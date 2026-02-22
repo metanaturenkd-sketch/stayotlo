@@ -79,19 +79,21 @@
         /* Carousel */
         .carousel-track { 
             display: flex; 
-            /* Updated transition: Cinematic 3s duration with ultra-smooth easing */
             transition: transform 3s cubic-bezier(0.19, 1, 0.22, 1); 
         }
         .carousel-slide { min-width: 100%; transition: opacity 0.6s ease; position: relative; }
         
-        /* Gallery Images - Slower Fade */
+        /* Image Quality & Slower Fade */
+        .gallery-image, .plan-image, .explode-layer { 
+            image-rendering: high-quality;
+            image-rendering: -webkit-optimize-contrast;
+        }
         .gallery-image { 
             position: absolute; 
             inset: 0; 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
-            /* Updated fade: 2.5s for very subtle cross-dissolve */
             transition: opacity 2.5s ease-in-out; 
         }
         .gallery-image.active { opacity: 1; z-index: 10; }
@@ -145,7 +147,6 @@
             width: 100%; 
             height: 100%; 
             object-fit: contain; 
-            padding: 2rem; 
             transition: opacity 1.5s ease-in-out; 
         }
         .plan-image.active { opacity: 1; z-index: 10; }
@@ -153,8 +154,9 @@
 
         /* 360 Viewer Overrides */
         .slider-360 { -webkit-appearance: none; height: 4px !important; background: rgba(0,0,0,0.15) !important; border-radius: 10px; outline: none; }
-        .slider-360::-webkit-slider-thumb { -webkit-appearance: none; width: 14px !important; height: 14px !important; background: #1d1d1f !important; border-radius: 50%; cursor: pointer; border: 2px solid #fff !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .slider-360::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        .slider-360::-webkit-slider-thumb { -webkit-appearance: none; width: 18px !important; height: 18px !important; background: #1d1d1f !important; border-radius: 50%; cursor: pointer; border: 2px solid #fff !important; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .slider-360::-webkit-slider-thumb:hover { transform: scale(1.15); }
+        #my-360-viewer canvas, #my-360-viewer img { image-rendering: high-quality; image-rendering: -webkit-optimize-contrast; }
 
         /* Exploded View Anatomy Styles */
         .explode-wrapper {
@@ -166,7 +168,6 @@
             position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
             transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
             will-change: transform, opacity;
-            image-rendering: -webkit-optimize-contrast;
             transform: translateZ(0);
         }
         .explode-view { z-index: 10; opacity: 1; cursor: pointer; }
@@ -180,15 +181,19 @@
         #explode-stage.is-exploded .explode-base { pointer-events: auto; }
         
         #explode-stage.is-exploded .explode-wrapper { transform: scale(0.65); }
-        #explode-stage.is-exploded .explode-shell { transform: translateY(-50%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
+        #explode-stage.is-exploded .explode-shell { transform: translateY(-75%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
         #explode-stage.is-exploded .explode-interior { transform: translateY(0%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
-        #explode-stage.is-exploded .explode-base { transform: translateY(50%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
+        #explode-stage.is-exploded .explode-base { transform: translateY(75%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
 
         /* Focused State (Zoom) */
         #explode-stage.is-focused .explode-wrapper { transform: scale(1.3); cursor: zoom-out; }
         #explode-stage.is-focused .explode-shell { transform: translateY(-100%); opacity: 0; }
         #explode-stage.is-focused .explode-base { transform: translateY(100%); opacity: 0; }
         #explode-stage.is-focused .explode-interior { cursor: zoom-out; }
+
+        /* Explode UI Toggle Pill */
+        .glass-toggle { width: 88px; height: 48px; border-radius: 24px; padding: 4px; position: relative; display: flex; }
+        .glass-highlight { position: absolute; width: 40px; height: 40px; background: #000; border-radius: 50%; left: 4px; top: 4px; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
         /* PRINT STYLES */
         .print-only-header { display: none; }
@@ -542,9 +547,8 @@
         <section id="tab-concepts" class="tab-content hidden min-h-screen bg-white relative">
             
             <!-- OTLO Collection Header -->
-            <div class="w-full bg-[#fcfcfc] pt-24 md:pt-32 pb-12 flex flex-col items-center justify-center border-b border-gray-100">
-                <img src="logo1.png" alt="OTLO Logo" class="h-16 md:h-20 mb-4 object-contain opacity-90">
-                <h1 class="font-display text-gray-800 text-center">COLLECTION</h1>
+            <div class="w-full bg-[#fcfcfc] pt-20 md:pt-24 pb-6 flex flex-col items-center justify-center border-b border-gray-100">
+                <img src="stayotlo/logo/logo1.png" alt="OTLO Logo" class="h-10 md:h-12 object-contain opacity-90">
             </div>
 
             <!-- Sticky Sub-Navigation -->
@@ -559,7 +563,7 @@
             </div>
 
             <!-- Slideshow Hero -->
-            <div id="otlo-intro" class="relative w-full h-[70vh] md:h-[80vh] bg-black overflow-hidden group">
+            <div id="otlo-intro" class="relative w-full h-screen bg-black overflow-hidden group">
                 <div class="absolute top-4 md:top-6 right-4 md:right-6 z-40">
                     <button onclick="toggleMute()" id="mute-btn" class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full px-3 md:px-4 py-1.5 md:py-2 text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-colors flex items-center gap-2"><span>Sound</span> <span id="sound-icon">🔊</span></button>
                 </div>
@@ -746,7 +750,7 @@
 
             <!-- ANATOMY OF OTLO SECTION -->
             <div class="w-full py-24 md:py-32 bg-white border-t border-gray-100">
-                <div class="max-w-7xl mx-auto px-6">
+                <div class="w-full max-w-screen-2xl mx-auto px-4 md:px-6">
                     <!-- Header -->
                     <div class="mb-20 md:mb-24 text-center reveal-on-scroll">
                         <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-8">Anatomy of OTLO</h2>
@@ -754,93 +758,89 @@
                     </div>
 
                     <!-- 1. Spatial Flow -->
-                    <div id="otlo-spatial" class="max-w-5xl mx-auto reveal-on-scroll scroll-mt-32 md:scroll-mt-40">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center md:text-left">1. Spatial Flow</h3>
+                    <div id="otlo-spatial" class="w-full mx-auto reveal-on-scroll scroll-mt-32 md:scroll-mt-40 flex flex-col items-center">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center md:text-left w-full max-w-7xl">1. Spatial Flow</h3>
                         
-                        <!-- Slideshow Container -->
-                        <div class="relative w-full aspect-[4/3] md:aspect-video bg-gray-50/50 rounded-[2rem] overflow-hidden group border border-gray-100 cursor-zoom-in hover:shadow-sm transition-all" onclick="openPlanModal()">
+                        <!-- Slideshow Container (Enlarged) -->
+                        <div class="relative w-full max-w-7xl aspect-square md:aspect-[16/9] bg-gray-50/50 rounded-[2rem] overflow-hidden group border border-gray-100 cursor-zoom-in hover:shadow-sm transition-all mb-8" onclick="openPlanModal()">
                             <div id="plan-gallery" class="w-full h-full relative">
-                                <img src="plans/plan1.png" class="plan-image active" data-index="0" alt="Floor Plan 1">
-                                <img src="plans/plan2.png" class="plan-image inactive" data-index="1" alt="Floor Plan 2">
-                                <img src="plans/plan3.png" class="plan-image inactive" data-index="2" alt="Floor Plan 3">
-                                <img src="plans/plan4.png" class="plan-image inactive" data-index="3" alt="Floor Plan 4">
-                                <img src="plans/plan5.png" class="plan-image inactive" data-index="4" alt="Floor Plan 5">
+                                <img src="plans/plan1.png" class="plan-image active" data-index="0" alt="">
+                                <img src="plans/plan2.png" class="plan-image inactive" data-index="1" alt="">
+                                <img src="plans/plan3.png" class="plan-image inactive" data-index="2" alt="">
+                                <img src="plans/plan4.png" class="plan-image inactive" data-index="3" alt="">
+                                <img src="plans/plan5.png" class="plan-image inactive" data-index="4" alt="">
                             </div>
-                            
-                            <!-- Overlay Controls -->
-                            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-6 bg-white/90 backdrop-blur-md border border-gray-200 px-6 py-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-30" onclick="event.stopPropagation()">
-                                <button onclick="cyclePlan(-1)" class="text-gray-400 hover:text-black transition-colors flex items-center justify-center">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-                                </button>
-                                <div class="w-px h-4 bg-gray-200"></div>
-                                <button id="btn-play-pause" onclick="togglePlanPlay()" class="text-black font-bold text-[10px] uppercase tracking-widest w-12 text-center hover:opacity-70 transition-opacity">
-                                    PAUSE
-                                </button>
-                                <div class="w-px h-4 bg-gray-200"></div>
-                                <button onclick="cyclePlan(1)" class="text-gray-400 hover:text-black transition-colors flex items-center justify-center">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-                                </button>
-                            </div>
+                        </div>
+                        
+                        <!-- External Controls -->
+                        <div class="flex items-center gap-6 bg-white border border-gray-200 px-6 py-3 rounded-full shadow-sm">
+                            <button onclick="cyclePlan(-1)" class="text-gray-400 hover:text-black transition-colors flex items-center justify-center">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+                            </button>
+                            <div class="w-px h-4 bg-gray-200"></div>
+                            <button id="btn-play-pause" onclick="togglePlanPlay()" class="text-black hover:opacity-70 transition-opacity flex items-center justify-center w-6 h-6">
+                                <!-- Pause SVG (Default) -->
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                            </button>
+                            <div class="w-px h-4 bg-gray-200"></div>
+                            <button onclick="cyclePlan(1)" class="text-gray-400 hover:text-black transition-colors flex items-center justify-center">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                            </button>
                         </div>
                     </div>
                     
                     <!-- 2. The 360° Experience -->
-                    <div id="otlo-360" class="max-w-5xl mx-auto reveal-on-scroll mt-24 scroll-mt-32 md:scroll-mt-40">
+                    <div id="otlo-360" class="w-full max-w-7xl mx-auto reveal-on-scroll mt-32 scroll-mt-32 md:scroll-mt-40">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center md:text-left">2. The 360° Experience</h3>
                         
                         <!-- Slideshow Container -->
-                        <div class="relative w-full aspect-video md:aspect-[21/9] bg-gray-50 rounded-[2rem] overflow-hidden group border border-gray-100 hover:shadow-sm transition-all">
+                        <div class="relative w-full aspect-[4/3] md:aspect-[16/9] bg-gray-50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all mb-8">
                             
                             <!-- Dual Viewers (Overlapped for seamless crossfade) -->
                             <div id="viewer-exterior" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-100 cursor-grab active:cursor-grabbing"></div>
                             <div id="viewer-interior" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-0 pointer-events-none cursor-grab active:cursor-grabbing"></div>
                             
-                            <!-- Floating Controls Overlay -->
-                            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[400px] flex flex-col gap-4 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <div class="flex items-center justify-between gap-4 bg-white/90 backdrop-blur-md border border-gray-200 px-4 py-2.5 rounded-full shadow-lg">
-                                    
-                                    <!-- Ext/Int Toggles -->
-                                    <div class="flex items-center gap-1">
-                                        <button id="btn-ext" onclick="switch360View('exterior')" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest bg-black text-white transition-colors">Exterior</button>
-                                        <button id="btn-int" onclick="switch360View('interior')" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Interior</button>
-                                    </div>
-
-                                    <div class="w-px h-4 bg-gray-200"></div>
-                                    
-                                    <!-- Play/Pause -->
-                                    <button id="btn-360-play" onclick="toggle360Play()" class="text-black font-bold text-[9px] uppercase tracking-widest hover:opacity-70 transition-opacity w-12 text-center">
-                                        PAUSE
-                                    </button>
-                                </div>
-                                
-                                <!-- Thin Slider -->
-                                <div class="px-4">
-                                    <input type="range" id="slider-360" class="slider-360 w-full" min="0" max="50" value="0">
-                                </div>
+                            <!-- Internal Floating Toggle -->
+                            <div class="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1 bg-white/90 backdrop-blur-md border border-gray-200 px-2 py-1.5 rounded-full shadow-md">
+                                <button id="btn-ext" onclick="switch360View('exterior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-black text-white transition-colors">Exterior</button>
+                                <button id="btn-int" onclick="switch360View('interior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Interior</button>
                             </div>
+                        </div>
+
+                        <!-- External Slider Control -->
+                        <div class="w-full max-w-md mx-auto flex flex-col items-center">
+                            <input type="range" id="slider-360" class="slider-360 w-full" min="1" max="51" value="1">
+                            <p class="text-[9px] text-gray-400 mt-3 text-center uppercase tracking-widest">Drag image or use slider to rotate</p>
                         </div>
                     </div>
                     
                     <!-- 3. System Anatomy -->
-                    <div id="otlo-anatomy" class="max-w-5xl mx-auto reveal-on-scroll mt-24 scroll-mt-32 md:scroll-mt-40">
-                        <div class="flex justify-between items-end mb-8">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 text-center md:text-left">3. System Anatomy</h3>
-                            <button onclick="toggleExplode()" id="btn-explode" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors flex items-center gap-2">
-                                <span>EXPLODE</span>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 3l-6 6"/><path d="M21 3v6"/><path d="M21 3h-6"/><path d="M3 21l6-6"/><path d="M3 21v-6"/><path d="M3 21h6"/><path d="M15 21l6-6"/><path d="M21 21v-6"/><path d="M21 21h-6"/><path d="M9 3L3 9"/><path d="M3 3v6"/><path d="M3 3h6"/></svg>
-                            </button>
-                        </div>
+                    <div id="otlo-anatomy" class="w-full max-w-7xl mx-auto reveal-on-scroll mt-32 scroll-mt-32 md:scroll-mt-40">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center md:text-left">3. System Anatomy</h3>
                         
-                        <!-- Explode Container -->
-                        <div id="explode-stage" class="relative w-full aspect-[4/3] md:aspect-video bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group hover:shadow-sm transition-all">
-                            <div class="explode-wrapper relative w-[80%] max-w-[800px] aspect-[16/9]">
-                                <img src="exploded/typology A/view.png" class="explode-layer explode-view" alt="Full View" onclick="toggleExplode()">
-                                <img src="exploded/typology A/shell.png" class="explode-layer explode-shell" alt="Shell Layer">
-                                <img src="exploded/typology A/interior.png" class="explode-layer explode-interior" alt="Interior Layer" onclick="toggleExplodeFocus()">
-                                <img src="exploded/typology A/base.png" class="explode-layer explode-base" alt="Base Layer" onclick="collapseExplodeView()">
+                        <!-- Minimal Glass Toggle Button -->
+                        <div class="flex justify-center mb-8">
+                            <div class="relative flex items-center bg-gray-50 border border-gray-200 rounded-full p-1 shadow-sm w-[88px] h-12">
+                                <div id="explode-highlight" class="absolute w-10 h-10 bg-black rounded-full transition-transform duration-300 left-1 translate-x-0"></div>
+                                <button onclick="setExplodeState(false)" class="relative z-10 w-10 h-10 flex items-center justify-center transition-colors text-white" id="btn-col" aria-label="Collapse">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+                                </button>
+                                <button onclick="setExplodeState(true)" class="relative z-10 w-10 h-10 flex items-center justify-center transition-colors text-gray-400 hover:text-black" id="btn-exp" aria-label="Explode">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="3" rx="1"/><rect x="4" y="10.5" width="16" height="3" rx="1"/><rect x="4" y="17" width="16" height="3" rx="1"/></svg>
+                                </button>
                             </div>
                         </div>
-                        <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest" id="explode-hint">Click to interact</p>
+
+                        <!-- Explode Container -->
+                        <div id="explode-stage" class="relative w-full h-[70vh] md:h-[80vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group shadow-sm transition-all">
+                            <div class="explode-wrapper relative w-full max-w-[1000px] h-full">
+                                <img src="stayotlo/exploded/typology A/view.png" class="explode-layer explode-view" alt="" onclick="setExplodeState(true)">
+                                <img src="stayotlo/exploded/typology A/shell.png" class="explode-layer explode-shell" alt="">
+                                <img src="stayotlo/exploded/typology A/interior.png" class="explode-layer explode-interior" alt="" onclick="toggleExplodeFocus()">
+                                <img src="stayotlo/exploded/typology A/base.png" class="explode-layer explode-base" alt="" onclick="setExplodeState(false)">
+                            </div>
+                        </div>
+                        <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest" id="explode-hint">Click interior to zoom</p>
                     </div>
 
                 </div>
@@ -848,8 +848,8 @@
 
             <!-- OTLO Footer -->
             <div class="w-full bg-[#fcfcfc] py-16 flex flex-col items-center justify-center border-t border-gray-100">
-                <img src="logo1.png" alt="OTLO Logo" class="h-8 md:h-10 mb-3 opacity-40 grayscale object-contain">
-                <p class="text-[9px] md:text-[10px] text-gray-400 font-bold tracking-[0.3em] uppercase">COLLECTION&reg;</p>
+                <img src="stayotlo/logo/logo1.png" alt="OTLO Logo" class="h-8 md:h-10 mb-3 opacity-40 grayscale object-contain">
+                <p class="text-[9px] md:text-[10px] text-gray-400 font-bold tracking-[0.3em] uppercase">&reg;</p>
             </div>
 
         </section>
@@ -1227,7 +1227,7 @@
                 Back to Projects
             </button>
         </div>
-        <img id="plan-modal-img" src="" class="max-w-full max-h-[85vh] object-contain drop-shadow-xl transition-all duration-500 scale-95">
+        <img id="plan-modal-img" src="" class="max-w-full max-h-[85vh] object-contain drop-shadow-xl transition-all duration-500 scale-95" style="image-rendering: high-quality; image-rendering: -webkit-optimize-contrast;">
     </div>
 
     <!-- LOGIC -->
@@ -1346,9 +1346,11 @@
         let planIdx = 0;
         let planPlaying = true;
         let planTimer;
+        
+        const playSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+        const pauseSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
 
         // 360 Viewer Variables
-        let is360Playing = true;
         let current360View = 'exterior';
 
         window.onload = function() {
@@ -2217,10 +2219,10 @@
             planPlaying = !planPlaying;
             const btn = document.getElementById('btn-play-pause');
             if(planPlaying) {
-                btn.innerText = 'PAUSE';
+                btn.innerHTML = pauseSvg;
                 startPlanSlideshow();
             } else {
-                btn.innerText = 'PLAY';
+                btn.innerHTML = playSvg;
                 clearInterval(planTimer);
             }
         }
@@ -2239,7 +2241,7 @@
             setTimeout(() => { modalImg.classList.remove('scale-95'); modalImg.classList.add('scale-100'); }, 50);
             
             // Auto-pause the background slideshow so user can read
-            if(planPlaying) clearInterval(planTimer);
+            if(planPlaying) togglePlanPlay();
         }
 
         function closePlanModal() {
@@ -2251,9 +2253,6 @@
             modal.classList.add('pointer-events-none', 'opacity-0');
             modalImg.classList.remove('scale-100');
             modalImg.classList.add('scale-95');
-            
-            // Resume slideshow if it was set to play
-            if(planPlaying) startPlanSlideshow();
         }
 
         // --- SUB-NAVIGATION SCROLL LOGIC ---
@@ -2281,20 +2280,25 @@
                 return;
             }
 
+            // Create arrays to prevent string parsing issues
+            const extFrames = [];
+            const intFrames = [];
+            for(let i=1; i<=51; i++) {
+                extFrames.push(`stayotlo/360/exterior/typology A/Image${i}.png`);
+                intFrames.push(`stayotlo/360/interior/typology A/Image${i}.png`);
+            }
+
             const spinOptions = {
-                width: 1866,
-                height: 904,
                 sense: -1,
                 responsive: true,
                 loop: true,
-                frameTime: 60, // Smooth speed
             };
 
             // Initialize Exterior (Active by Default)
             $('#viewer-exterior').spritespin({
                 ...spinOptions,
-                animate: true,
-                source: SpriteSpin.sourceArray('360/exterior/typology A/Image{frame}.png', { frame: [1, 51], digits: 2 }),
+                animate: false, // Removed auto rotate
+                source: extFrames,
                 onFrame: function(e, data) {
                     if(current360View === 'exterior') $('#slider-360').val(data.frame);
                 }
@@ -2303,8 +2307,8 @@
             // Initialize Interior (Hidden by Default)
             $('#viewer-interior').spritespin({
                 ...spinOptions,
-                animate: false,
-                source: SpriteSpin.sourceArray('360/interior/typology A/Image{frame}.png', { frame: [1, 51], digits: 2 }),
+                animate: false, // Removed auto rotate
+                source: intFrames,
                 onFrame: function(e, data) {
                     if(current360View === 'interior') $('#slider-360').val(data.frame);
                 }
@@ -2331,8 +2335,6 @@
                 // Pre-sync interior frame to match current exterior before showing
                 intApi.updateFrame(extApi.data.frame);
                 
-                if(is360Playing) { extApi.stopAnimation(); intApi.startAnimation(); }
-                
                 // Crossfade
                 document.getElementById('viewer-interior').classList.replace('opacity-0', 'opacity-100');
                 document.getElementById('viewer-interior').classList.remove('pointer-events-none');
@@ -2347,8 +2349,6 @@
             } else {
                 // Pre-sync exterior frame to match current interior before showing
                 extApi.updateFrame(intApi.data.frame);
-                
-                if(is360Playing) { intApi.stopAnimation(); extApi.startAnimation(); }
                 
                 // Crossfade
                 document.getElementById('viewer-exterior').classList.replace('opacity-0', 'opacity-100');
@@ -2365,78 +2365,49 @@
             current360View = view;
         }
 
-        function toggle360Play() {
-            is360Playing = !is360Playing;
-            const extApi = $('#viewer-exterior').spritespin("api");
-            const intApi = $('#viewer-interior').spritespin("api");
-            const btn = document.getElementById('btn-360-play');
-            
-            if(is360Playing) {
-                btn.innerText = 'PAUSE';
-                if(current360View === 'exterior') extApi.startAnimation();
-                else intApi.startAnimation();
-            } else {
-                btn.innerText = 'PLAY';
-                extApi.stopAnimation();
-                intApi.stopAnimation();
-            }
-        }
-
         // --- EXPLODED ANATOMY LOGIC ---
         let isExploded = false;
-        let isExplodeFocused = false;
 
-        function toggleExplode() {
+        function setExplodeState(explode) {
             const stage = document.getElementById('explode-stage');
-            const btn = document.getElementById('btn-explode');
-            const hint = document.getElementById('explode-hint');
+            const highlight = document.getElementById('explode-highlight');
+            const btnCol = document.getElementById('btn-col');
+            const btnExp = document.getElementById('btn-exp');
             
-            if (isExplodeFocused) {
-                toggleExplodeFocus(); 
-                return;
-            }
+            isExploded = explode;
             
-            isExploded = !isExploded;
-            
-            if (isExploded) {
+            if (explode) {
                 stage.classList.add('is-exploded');
-                btn.querySelector('span').innerText = 'COLLAPSE';
-                hint.innerText = 'Click interior to zoom';
+                // The toggle container is 88px wide. The button is 40px wide. Left offset is 4px.
+                // 40px translation shifts it perfectly over the right button.
+                highlight.style.transform = 'translateX(40px)';
+                
+                btnExp.classList.replace('text-gray-400', 'text-white');
+                btnExp.classList.remove('hover:text-black');
+                btnCol.classList.replace('text-white', 'text-gray-400');
+                btnCol.classList.add('hover:text-black');
             } else {
                 stage.classList.remove('is-exploded');
-                btn.querySelector('span').innerText = 'EXPLODE';
-                hint.innerText = 'Click to interact';
+                stage.classList.remove('is-focused'); // collapse focus too if open
+                
+                highlight.style.transform = 'translateX(0)';
+                
+                btnCol.classList.replace('text-gray-400', 'text-white');
+                btnCol.classList.remove('hover:text-black');
+                btnExp.classList.replace('text-white', 'text-gray-400');
+                btnExp.classList.add('hover:text-black');
             }
         }
 
         function toggleExplodeFocus() {
             if (!isExploded) return;
             const stage = document.getElementById('explode-stage');
-            const hint = document.getElementById('explode-hint');
             
-            isExplodeFocused = !isExplodeFocused;
-            
-            if (isExplodeFocused) {
-                stage.classList.add('is-focused');
-                hint.innerText = 'Click interior to return';
-            } else {
+            if (stage.classList.contains('is-focused')) {
                 stage.classList.remove('is-focused');
-                hint.innerText = 'Click interior to zoom';
+            } else {
+                stage.classList.add('is-focused');
             }
-        }
-
-        function collapseExplodeView() {
-            if (!isExploded) return;
-            isExploded = false;
-            isExplodeFocused = false; 
-            
-            const stage = document.getElementById('explode-stage');
-            const btn = document.getElementById('btn-explode');
-            const hint = document.getElementById('explode-hint');
-            
-            stage.classList.remove('is-focused', 'is-exploded');
-            btn.querySelector('span').innerText = 'EXPLODE';
-            hint.innerText = 'Click to interact';
         }
     </script>
 </body>
