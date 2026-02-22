@@ -548,7 +548,7 @@
             
             <!-- OTLO Collection Header -->
             <div class="w-full bg-[#fcfcfc] pt-20 md:pt-24 pb-6 flex flex-col items-center justify-center border-b border-gray-100">
-                <img src="stayotlo/logo/logo1.png" alt="OTLO Logo" class="h-10 md:h-12 object-contain opacity-90">
+                <img src="stayotlo/logo/logo.png" alt="OTLO Logo" class="h-10 md:h-12 object-contain opacity-90">
             </div>
 
             <!-- Sticky Sub-Navigation -->
@@ -834,10 +834,10 @@
                         <!-- Explode Container -->
                         <div id="explode-stage" class="relative w-full h-[70vh] md:h-[80vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group shadow-sm transition-all">
                             <div class="explode-wrapper relative w-full max-w-[1000px] h-full">
-                                <img src="stayotlo/exploded/typology%20A/view.png" class="explode-layer explode-view" alt="" onclick="setExplodeState(true)">
-                                <img src="stayotlo/exploded/typology%20A/shell.png" class="explode-layer explode-shell" alt="">
-                                <img src="stayotlo/exploded/typology%20A/interior.png" class="explode-layer explode-interior" alt="" onclick="toggleExplodeFocus()">
-                                <img src="stayotlo/exploded/typology%20A/base.png" class="explode-layer explode-base" alt="" onclick="setExplodeState(false)">
+                                <img src="stayotlo/exploded/view.png" class="explode-layer explode-view" alt="" onclick="setExplodeState(true)">
+                                <img src="stayotlo/exploded/shell.png" class="explode-layer explode-shell" alt="">
+                                <img src="stayotlo/exploded/interior.png" class="explode-layer explode-interior" alt="" onclick="toggleExplodeFocus()">
+                                <img src="stayotlo/exploded/base.png" class="explode-layer explode-base" alt="" onclick="setExplodeState(false)">
                             </div>
                         </div>
                         <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest" id="explode-hint">Click interior to zoom</p>
@@ -848,7 +848,7 @@
 
             <!-- OTLO Footer -->
             <div class="w-full bg-[#fcfcfc] py-16 flex flex-col items-center justify-center border-t border-gray-100">
-                <img src="stayotlo/logo/logo1.png" alt="OTLO Logo" class="h-8 md:h-10 mb-3 opacity-40 grayscale object-contain">
+                <img src="stayotlo/logo/logo.png" alt="OTLO Logo" class="h-8 md:h-10 mb-3 opacity-40 grayscale object-contain">
                 <p class="text-[9px] md:text-[10px] text-gray-400 font-bold tracking-[0.3em] uppercase">&reg;</p>
             </div>
 
@@ -2281,12 +2281,13 @@
             }
 
             // Create arrays to prevent string parsing issues. 
-            // URL-encoded the space in "typology A" to "typology%20A" to prevent broken links
             const extFrames = [];
             const intFrames = [];
             for(let i=1; i<=51; i++) {
-                extFrames.push(`stayotlo/360/exterior/typology%20A/Image${i}.png`);
-                intFrames.push(`stayotlo/360/interior/typology%20A/Image${i}.png`);
+                // Pad single digits with a leading zero (e.g., 1 -> '01')
+                let paddedIndex = String(i).padStart(2, '0');
+                extFrames.push(`stayotlo/360e/Image${paddedIndex}.png`);
+                intFrames.push(`stayotlo/360i/Image${paddedIndex}.png`);
             }
 
             const spinOptions = {
