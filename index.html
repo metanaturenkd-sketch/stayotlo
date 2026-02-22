@@ -12,8 +12,12 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- 360 Viewer Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/spritespin@4.1.0/release/spritespin.js"></script>
+
+    <!-- Google Fonts: Inter & Cormorant Garamond (Elegant Serif) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <style>
@@ -21,6 +25,9 @@
         .brand-gradient { background: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%); }
         .brand-gradient-text { background: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
+        .font-display { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.25rem; text-transform: uppercase; letter-spacing: 0.2em; }
+        @media (min-width: 768px) { .font-display { font-size: 3.25rem; } }
+
         /* Navigation Glass Effect */
         .nav-glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
 
@@ -131,6 +138,58 @@
             background-size: 40px 40px;
         }
 
+        /* Floor Plan Slideshow */
+        .plan-image { 
+            position: absolute; 
+            inset: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+            padding: 2rem; 
+            transition: opacity 1.5s ease-in-out; 
+        }
+        .plan-image.active { opacity: 1; z-index: 10; }
+        .plan-image.inactive { opacity: 0; z-index: 0; pointer-events: none; }
+
+        /* 360 Viewer Overrides */
+        .slider-360 { -webkit-appearance: none; height: 4px !important; background: rgba(0,0,0,0.15) !important; border-radius: 10px; outline: none; }
+        .slider-360::-webkit-slider-thumb { -webkit-appearance: none; width: 14px !important; height: 14px !important; background: #1d1d1f !important; border-radius: 50%; cursor: pointer; border: 2px solid #fff !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .slider-360::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        /* Exploded View Anatomy Styles */
+        .explode-wrapper {
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
+        .explode-layer {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+            transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform, opacity;
+            image-rendering: -webkit-optimize-contrast;
+            transform: translateZ(0);
+        }
+        .explode-view { z-index: 10; opacity: 1; cursor: pointer; }
+        .explode-shell { z-index: 3; pointer-events: none; }
+        .explode-interior { z-index: 2; pointer-events: none; }
+        .explode-base { z-index: 1; pointer-events: none; }
+
+        /* Exploded State */
+        #explode-stage.is-exploded .explode-view { opacity: 0; pointer-events: none; }
+        #explode-stage.is-exploded .explode-interior { pointer-events: auto; cursor: zoom-in; }
+        #explode-stage.is-exploded .explode-base { pointer-events: auto; }
+        
+        #explode-stage.is-exploded .explode-wrapper { transform: scale(0.65); }
+        #explode-stage.is-exploded .explode-shell { transform: translateY(-50%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
+        #explode-stage.is-exploded .explode-interior { transform: translateY(0%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
+        #explode-stage.is-exploded .explode-base { transform: translateY(50%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
+
+        /* Focused State (Zoom) */
+        #explode-stage.is-focused .explode-wrapper { transform: scale(1.3); cursor: zoom-out; }
+        #explode-stage.is-focused .explode-shell { transform: translateY(-100%); opacity: 0; }
+        #explode-stage.is-focused .explode-base { transform: translateY(100%); opacity: 0; }
+        #explode-stage.is-focused .explode-interior { cursor: zoom-out; }
+
         /* PRINT STYLES */
         .print-only-header { display: none; }
         @media print {
@@ -166,10 +225,25 @@
             </div>
             
             <!-- Desktop Links -->
-            <div class="hidden md:flex gap-8 lg:gap-10 text-xs font-semibold uppercase tracking-widest text-gray-500">
+            <div class="hidden md:flex gap-8 lg:gap-10 text-xs font-semibold uppercase tracking-widest text-gray-500 h-full items-center">
                 <button onclick="switchTab('philosophy')" class="hover:text-black transition-colors nav-btn text-black" data-target="philosophy">Philosophy</button>
                 <button onclick="switchTab('benchmarks')" class="hover:text-black transition-colors nav-btn" data-target="benchmarks">Benchmarks</button>
-                <button onclick="switchTab('concepts')" class="hover:text-black transition-colors nav-btn" data-target="concepts">Concept</button>
+                
+                <!-- Desktop Projects Dropdown -->
+                <div class="relative group flex items-center h-full">
+                    <button class="hover:text-black transition-colors nav-btn flex items-center gap-1 py-4 cursor-default" data-target="concepts">
+                        Projects <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <!-- Invisible bridge to keep hover state active -->
+                    <div class="absolute left-0 top-full pt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                        <div class="bg-white border border-gray-100 shadow-xl rounded-xl overflow-hidden">
+                            <button onclick="switchTab('concepts')" class="block text-left px-5 py-4 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:bg-gray-50 transition-colors w-full">
+                                OTLO Collection
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <button onclick="switchTab('calculator')" class="hover:text-black transition-colors nav-btn" data-target="calculator">Investor Engine</button>
             </div>
 
@@ -188,7 +262,19 @@
         <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full mobile-menu-glass md:hidden flex-col p-6 space-y-4 text-center z-40 transition-all duration-300">
             <button onclick="switchTab('philosophy'); toggleMobileMenu()" class="block w-full py-4 text-sm font-bold uppercase tracking-widest text-gray-800 border-b border-gray-100/50">Philosophy</button>
             <button onclick="switchTab('benchmarks'); toggleMobileMenu()" class="block w-full py-4 text-sm font-bold uppercase tracking-widest text-gray-800 border-b border-gray-100/50">Benchmarks</button>
-            <button onclick="switchTab('concepts'); toggleMobileMenu()" class="block w-full py-4 text-sm font-bold uppercase tracking-widest text-gray-800 border-b border-gray-100/50">Concept</button>
+            
+            <!-- Mobile Projects Accordion -->
+            <div class="w-full">
+                <button onclick="document.getElementById('mobile-projects-dropdown').classList.toggle('hidden')" class="w-full py-4 text-sm font-bold uppercase tracking-widest text-gray-800 border-b border-gray-100/50 flex justify-center items-center gap-2 focus:outline-none">
+                    Projects <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="mobile-projects-dropdown" class="hidden flex-col bg-gray-50/50 border-b border-gray-100/50 rounded-b-xl">
+                    <button onclick="switchTab('concepts'); toggleMobileMenu()" class="block w-full py-4 text-xs font-bold uppercase tracking-widest text-gray-600 hover:text-black">
+                        OTLO Collection
+                    </button>
+                </div>
+            </div>
+
             <button onclick="switchTab('calculator'); toggleMobileMenu()" class="block w-full py-4 text-sm font-bold uppercase tracking-widest text-gray-800">Investor Engine</button>
             <button onclick="scrollToId('calculator'); toggleMobileMenu()" class="w-full bg-black text-white px-6 py-4 rounded-xl text-sm font-bold uppercase tracking-widest shadow-lg mt-2">Run Calculator</button>
         </div>
@@ -452,12 +538,31 @@
             <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12"><div id="benchmark-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div></div>
         </section>
 
-        <!-- TAB 3: CONCEPT -->
-        <section id="tab-concepts" class="tab-content hidden min-h-screen bg-black overflow-hidden relative">
-            <div class="absolute top-20 md:top-24 right-4 md:right-6 z-40">
-                <button onclick="toggleMute()" id="mute-btn" class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full px-3 md:px-4 py-1.5 md:py-2 text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-colors flex items-center gap-2"><span>Sound</span> <span id="sound-icon">🔊</span></button>
+        <!-- TAB 3: PROJECTS -->
+        <section id="tab-concepts" class="tab-content hidden min-h-screen bg-white relative">
+            
+            <!-- OTLO Collection Header -->
+            <div class="w-full bg-[#fcfcfc] pt-24 md:pt-32 pb-12 flex flex-col items-center justify-center border-b border-gray-100">
+                <img src="logo1.png" alt="OTLO Logo" class="h-16 md:h-20 mb-4 object-contain opacity-90">
+                <h1 class="font-display text-gray-800 text-center">COLLECTION</h1>
             </div>
-            <div class="relative w-full h-[calc(100vh-64px)] md:h-screen overflow-hidden">
+
+            <!-- Sticky Sub-Navigation -->
+            <div class="sticky top-16 md:top-20 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 w-full shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-start md:justify-center gap-6 md:gap-12 overflow-x-auto no-scrollbar text-[10px] md:text-xs font-bold uppercase tracking-widest text-gray-500">
+                    <button onclick="scrollToConceptSection('otlo-intro')" class="hover:text-black transition-colors whitespace-nowrap">Gallery</button>
+                    <button onclick="scrollToConceptSection('otlo-meaning')" class="hover:text-black transition-colors whitespace-nowrap">Philosophy</button>
+                    <button onclick="scrollToConceptSection('otlo-spatial')" class="hover:text-black transition-colors whitespace-nowrap">Spatial Flow</button>
+                    <button onclick="scrollToConceptSection('otlo-360')" class="hover:text-black transition-colors whitespace-nowrap">360° View</button>
+                    <button onclick="scrollToConceptSection('otlo-anatomy')" class="hover:text-black transition-colors whitespace-nowrap">Anatomy</button>
+                </div>
+            </div>
+
+            <!-- Slideshow Hero -->
+            <div id="otlo-intro" class="relative w-full h-[70vh] md:h-[80vh] bg-black overflow-hidden group">
+                <div class="absolute top-4 md:top-6 right-4 md:right-6 z-40">
+                    <button onclick="toggleMute()" id="mute-btn" class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full px-3 md:px-4 py-1.5 md:py-2 text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-colors flex items-center gap-2"><span>Sound</span> <span id="sound-icon">🔊</span></button>
+                </div>
                 <div class="carousel-track h-full" id="carousel-track">
                     <!-- Project 1 -->
                     <div class="carousel-slide min-w-full h-full relative group">
@@ -475,19 +580,6 @@
                         <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
                             <button onclick="cycleInternalImage('gallery-mountain', -1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">←</button>
                             <button onclick="cycleInternalImage('gallery-mountain', 1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">→</button>
-                        </div>
-                        <div class="absolute bottom-0 left-0 w-full pl-6 md:pl-40 pr-6 md:pr-10 pb-20 pt-10 md:py-20 z-30 flex flex-col justify-end animate-text-reveal pointer-events-none">
-                            <div class="max-w-4xl pointer-events-auto">
-                                <h4 class="text-blue-400 font-bold uppercase tracking-widest mb-1 text-[10px] md:text-xs">Pipeline Concept</h4>
-                                <h2 class="text-3xl md:text-6xl font-bold text-white mb-3 tracking-tighter">ALPINE ESCAPE</h2>
-                                <p class="text-white/90 text-xs md:text-base leading-relaxed font-light mb-4 md:mb-6 max-w-xl line-clamp-3 md:line-clamp-none">A high-altitude sanctuary designed to blend seamlessly into the mountain treeline. Features cantilevered sky cabins, panoramic glazing, and Nordic Spa amenities.</p>
-                                <div class="border-t border-white/20 pt-3 md:pt-4">
-                                    <p class="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Key Experiences</p>
-                                    <div class="flex flex-wrap gap-2 md:gap-3 text-[10px] md:text-xs text-white font-medium">
-                                        <span class="bg-white/10 px-2 py-1 rounded-full backdrop-blur-sm">Nordic Spa</span><span class="bg-white/10 px-2 py-1 rounded-full backdrop-blur-sm">Infinity Pool</span><span class="bg-white/10 px-2 py-1 rounded-full backdrop-blur-sm">Sky Cabins</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <!-- Project 2 -->
@@ -507,25 +599,259 @@
                             <button onclick="cycleInternalImage('gallery-lake', -1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">←</button>
                             <button onclick="cycleInternalImage('gallery-lake', 1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">→</button>
                         </div>
-                        <div class="absolute bottom-0 left-0 w-full pl-6 md:pl-40 pr-6 md:pr-10 pb-20 pt-10 md:py-20 z-30 flex flex-col justify-end animate-text-reveal pointer-events-none">
-                            <div class="max-w-4xl pointer-events-auto">
-                                <h4 class="text-green-400 font-bold uppercase tracking-widest mb-1 text-[10px] md:text-xs">Pipeline Concept</h4>
-                                <h2 class="text-3xl md:text-6xl font-bold text-white mb-3 tracking-tighter">LAKESIDE HAVEN</h2>
-                                <p class="text-white/90 text-xs md:text-base leading-relaxed font-light mb-4 md:mb-6 max-w-xl line-clamp-3 md:line-clamp-none">Amphibious architecture meeting serene waters. Focuses on relaxation, water-based activities, and sustainable vernacular construction.</p>
-                                <div class="border-t border-white/20 pt-3 md:pt-4">
-                                    <p class="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Key Experiences</p>
-                                    <div class="flex flex-wrap gap-2 md:gap-3 text-[10px] md:text-xs text-white font-medium">
-                                        <span class="bg-white/10 px-2 py-1 rounded-full backdrop-blur-sm">Lakeside Sauna</span><span class="bg-white/10 px-2 py-1 rounded-full backdrop-blur-sm">Floating Suites</span><span class="bg-white/10 px-2 py-1 rounded-full backdrop-blur-sm">Kayak Club</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!-- Main Nav Arrows -->
                 <button onclick="moveCarousel(-1)" class="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
                 <button onclick="moveCarousel(1)" class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+
+                <!-- Minimal Footer Overlay -->
+                <div class="absolute bottom-8 md:bottom-12 left-0 w-full z-40 flex justify-center pointer-events-none animate-fade-in" style="animation-delay: 0.8s">
+                    <p class="text-[9px] md:text-[10px] font-light uppercase tracking-[0.25em] text-white/70 text-center px-4 leading-relaxed">
+                        OTLO SHORES <span class="mx-2 md:mx-4 text-white/30">|</span> 
+                        OTLO PEAK <span class="mx-2 md:mx-4 text-white/30">|</span> 
+                        OTLO WOODS
+                    </p>
+                </div>
             </div>
+
+            <!-- EXPLANATION SECTION -->
+            <div id="otlo-meaning" class="w-full py-24 md:py-32 scroll-mt-24 md:scroll-mt-32">
+                <div class="max-w-7xl mx-auto px-6">
+                    
+                    <!-- Header & Intro -->
+                    <div class="mb-20 md:mb-24 max-w-4xl mx-auto text-center reveal-on-scroll">
+                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-8">The Meaning of OTLO</h2>
+                        <div class="w-12 h-px bg-black mx-auto mb-8"></div>
+                        <p class="text-xl md:text-3xl text-gray-800 font-light leading-relaxed mb-6">
+                            OTLO is a design-driven micro-resort concept built around a universal architectural idea: <strong class="font-semibold text-black">the threshold.</strong>
+                        </p>
+                        <p class="text-base md:text-lg text-gray-500 font-light leading-relaxed max-w-3xl mx-auto">
+                            Inspired by the Gujarati <em>otlo</em> — a transitional porch space between home and street — the project reinterprets this globally recognized spatial archetype (porch, portico, engawa) as a contemporary hospitality experience.
+                        </p>
+                    </div>
+
+                    <!-- Narrative & Diagrams Grid -->
+                    <div class="grid lg:grid-cols-3 gap-16 md:gap-12 reveal-on-scroll">
+                        
+                        <!-- Block 1: Threshold -->
+                        <div class="flex flex-col">
+                            <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-48 flex items-center justify-center border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow duration-300">
+                                <div class="absolute inset-0 arch-grid opacity-10 pointer-events-none"></div>
+                                <!-- Diagram 1: Urban -> Threshold -> Nature -->
+                                <svg viewBox="0 0 300 120" class="w-full h-full relative z-10 stroke-gray-900 fill-none" stroke-width="1.5">
+                                    <rect x="20" y="30" width="50" height="40" stroke-width="1"/>
+                                    <line x1="30" y1="30" x2="30" y2="70" stroke-width="0.5" stroke-opacity="0.4"/>
+                                    <line x1="40" y1="30" x2="40" y2="70" stroke-width="0.5" stroke-opacity="0.4"/>
+                                    <line x1="50" y1="30" x2="50" y2="70" stroke-width="0.5" stroke-opacity="0.4"/>
+                                    <line x1="60" y1="30" x2="60" y2="70" stroke-width="0.5" stroke-opacity="0.4"/>
+                                    
+                                    <line x1="85" y1="50" x2="105" y2="50" stroke-dasharray="2 2" />
+                                    <polyline points="100,45 105,50 100,55" stroke-width="1" />
+                                    
+                                    <rect x="120" y="25" width="60" height="50" stroke-dasharray="4 4" stroke-width="1.5" />
+                                    <circle cx="150" cy="50" r="3" fill="currentColor" stroke="none" />
+                                    
+                                    <line x1="195" y1="50" x2="215" y2="50" stroke-dasharray="2 2" />
+                                    <polyline points="210,45 215,50 210,55" stroke-width="1" />
+                                    
+                                    <path d="M 230 70 Q 245 20 260 70 T 290 70" stroke-width="1.5" />
+                                    <path d="M 240 70 Q 255 40 270 70" stroke-width="1" stroke-opacity="0.4" />
+                                    
+                                    <text x="45" y="95" font-size="7" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Urban</text>
+                                    <text x="150" y="95" font-size="7" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest font-bold">Threshold</text>
+                                    <text x="260" y="95" font-size="7" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Nature</text>
+                                </svg>
+                            </div>
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-black mb-4">1. Liminal Environment</h4>
+                            <p class="text-sm text-gray-500 font-light leading-relaxed border-l-2 border-gray-200 pl-4">
+                                Each modular cabin is conceived as a liminal environment positioned between urban life and natural landscape. Rather than isolating guests from nature or fully immersing them in it, OTLO creates calibrated buffer spaces that foster restoration, mindfulness, and social connection.
+                            </p>
+                        </div>
+
+                        <!-- Block 2: Archetypes -->
+                        <div class="flex flex-col">
+                            <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-48 flex items-center justify-center border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow duration-300">
+                                <div class="absolute inset-0 arch-grid opacity-10 pointer-events-none"></div>
+                                <!-- Diagram 2: Convergence of Archetypes -->
+                                <svg viewBox="0 0 300 120" class="w-full h-full relative z-10 stroke-gray-900 fill-none" stroke-width="1">
+                                    <rect x="30" y="20" width="60" height="30" />
+                                    <line x1="40" y1="20" x2="40" y2="50" stroke-opacity="0.3"/>
+                                    <line x1="80" y1="20" x2="80" y2="50" stroke-opacity="0.3"/>
+                                    <text x="60" y="70" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Porch</text>
+
+                                    <rect x="120" y="20" width="60" height="30" />
+                                    <circle cx="135" cy="35" r="8" stroke-opacity="0.3"/>
+                                    <circle cx="165" cy="35" r="8" stroke-opacity="0.3"/>
+                                    <text x="150" y="70" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Portico</text>
+
+                                    <rect x="210" y="20" width="60" height="30" />
+                                    <line x1="210" y1="35" x2="270" y2="35" stroke-dasharray="2 2" stroke-opacity="0.4"/>
+                                    <text x="240" y="70" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Engawa</text>
+
+                                    <line x1="60" y1="80" x2="135" y2="100" stroke-dasharray="2 2" />
+                                    <line x1="150" y1="80" x2="150" y2="90" stroke-dasharray="2 2" />
+                                    <line x1="240" y1="80" x2="165" y2="100" stroke-dasharray="2 2" />
+
+                                    <rect x="130" y="90" width="40" height="20" fill="currentColor" />
+                                    <text x="150" y="103" font-size="7" stroke="none" fill="white" text-anchor="middle" class="font-bold tracking-widest">OTLO</text>
+                                </svg>
+                            </div>
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-black mb-4">2. The Spatial Experience</h4>
+                            <p class="text-sm text-gray-500 font-light leading-relaxed border-l-2 border-gray-200 pl-4">
+                                OTLO is not just accommodation — it is a spatial experience centered on pause, presence, and transition. The concept taps into growing demand for experiential travel, slow living, and wellness-focused retreats.
+                            </p>
+                        </div>
+
+                        <!-- Block 3: Scalability -->
+                        <div class="flex flex-col">
+                            <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-48 flex items-center justify-center border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow duration-300">
+                                <div class="absolute inset-0 arch-grid opacity-10 pointer-events-none"></div>
+                                <!-- Diagram 3: Modular Scalability -->
+                                <svg viewBox="0 0 300 130" class="w-full h-full relative z-10 stroke-gray-900 fill-none" stroke-width="1.5">
+                                    <rect x="130" y="10" width="40" height="25" stroke-dasharray="3 3" />
+                                    <circle cx="150" cy="22.5" r="2.5" fill="currentColor" stroke="none" />
+                                    <text x="150" y="50" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest font-bold">Core Module</text>
+
+                                    <line x1="150" y1="55" x2="150" y2="65" stroke-width="1" stroke-opacity="0.4"/>
+                                    <line x1="50" y1="65" x2="250" y2="65" stroke-width="1" stroke-opacity="0.4"/>
+                                    <line x1="50" y1="65" x2="50" y2="75" stroke-width="1" stroke-opacity="0.4"/>
+                                    <line x1="150" y1="65" x2="150" y2="75" stroke-width="1" stroke-opacity="0.4"/>
+                                    <line x1="250" y1="65" x2="250" y2="75" stroke-width="1" stroke-opacity="0.4"/>
+
+                                    <rect x="35" y="75" width="30" height="20" stroke-width="1"/>
+                                    <line x1="25" y1="95" x2="25" y2="70" stroke-width="1" stroke-opacity="0.4"/>
+                                    <line x1="75" y1="95" x2="75" y2="60" stroke-width="1" stroke-opacity="0.4"/>
+                                    <text x="50" y="115" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Forest</text>
+
+                                    <rect x="135" y="75" width="30" height="20" stroke-width="1"/>
+                                    <path d="M 120 95 L 140 60 L 155 80 L 165 50 L 180 95" stroke-width="1" stroke-opacity="0.4" />
+                                    <text x="150" y="115" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Mountain</text>
+
+                                    <rect x="235" y="75" width="30" height="20" stroke-width="1"/>
+                                    <path d="M 220 90 Q 230 85, 240 90 T 260 90 T 280 90" stroke-width="1" stroke-opacity="0.4"/>
+                                    <path d="M 220 95 Q 230 90, 240 95 T 260 95 T 280 95" stroke-width="1" stroke-opacity="0.4"/>
+                                    <text x="250" y="115" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Waterfront</text>
+                                </svg>
+                            </div>
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-black mb-4">3. Contextual Scalability</h4>
+                            <p class="text-sm text-gray-500 font-light leading-relaxed border-l-2 border-gray-200 pl-4">
+                                Its modular strategy allows scalable development across forests, mountains, or waterfront contexts while maintaining a strong, culturally resonant brand identity.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANATOMY OF OTLO SECTION -->
+            <div class="w-full py-24 md:py-32 bg-white border-t border-gray-100">
+                <div class="max-w-7xl mx-auto px-6">
+                    <!-- Header -->
+                    <div class="mb-20 md:mb-24 text-center reveal-on-scroll">
+                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-8">Anatomy of OTLO</h2>
+                        <div class="w-12 h-px bg-black mx-auto"></div>
+                    </div>
+
+                    <!-- 1. Spatial Flow -->
+                    <div id="otlo-spatial" class="max-w-5xl mx-auto reveal-on-scroll scroll-mt-32 md:scroll-mt-40">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center md:text-left">1. Spatial Flow</h3>
+                        
+                        <!-- Slideshow Container -->
+                        <div class="relative w-full aspect-[4/3] md:aspect-video bg-gray-50/50 rounded-[2rem] overflow-hidden group border border-gray-100 cursor-zoom-in hover:shadow-sm transition-all" onclick="openPlanModal()">
+                            <div id="plan-gallery" class="w-full h-full relative">
+                                <img src="plans/plan1.png" class="plan-image active" data-index="0" alt="Floor Plan 1">
+                                <img src="plans/plan2.png" class="plan-image inactive" data-index="1" alt="Floor Plan 2">
+                                <img src="plans/plan3.png" class="plan-image inactive" data-index="2" alt="Floor Plan 3">
+                                <img src="plans/plan4.png" class="plan-image inactive" data-index="3" alt="Floor Plan 4">
+                                <img src="plans/plan5.png" class="plan-image inactive" data-index="4" alt="Floor Plan 5">
+                            </div>
+                            
+                            <!-- Overlay Controls -->
+                            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-6 bg-white/90 backdrop-blur-md border border-gray-200 px-6 py-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-30" onclick="event.stopPropagation()">
+                                <button onclick="cyclePlan(-1)" class="text-gray-400 hover:text-black transition-colors flex items-center justify-center">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+                                </button>
+                                <div class="w-px h-4 bg-gray-200"></div>
+                                <button id="btn-play-pause" onclick="togglePlanPlay()" class="text-black font-bold text-[10px] uppercase tracking-widest w-12 text-center hover:opacity-70 transition-opacity">
+                                    PAUSE
+                                </button>
+                                <div class="w-px h-4 bg-gray-200"></div>
+                                <button onclick="cyclePlan(1)" class="text-gray-400 hover:text-black transition-colors flex items-center justify-center">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2. The 360° Experience -->
+                    <div id="otlo-360" class="max-w-5xl mx-auto reveal-on-scroll mt-24 scroll-mt-32 md:scroll-mt-40">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center md:text-left">2. The 360° Experience</h3>
+                        
+                        <!-- Slideshow Container -->
+                        <div class="relative w-full aspect-video md:aspect-[21/9] bg-gray-50 rounded-[2rem] overflow-hidden group border border-gray-100 hover:shadow-sm transition-all">
+                            
+                            <!-- Dual Viewers (Overlapped for seamless crossfade) -->
+                            <div id="viewer-exterior" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-100 cursor-grab active:cursor-grabbing"></div>
+                            <div id="viewer-interior" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-0 pointer-events-none cursor-grab active:cursor-grabbing"></div>
+                            
+                            <!-- Floating Controls Overlay -->
+                            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[400px] flex flex-col gap-4 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div class="flex items-center justify-between gap-4 bg-white/90 backdrop-blur-md border border-gray-200 px-4 py-2.5 rounded-full shadow-lg">
+                                    
+                                    <!-- Ext/Int Toggles -->
+                                    <div class="flex items-center gap-1">
+                                        <button id="btn-ext" onclick="switch360View('exterior')" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest bg-black text-white transition-colors">Exterior</button>
+                                        <button id="btn-int" onclick="switch360View('interior')" class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Interior</button>
+                                    </div>
+
+                                    <div class="w-px h-4 bg-gray-200"></div>
+                                    
+                                    <!-- Play/Pause -->
+                                    <button id="btn-360-play" onclick="toggle360Play()" class="text-black font-bold text-[9px] uppercase tracking-widest hover:opacity-70 transition-opacity w-12 text-center">
+                                        PAUSE
+                                    </button>
+                                </div>
+                                
+                                <!-- Thin Slider -->
+                                <div class="px-4">
+                                    <input type="range" id="slider-360" class="slider-360 w-full" min="0" max="50" value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 3. System Anatomy -->
+                    <div id="otlo-anatomy" class="max-w-5xl mx-auto reveal-on-scroll mt-24 scroll-mt-32 md:scroll-mt-40">
+                        <div class="flex justify-between items-end mb-8">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 text-center md:text-left">3. System Anatomy</h3>
+                            <button onclick="toggleExplode()" id="btn-explode" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors flex items-center gap-2">
+                                <span>EXPLODE</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 3l-6 6"/><path d="M21 3v6"/><path d="M21 3h-6"/><path d="M3 21l6-6"/><path d="M3 21v-6"/><path d="M3 21h6"/><path d="M15 21l6-6"/><path d="M21 21v-6"/><path d="M21 21h-6"/><path d="M9 3L3 9"/><path d="M3 3v6"/><path d="M3 3h6"/></svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Explode Container -->
+                        <div id="explode-stage" class="relative w-full aspect-[4/3] md:aspect-video bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group hover:shadow-sm transition-all">
+                            <div class="explode-wrapper relative w-[80%] max-w-[800px] aspect-[16/9]">
+                                <img src="exploded/typology A/view.png" class="explode-layer explode-view" alt="Full View" onclick="toggleExplode()">
+                                <img src="exploded/typology A/shell.png" class="explode-layer explode-shell" alt="Shell Layer">
+                                <img src="exploded/typology A/interior.png" class="explode-layer explode-interior" alt="Interior Layer" onclick="toggleExplodeFocus()">
+                                <img src="exploded/typology A/base.png" class="explode-layer explode-base" alt="Base Layer" onclick="collapseExplodeView()">
+                            </div>
+                        </div>
+                        <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest" id="explode-hint">Click to interact</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- OTLO Footer -->
+            <div class="w-full bg-[#fcfcfc] py-16 flex flex-col items-center justify-center border-t border-gray-100">
+                <img src="logo1.png" alt="OTLO Logo" class="h-8 md:h-10 mb-3 opacity-40 grayscale object-contain">
+                <p class="text-[9px] md:text-[10px] text-gray-400 font-bold tracking-[0.3em] uppercase">COLLECTION&reg;</p>
+            </div>
+
         </section>
 
         <!-- TAB 4: INVESTOR CALCULATOR -->
@@ -893,6 +1219,17 @@
         </div>
     </div>
 
+    <!-- PLAN MODAL (FULLSCREEN) -->
+    <div id="plan-modal" class="fixed inset-0 z-[100] bg-white pointer-events-none opacity-0 transition-opacity duration-700 flex flex-col items-center justify-center p-6 md:p-12">
+        <div class="absolute top-0 left-0 w-full p-6 md:p-10 flex justify-start z-10">
+            <button onclick="closePlanModal()" class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors bg-white/80 backdrop-blur-md px-4 py-2 rounded-full border border-gray-100">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to Projects
+            </button>
+        </div>
+        <img id="plan-modal-img" src="" class="max-w-full max-h-[85vh] object-contain drop-shadow-xl transition-all duration-500 scale-95">
+    </div>
+
     <!-- LOGIC -->
     <script>
         const CURRENCY = { USD: { symbol: '$', rate: 1, locale: 'en-US' }, INR: { symbol: '₹', rate: 75, locale: 'en-IN' } };
@@ -1005,6 +1342,15 @@
         let activeScenario = null;
         let exportSlot = null;
 
+        // Plan Slideshow Variables
+        let planIdx = 0;
+        let planPlaying = true;
+        let planTimer;
+
+        // 360 Viewer Variables
+        let is360Playing = true;
+        let current360View = 'exterior';
+
         window.onload = function() {
             renderBenchmarks('USA'); initCalculatorUI(); initCharts();
             updateScenarioUI();
@@ -1022,7 +1368,10 @@
                calculate();
             });
             
-            startInternalGalleries(); switchTab('philosophy');
+            startInternalGalleries(); 
+            startPlanSlideshow();
+            init360(); // Initialize SpriteSpin 360 views
+            switchTab('philosophy');
             
             document.querySelectorAll('.reveal-on-scroll').forEach(el => {
                if(typeof IntersectionObserver !== 'undefined') {
@@ -1834,6 +2183,260 @@
                     cycleInternalImage(activeGalleryId, 1);
                 }
             }, slideDuration); 
+        }
+
+        // --- PLAN SLIDESHOW LOGIC ---
+        function cyclePlan(dir) {
+            const container = document.getElementById('plan-gallery');
+            const images = container.querySelectorAll('.plan-image');
+            
+            images[planIdx].classList.remove('active');
+            images[planIdx].classList.add('inactive');
+            
+            planIdx += dir;
+            if(planIdx >= images.length) planIdx = 0;
+            if(planIdx < 0) planIdx = images.length - 1;
+            
+            images[planIdx].classList.remove('inactive');
+            images[planIdx].classList.add('active');
+
+            // Sync modal image if open
+            const modalImg = document.getElementById('plan-modal-img');
+            if (modalImg && !document.getElementById('plan-modal').classList.contains('pointer-events-none')) {
+                modalImg.src = images[planIdx].src;
+            }
+        }
+
+        function startPlanSlideshow() {
+            if(planTimer) clearInterval(planTimer);
+            // Slower transition speed (e.g. 5.5s) to allow reading
+            planTimer = setInterval(() => cyclePlan(1), 5500); 
+        }
+
+        function togglePlanPlay() {
+            planPlaying = !planPlaying;
+            const btn = document.getElementById('btn-play-pause');
+            if(planPlaying) {
+                btn.innerText = 'PAUSE';
+                startPlanSlideshow();
+            } else {
+                btn.innerText = 'PLAY';
+                clearInterval(planTimer);
+            }
+        }
+
+        function openPlanModal() {
+            const modal = document.getElementById('plan-modal');
+            const modalImg = document.getElementById('plan-modal-img');
+            const container = document.getElementById('plan-gallery');
+            const images = container.querySelectorAll('.plan-image');
+            
+            modalImg.src = images[planIdx].src;
+            
+            // Show Modal & apply zoom effect to img
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.classList.add('pointer-events-auto', 'opacity-100');
+            setTimeout(() => { modalImg.classList.remove('scale-95'); modalImg.classList.add('scale-100'); }, 50);
+            
+            // Auto-pause the background slideshow so user can read
+            if(planPlaying) clearInterval(planTimer);
+        }
+
+        function closePlanModal() {
+            const modal = document.getElementById('plan-modal');
+            const modalImg = document.getElementById('plan-modal-img');
+            
+            // Hide Modal & revert zoom
+            modal.classList.remove('pointer-events-auto', 'opacity-100');
+            modal.classList.add('pointer-events-none', 'opacity-0');
+            modalImg.classList.remove('scale-100');
+            modalImg.classList.add('scale-95');
+            
+            // Resume slideshow if it was set to play
+            if(planPlaying) startPlanSlideshow();
+        }
+
+        // --- SUB-NAVIGATION SCROLL LOGIC ---
+        function scrollToConceptSection(id) {
+            const el = document.getElementById(id);
+            if(el) {
+                // Determine offset based on viewport to account for dual sticky headers
+                const isMobile = window.innerWidth < 768;
+                const headerOffset = isMobile ? 120 : 140; 
+                const elementPosition = el.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }
+
+        // --- 360 VIEWER LOGIC ---
+        function init360() {
+            // Failsafe in case CDN hasn't loaded yet
+            if(typeof jQuery === 'undefined' || !$.fn.spritespin) {
+                setTimeout(init360, 100);
+                return;
+            }
+
+            const spinOptions = {
+                width: 1866,
+                height: 904,
+                sense: -1,
+                responsive: true,
+                loop: true,
+                frameTime: 60, // Smooth speed
+            };
+
+            // Initialize Exterior (Active by Default)
+            $('#viewer-exterior').spritespin({
+                ...spinOptions,
+                animate: true,
+                source: SpriteSpin.sourceArray('360/exterior/typology A/Image{frame}.png', { frame: [1, 51], digits: 2 }),
+                onFrame: function(e, data) {
+                    if(current360View === 'exterior') $('#slider-360').val(data.frame);
+                }
+            });
+
+            // Initialize Interior (Hidden by Default)
+            $('#viewer-interior').spritespin({
+                ...spinOptions,
+                animate: false,
+                source: SpriteSpin.sourceArray('360/interior/typology A/Image{frame}.png', { frame: [1, 51], digits: 2 }),
+                onFrame: function(e, data) {
+                    if(current360View === 'interior') $('#slider-360').val(data.frame);
+                }
+            });
+
+            // Sync Slider input to active viewer manually when dragged
+            $('#slider-360').on('input change', function() {
+                const frameIndex = parseInt($(this).val(), 10);
+                if(current360View === 'exterior') {
+                    $('#viewer-exterior').spritespin("api").updateFrame(frameIndex);
+                } else {
+                    $('#viewer-interior').spritespin("api").updateFrame(frameIndex);
+                }
+            });
+        }
+
+        function switch360View(view) {
+            if(view === current360View) return;
+            
+            const extApi = $('#viewer-exterior').spritespin("api");
+            const intApi = $('#viewer-interior').spritespin("api");
+            
+            if (view === 'interior') {
+                // Pre-sync interior frame to match current exterior before showing
+                intApi.updateFrame(extApi.data.frame);
+                
+                if(is360Playing) { extApi.stopAnimation(); intApi.startAnimation(); }
+                
+                // Crossfade
+                document.getElementById('viewer-interior').classList.replace('opacity-0', 'opacity-100');
+                document.getElementById('viewer-interior').classList.remove('pointer-events-none');
+                document.getElementById('viewer-exterior').classList.replace('opacity-100', 'opacity-0');
+                document.getElementById('viewer-exterior').classList.add('pointer-events-none');
+                
+                // Toggle Buttons
+                document.getElementById('btn-int').classList.add('bg-black', 'text-white');
+                document.getElementById('btn-int').classList.remove('text-gray-500', 'hover:text-black');
+                document.getElementById('btn-ext').classList.remove('bg-black', 'text-white');
+                document.getElementById('btn-ext').classList.add('text-gray-500', 'hover:text-black');
+            } else {
+                // Pre-sync exterior frame to match current interior before showing
+                extApi.updateFrame(intApi.data.frame);
+                
+                if(is360Playing) { intApi.stopAnimation(); extApi.startAnimation(); }
+                
+                // Crossfade
+                document.getElementById('viewer-exterior').classList.replace('opacity-0', 'opacity-100');
+                document.getElementById('viewer-exterior').classList.remove('pointer-events-none');
+                document.getElementById('viewer-interior').classList.replace('opacity-100', 'opacity-0');
+                document.getElementById('viewer-interior').classList.add('pointer-events-none');
+                
+                // Toggle Buttons
+                document.getElementById('btn-ext').classList.add('bg-black', 'text-white');
+                document.getElementById('btn-ext').classList.remove('text-gray-500', 'hover:text-black');
+                document.getElementById('btn-int').classList.remove('bg-black', 'text-white');
+                document.getElementById('btn-int').classList.add('text-gray-500', 'hover:text-black');
+            }
+            current360View = view;
+        }
+
+        function toggle360Play() {
+            is360Playing = !is360Playing;
+            const extApi = $('#viewer-exterior').spritespin("api");
+            const intApi = $('#viewer-interior').spritespin("api");
+            const btn = document.getElementById('btn-360-play');
+            
+            if(is360Playing) {
+                btn.innerText = 'PAUSE';
+                if(current360View === 'exterior') extApi.startAnimation();
+                else intApi.startAnimation();
+            } else {
+                btn.innerText = 'PLAY';
+                extApi.stopAnimation();
+                intApi.stopAnimation();
+            }
+        }
+
+        // --- EXPLODED ANATOMY LOGIC ---
+        let isExploded = false;
+        let isExplodeFocused = false;
+
+        function toggleExplode() {
+            const stage = document.getElementById('explode-stage');
+            const btn = document.getElementById('btn-explode');
+            const hint = document.getElementById('explode-hint');
+            
+            if (isExplodeFocused) {
+                toggleExplodeFocus(); 
+                return;
+            }
+            
+            isExploded = !isExploded;
+            
+            if (isExploded) {
+                stage.classList.add('is-exploded');
+                btn.querySelector('span').innerText = 'COLLAPSE';
+                hint.innerText = 'Click interior to zoom';
+            } else {
+                stage.classList.remove('is-exploded');
+                btn.querySelector('span').innerText = 'EXPLODE';
+                hint.innerText = 'Click to interact';
+            }
+        }
+
+        function toggleExplodeFocus() {
+            if (!isExploded) return;
+            const stage = document.getElementById('explode-stage');
+            const hint = document.getElementById('explode-hint');
+            
+            isExplodeFocused = !isExplodeFocused;
+            
+            if (isExplodeFocused) {
+                stage.classList.add('is-focused');
+                hint.innerText = 'Click interior to return';
+            } else {
+                stage.classList.remove('is-focused');
+                hint.innerText = 'Click interior to zoom';
+            }
+        }
+
+        function collapseExplodeView() {
+            if (!isExploded) return;
+            isExploded = false;
+            isExplodeFocused = false; 
+            
+            const stage = document.getElementById('explode-stage');
+            const btn = document.getElementById('btn-explode');
+            const hint = document.getElementById('explode-hint');
+            
+            stage.classList.remove('is-focused', 'is-exploded');
+            btn.querySelector('span').innerText = 'EXPLODE';
+            hint.innerText = 'Click to interact';
         }
     </script>
 </body>
