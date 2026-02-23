@@ -163,15 +163,14 @@
         .slider-360::-webkit-slider-thumb { -webkit-appearance: none; width: 18px !important; height: 18px !important; background: #1d1d1f !important; border-radius: 50%; cursor: pointer; border: 2px solid #fff !important; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
         .slider-360::-webkit-slider-thumb:hover { transform: scale(1.15); }
         
-        /* Force SpriteSpin to remain inside the container seamlessly */
-        #viewer-360 { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; position: absolute; inset: 0; }
-        #viewer-360 .spritespin-stage { width: 100% !important; height: 100% !important; display: flex; justify-content: center; align-items: center; }
-        #viewer-360 .spritespin-canvas, #viewer-360 .spritespin-image { 
+        /* Force SpriteSpin to remain inside the container seamlessly without clipping */
+        #viewer-360 { width: 100%; height: 100%; position: absolute; inset: 0; overflow: hidden; }
+        #viewer-360 .spritespin-stage { width: 100% !important; height: 100% !important; }
+        #viewer-360 canvas, #viewer-360 .spritespin-image { 
             width: 100% !important; 
             height: 100% !important; 
-            max-width: 100% !important; 
-            max-height: 100% !important; 
             object-fit: contain !important; 
+            object-position: center !important;
             position: absolute !important;
             left: 0 !important;
             top: 0 !important;
@@ -183,14 +182,14 @@
         .explode-wrapper {
             width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
-            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 2.5s cubic-bezier(0.19, 1, 0.22, 1);
             transform-style: preserve-3d;
             backface-visibility: hidden;
             position: relative;
         }
         .explode-layer {
             position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
-            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: all 2.5s cubic-bezier(0.19, 1, 0.22, 1);
             will-change: transform, opacity;
             transform: translateZ(0);
             opacity: 1; /* Safety override to ensure visibility */
@@ -245,7 +244,8 @@
 </head>
 <body class="antialiased selection:bg-black selection:text-white overflow-x-hidden text-gray-900 pb-24 lg:pb-0">
 
-    <audio id="bg-music" loop preload="none"><source src="music/borealis.mp3" type="audio/mpeg"></audio>
+    <!-- Added autoplay and preload="auto" to start loading the audio immediately -->
+    <audio id="bg-music" loop autoplay preload="auto"><source src="music/borealis.mp3" type="audio/mpeg"></audio>
 
     <nav class="fixed top-0 w-full z-50 nav-glass transition-all duration-300">
         <div class="max-w-screen-2xl mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center relative">
@@ -546,6 +546,7 @@
                 <div class="absolute top-4 md:top-6 right-4 md:right-6 z-40">
                     <button onclick="toggleMute()" id="mute-btn" class="text-white hover:text-white/70 transition-colors drop-shadow-md">
                         <svg id="sound-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <!-- Play icon state -> showing playing visually by default -->
                             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                         </svg>
@@ -775,8 +776,8 @@
                         </div>
 
                         <!-- Fixed framing container for SpriteSpin -->
-                        <div class="relative w-full aspect-square md:aspect-[16/9] max-h-[60vh]">
-                            <div id="viewer-360" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-100 cursor-grab active:cursor-grabbing z-10 flex items-center justify-center"></div>
+                        <div class="relative w-full aspect-[4/3] md:aspect-video bg-gray-100/50 rounded-xl overflow-hidden border border-gray-200/50">
+                            <div id="viewer-360" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-100 cursor-grab active:cursor-grabbing z-10"></div>
                         </div>
                     </div>
 
@@ -803,7 +804,6 @@
                     </div>
 
                     <div id="explode-stage" class="relative w-[95%] h-[55vh] md:h-[65vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group shadow-sm transition-all z-10">
-                        <!-- Removed onerror display:none which was breaking the layout when images didn't load due to case sensitivity. Added placeholders. -->
                         <div class="explode-wrapper relative w-full max-w-[1200px] h-full">
                             <img src="images/view.png" loading="lazy" class="explode-layer explode-view" alt="" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" onclick="setExplodeState(true)">
                             <img src="images/shell.png" loading="lazy" class="explode-layer explode-shell" onerror="this.src='https://images.unsplash.com/photo-1541888086968-9de15039eb14?auto=format&fit=crop&q=80'" alt="Shell structure">
@@ -815,7 +815,7 @@
                 </div>
 
                 <!-- NEW AMENITIES SECTION -->
-                <div id="otlo-amenities" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
+                <div id="otlo-amenities" class="w-full max-w-[1800px] mx-auto flex flex-col items-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
                     
                     <!-- Intro / Concept -->
                     <div class="max-w-4xl mx-auto text-center px-6 mb-20">
@@ -1529,28 +1529,31 @@
 
         function attemptPlayMusic() {
             const audio = document.getElementById('bg-music');
-            const introEl = document.getElementById('otlo-intro');
             const conceptsTab = document.getElementById('tab-concepts');
             
-            if (audio && introEl && conceptsTab && !conceptsTab.classList.contains('hidden')) {
-                const rect = introEl.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 140) {
-                    const playPromise = audio.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(e => {
-                            console.log("Autoplay prevented. Waiting for interaction.");
-                            document.body.addEventListener('click', function playOnClick() {
-                                audio.play().catch(()=>{});
-                                document.body.removeEventListener('click', playOnClick);
-                            }, { once: true });
+            // Only try to play if the user is on the concepts tab
+            if (audio && conceptsTab && !conceptsTab.classList.contains('hidden')) {
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.log("Browser autoplay policy prevented immediate playback. Adding invisible listeners to catch first user interaction.");
+                        
+                        // If the browser blocks it, wait for the absolute FIRST interaction and force play.
+                        const forcePlay = () => {
+                            audio.play().catch(()=>{});
+                            ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(evt => {
+                                document.removeEventListener(evt, forcePlay);
+                            });
+                        };
+                        
+                        ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(evt => {
+                            document.addEventListener(evt, forcePlay, { once: true, passive: true });
                         });
-                    }
+                    });
                 }
             }
         }
 
-        // CHANGED: Use DOMContentLoaded instead of window.onload so things start instantly
-        // without waiting for all 360 images to download.
         document.addEventListener("DOMContentLoaded", function() {
             renderBenchmarks('USA'); 
             initCalculatorUI(); 
@@ -1584,6 +1587,9 @@
             const viewerContainer = document.getElementById('otlo-360');
             if(viewerContainer) observer360.observe(viewerContainer);
 
+            // Force scroll to top on reload so gallery is perfectly framed
+            window.scrollTo(0, 0);
+            
             switchTab('concepts'); 
             attemptPlayMusic();
             
@@ -1652,12 +1658,12 @@
                 const anatomyObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if(entry.isIntersecting) {
-                            setTimeout(() => { setExplodeState(true); }, 200);
+                            setTimeout(() => { setExplodeState(true); }, 600);
                         } else {
                             setExplodeState(false);
                         }
                     });
-                }, { threshold: 0.3 }); // Trigger when 30% of anatomy section is visible
+                }, { threshold: 0.8 }); // Trigger only when 80% of anatomy section is fully visible
                 
                 const anatomyEl = document.getElementById('otlo-anatomy');
                 if(anatomyEl) anatomyObserver.observe(anatomyEl);
@@ -2674,7 +2680,7 @@
                 loop: true,
                 sizeMode: 'fit', 
                 animate: is360Playing,
-                frameTime: 120 
+                frameTime: 240 
             };
 
             const viewer = $('#viewer-360');
@@ -2742,7 +2748,7 @@
                         sizeMode: 'fit',
                         responsive: true,
                         sense: -1,
-                        frameTime: 120
+                        frameTime: 240
                     });
                 }
                 
@@ -2764,7 +2770,7 @@
                         sizeMode: 'fit',
                         responsive: true,
                         sense: -1,
-                        frameTime: 120
+                        frameTime: 240
                     });
                 }
                 
