@@ -7,12 +7,9 @@
     <link rel="icon" href="logo/logo.png" type="image/png">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/spritespin@4.1.0/release/spritespin.js"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
@@ -70,13 +67,13 @@
         .carousel-track { 
             display: flex; 
             transition: transform 3s cubic-bezier(0.19, 1, 0.22, 1); 
+            will-change: transform;
         }
         .carousel-slide { min-width: 100%; transition: opacity 0.6s ease; position: relative; }
         
         /* Image Quality & Slower Fade */
         .gallery-image, .plan-image, .explode-layer { 
-            image-rendering: high-quality;
-            image-rendering: -webkit-optimize-contrast;
+            will-change: opacity, transform;
         }
         .gallery-image { 
             position: absolute; 
@@ -135,7 +132,6 @@
             background-size: 40px 40px;
         }
         .arch-grid-dark {
-            /* Blueprint grid with perfectly subtle opacity */
             background-image: linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
                               linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
             background-size: 40px 40px;
@@ -149,9 +145,10 @@
             height: 100%; 
             object-fit: contain; 
             transition: opacity 1.5s ease-in-out; 
-            /* Invert to white lines and blend out background */
             filter: invert(1);
             mix-blend-mode: screen;
+            will-change: opacity;
+            transform: translateZ(0);
         }
         .plan-image.active { opacity: 1; z-index: 10; }
         .plan-image.inactive { opacity: 0; z-index: 0; pointer-events: none; }
@@ -161,17 +158,35 @@
             mix-blend-mode: screen;
         }
 
-        /* 360 Viewer Overrides */
+        /* 360 Viewer Overrides & Structural Fixes */
         .slider-360 { -webkit-appearance: none; height: 4px !important; background: rgba(0,0,0,0.15) !important; border-radius: 10px; outline: none; }
         .slider-360::-webkit-slider-thumb { -webkit-appearance: none; width: 18px !important; height: 18px !important; background: #1d1d1f !important; border-radius: 50%; cursor: pointer; border: 2px solid #fff !important; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
         .slider-360::-webkit-slider-thumb:hover { transform: scale(1.15); }
-        #my-360-viewer canvas, #my-360-viewer img { image-rendering: high-quality; image-rendering: -webkit-optimize-contrast; }
+        
+        /* Force SpriteSpin to remain inside the container seamlessly */
+        #viewer-360 { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; position: absolute; inset: 0; }
+        #viewer-360 .spritespin-stage { width: 100% !important; height: 100% !important; display: flex; justify-content: center; align-items: center; }
+        #viewer-360 .spritespin-canvas, #viewer-360 .spritespin-image { 
+            width: 100% !important; 
+            height: 100% !important; 
+            max-width: 100% !important; 
+            max-height: 100% !important; 
+            object-fit: contain !important; 
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
 
         /* Exploded View Anatomy Styles */
         .explode-wrapper {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
             transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
             transform-style: preserve-3d;
             backface-visibility: hidden;
+            position: relative;
         }
         .explode-layer {
             position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
@@ -196,7 +211,7 @@
         #explode-stage.is-exploded .explode-interior { transform: translateY(0%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12)); }
         #explode-stage.is-exploded .explode-base { transform: translateY(75%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12)); }
 
-        /* Focused State (Zoom) - Reduced scale to completely prevent top clipping */
+        /* Focused State (Zoom) */
         #explode-stage.is-focused .explode-wrapper { transform: scale(0.95) translateY(2%); cursor: zoom-out; }
         #explode-stage.is-focused .explode-shell { transform: translateY(-100%); opacity: 0; }
         #explode-stage.is-focused .explode-base { transform: translateY(100%); opacity: 0; }
@@ -230,13 +245,13 @@
 </head>
 <body class="antialiased selection:bg-black selection:text-white overflow-x-hidden text-gray-900 pb-24 lg:pb-0">
 
-    <audio id="bg-music" loop><source src="music/borealis.mp3" type="audio/mpeg"></audio>
+    <audio id="bg-music" loop preload="none"><source src="music/borealis.mp3" type="audio/mpeg"></audio>
 
     <nav class="fixed top-0 w-full z-50 nav-glass transition-all duration-300">
         <div class="max-w-screen-2xl mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center relative">
             
             <div class="flex items-center gap-3 cursor-pointer shrink-0 w-[240px]" onclick="switchTab('concepts')">
-                <img src="logo/logo.png" alt="ArchDoor Logo" class="w-8 h-8 object-contain">
+                <img src="logo/logo.png" alt="ArchDoor Logo" class="w-8 h-8 object-contain" onerror="this.style.display='none'">
                 <div class="text-base md:text-lg font-bold tracking-tight uppercase whitespace-nowrap">ArchDoor Ventures</div>
             </div>
             
@@ -537,13 +552,13 @@
                     </button>
                 </div>
                 
-                <div class="carousel-track h-full" id="carousel-track">
+                <div class="carousel-track h-full" id="carousel-track" style="will-change: transform;">
                     <div class="carousel-slide min-w-full h-full relative group">
                         <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-mountain">
                             <img src="images/msd.png" class="gallery-image active" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'">
-                            <img src="images/msn.png" class="gallery-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'">
-                            <img src="images/mcd.png" class="gallery-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'">
-                            <img src="images/mcn.png" class="gallery-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1518733057094-95b53143d2a7?auto=format&fit=crop&q=80'">
+                            <img src="images/msn.png" loading="lazy" class="gallery-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'">
+                            <img src="images/mcd.png" loading="lazy" class="gallery-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'">
+                            <img src="images/mcn.png" loading="lazy" class="gallery-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1518733057094-95b53143d2a7?auto=format&fit=crop&q=80'">
                             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20"></div>
                         </div>
                         <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
@@ -554,9 +569,9 @@
                     <div class="carousel-slide min-w-full h-full relative group">
                         <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-lake">
                             <img src="images/lsd.png" class="gallery-image active" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80'">
-                            <img src="images/lsn.png" class="gallery-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1504280390224-4bc343058814?auto=format&fit=crop&q=80'">
-                            <img src="images/lcd.png" class="gallery-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80'">
-                            <img src="images/lcn.png" class="gallery-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&q=80'">
+                            <img src="images/lsn.png" loading="lazy" class="gallery-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1504280390224-4bc343058814?auto=format&fit=crop&q=80'">
+                            <img src="images/lcd.png" loading="lazy" class="gallery-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80'">
+                            <img src="images/lcn.png" loading="lazy" class="gallery-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&q=80'">
                             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20"></div>
                         </div>
                         <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
@@ -735,10 +750,10 @@
                         
                         <div id="plan-gallery" class="w-full flex-grow relative z-10">
                             <img src="plans/plan1.png" class="plan-image active p-2 md:p-8" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan2.png" class="plan-image inactive p-2 md:p-8" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan3.png" class="plan-image inactive p-2 md:p-8" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan4.png" class="plan-image inactive p-2 md:p-8" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan5.png" class="plan-image inactive p-2 md:p-8" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan2.png" loading="lazy" class="plan-image inactive p-2 md:p-8" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan3.png" loading="lazy" class="plan-image inactive p-2 md:p-8" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan4.png" loading="lazy" class="plan-image inactive p-2 md:p-8" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan5.png" loading="lazy" class="plan-image inactive p-2 md:p-8" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
                         </div>
                     </div>
                 </div>
@@ -759,8 +774,9 @@
                             </div>
                         </div>
 
+                        <!-- Fixed framing container for SpriteSpin -->
                         <div class="relative w-full aspect-square md:aspect-[16/9] max-h-[60vh]">
-                            <div id="viewer-360" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-100 cursor-grab active:cursor-grabbing z-10"></div>
+                            <div id="viewer-360" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-100 cursor-grab active:cursor-grabbing z-10 flex items-center justify-center"></div>
                         </div>
                     </div>
 
@@ -787,11 +803,12 @@
                     </div>
 
                     <div id="explode-stage" class="relative w-[95%] h-[55vh] md:h-[65vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group shadow-sm transition-all z-10">
+                        <!-- Removed onerror display:none which was breaking the layout when images didn't load due to case sensitivity. Added placeholders. -->
                         <div class="explode-wrapper relative w-full max-w-[1200px] h-full">
-                            <img src="images/view.png" class="explode-layer explode-view" alt="" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" onclick="setExplodeState(true)">
-                            <img src="images/shell.png" class="explode-layer explode-shell" onerror="this.style.display='none'" alt="">
-                            <img src="images/interior.png" class="explode-layer explode-interior" onerror="this.style.display='none'" alt="" onclick="toggleExplodeFocus()">
-                            <img src="images/base.png" class="explode-layer explode-base" onerror="this.style.display='none'" alt="" onclick="setExplodeState(false)">
+                            <img src="images/view.png" loading="lazy" class="explode-layer explode-view" alt="" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" onclick="setExplodeState(true)">
+                            <img src="images/shell.png" loading="lazy" class="explode-layer explode-shell" onerror="this.src='https://images.unsplash.com/photo-1541888086968-9de15039eb14?auto=format&fit=crop&q=80'" alt="Shell structure">
+                            <img src="images/interior.png" loading="lazy" class="explode-layer explode-interior" onerror="this.src='https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80'" alt="Interior layout" onclick="toggleExplodeFocus()">
+                            <img src="images/base.png" loading="lazy" class="explode-layer explode-base" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80'" alt="Foundation" onclick="setExplodeState(false)">
                         </div>
                     </div>
                     <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest" id="explode-hint">Click interior to zoom</p>
@@ -1507,8 +1524,34 @@
         // 360 Viewer Variables
         let current360View = 'exterior';
         let is360Playing = true;
+        let is360Initialized = false;
+        let interiorLoaded = false;
 
-        window.onload = function() {
+        function attemptPlayMusic() {
+            const audio = document.getElementById('bg-music');
+            const introEl = document.getElementById('otlo-intro');
+            const conceptsTab = document.getElementById('tab-concepts');
+            
+            if (audio && introEl && conceptsTab && !conceptsTab.classList.contains('hidden')) {
+                const rect = introEl.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 140) {
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(e => {
+                            console.log("Autoplay prevented. Waiting for interaction.");
+                            document.body.addEventListener('click', function playOnClick() {
+                                audio.play().catch(()=>{});
+                                document.body.removeEventListener('click', playOnClick);
+                            }, { once: true });
+                        });
+                    }
+                }
+            }
+        }
+
+        // CHANGED: Use DOMContentLoaded instead of window.onload so things start instantly
+        // without waiting for all 360 images to download.
+        document.addEventListener("DOMContentLoaded", function() {
             renderBenchmarks('USA'); 
             initCalculatorUI(); 
             initCharts();
@@ -1529,8 +1572,20 @@
             
             startInternalGalleries(); 
             startPlanSlideshow();
-            init360(); 
+            
+            // DELAY 360 initialization using Intersection Observer to prevent UI locking
+            const observer360 = new IntersectionObserver((entries) => {
+                if(entries[0].isIntersecting && !is360Initialized) {
+                    is360Initialized = true;
+                    init360();
+                }
+            }, { rootMargin: "600px" }); // Initialize when user is within 600px of scrolling to it
+            
+            const viewerContainer = document.getElementById('otlo-360');
+            if(viewerContainer) observer360.observe(viewerContainer);
+
             switchTab('concepts'); 
+            attemptPlayMusic();
             
             document.querySelectorAll('.reveal-on-scroll').forEach(el => {
                if(typeof IntersectionObserver !== 'undefined') {
@@ -1548,6 +1603,7 @@
                }
             });
 
+            // Subnav Observer
             const subnavObserverOptions = {
                 root: null,
                 rootMargin: '-25% 0px -65% 0px',
@@ -1573,26 +1629,14 @@
                         const conceptsTab = document.getElementById('tab-concepts');
                         if (conceptsTab && !conceptsTab.classList.contains('hidden')) {
                             if (id === 'otlo-intro' && audio) {
-                                audio.play().catch(()=>{});
+                                attemptPlayMusic();
                             } else if (audio) {
                                 audio.pause();
                             }
                         }
 
-                        // Reset Spatial Flow to first slide when entering view
                         if (id === 'otlo-spatial') {
                             resetPlanSlideshow();
-                        }
-
-                        // Handle Anatomy Auto-Explode
-                        if (id === 'otlo-anatomy') {
-                            // Slight delay to ensure the user has scrolled to the section before animating
-                            setTimeout(() => {
-                                setExplodeState(true);
-                            }, 300);
-                        } else {
-                            // Reset state when scrolling to other sections so it re-animates upon return
-                            setExplodeState(false);
                         }
                     }
                 });
@@ -1602,9 +1646,25 @@
                 const el = document.getElementById(id);
                 if (el) subnavObserver.observe(el);
             });
+
+            // SEPARATE Observer specifically for Anatomy Animation to ensure it reliably triggers
+            if(typeof IntersectionObserver !== 'undefined') {
+                const anatomyObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if(entry.isIntersecting) {
+                            setTimeout(() => { setExplodeState(true); }, 200);
+                        } else {
+                            setExplodeState(false);
+                        }
+                    });
+                }, { threshold: 0.3 }); // Trigger when 30% of anatomy section is visible
+                
+                const anatomyEl = document.getElementById('otlo-anatomy');
+                if(anatomyEl) anatomyObserver.observe(anatomyEl);
+            }
             
             window.toggleMobileMenu = function() { const menu = document.getElementById('mobile-menu'); menu.classList.toggle('hidden'); }
-        };
+        });
 
         async function fetchLiveRate() {
             try {
@@ -1647,6 +1707,8 @@
         }
 
         function switchTab(tabId) {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             const targetTab = document.getElementById(`tab-${tabId}`);
             if(targetTab) targetTab.classList.remove('hidden');
@@ -1669,16 +1731,10 @@
                 }
             }
             
-            const audio = document.getElementById('bg-music');
             if(tabId === 'concepts') {
-                const introEl = document.getElementById('otlo-intro');
-                if (introEl) {
-                    const rect = introEl.getBoundingClientRect();
-                    if (rect.top < window.innerHeight && rect.bottom > 140 && audio) {
-                        audio.play().catch(() => {});
-                    }
-                }
+                attemptPlayMusic();
             } else {
+                const audio = document.getElementById('bg-music');
                 if(audio) audio.pause();
             }
             
@@ -2530,7 +2586,6 @@
             
             planIdx = 0;
             
-            // Restart the timer so the user has time to look at the first slide before it changes
             if(planPlaying) {
                 clearInterval(planTimer);
                 planTimer = setInterval(() => cyclePlan(1), 5500);
@@ -2601,25 +2656,25 @@
 
         function init360() {
             if(typeof jQuery === 'undefined' || !$.fn.spritespin) {
-                setTimeout(init360, 100);
+                setTimeout(init360, 200);
                 return;
             }
 
             extFrames = [];
-            intFrames = [];
             for(let i=1; i<=51; i++) {
                 let paddedIndex = String(i).padStart(2, '0');
                 extFrames.push(`360e/Image${paddedIndex}.png`);
-                intFrames.push(`360i/Image${paddedIndex}.png`);
             }
 
             const spinOptions = {
+                width: 1920, 
+                height: 1080,
                 sense: -1,
                 responsive: true,
                 loop: true,
-                sizeMode: 'fit',
+                sizeMode: 'fit', 
                 animate: is360Playing,
-                frameTime: 250 // Slower rotation
+                frameTime: 120 
             };
 
             const viewer = $('#viewer-360');
@@ -2632,7 +2687,6 @@
                     }
                 });
 
-                // Pause auto-rotation on manual interaction, resume on release only if playing
                 viewer.on('mousedown touchstart', function() {
                     const api = $(this).spritespin("api");
                     if(api) api.stopAnimation();
@@ -2668,12 +2722,27 @@
             const btnExt = document.getElementById('btn-ext');
 
             if (view === 'interior') {
+                if(!interiorLoaded) {
+                    intFrames = [];
+                    for(let i=1; i<=51; i++) {
+                        let paddedIndex = String(i).padStart(2, '0');
+                        intFrames.push(`360i/Image${paddedIndex}.png`);
+                    }
+                    interiorLoaded = true;
+                }
+
                 if(viewer.length) {
                     viewer.spritespin({
+                        width: 1920,
+                        height: 1080,
                         source: intFrames,
                         frame: currentFrame,
                         animate: is360Playing,
-                        frameTime: 250
+                        loop: true,
+                        sizeMode: 'fit',
+                        responsive: true,
+                        sense: -1,
+                        frameTime: 120
                     });
                 }
                 
@@ -2686,10 +2755,16 @@
             } else {
                 if(viewer.length) {
                     viewer.spritespin({
+                        width: 1920,
+                        height: 1080,
                         source: extFrames,
                         frame: currentFrame,
                         animate: is360Playing,
-                        frameTime: 250
+                        loop: true,
+                        sizeMode: 'fit',
+                        responsive: true,
+                        sense: -1,
+                        frameTime: 120
                     });
                 }
                 
