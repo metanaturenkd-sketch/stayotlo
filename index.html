@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ArchDoor Ventures | Interactive Investment Platform</title>
+    <title>ArchDoor Ventures | OTLO Collection</title>
     <link rel="icon" href="logo/logo.png" type="image/png">
     
     <!-- Tailwind CSS -->
@@ -28,10 +28,10 @@
         .font-display { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.25rem; text-transform: uppercase; letter-spacing: 0.2em; }
         @media (min-width: 768px) { .font-display { font-size: 3.25rem; } }
 
-        /* Navigation Glass Effect */
-        .nav-glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        /* Enhanced Navigation Glass Effect */
+        .nav-glass { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
 
-        /* Mobile Menu Glass Effect - Stronger background for visibility */
+        /* Mobile Menu Glass Effect */
         .mobile-menu-glass { 
             background: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(24px); 
@@ -58,21 +58,16 @@
         .select-card .amenity-title { color: #1f2937; }
         .select-card .amenity-subtext { color: #6b7280; }
 
-        /* ACTIVE STATE */
         .select-card.active { 
-            background-color: #22c55e; /* Green-500 */
+            background-color: #22c55e; 
             border-color: #22c55e; 
             color: white;
             box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
         }
         .select-card.active .amenity-title { color: white; }
         .select-card.active .amenity-subtext { color: rgba(255,255,255,0.8); }
-        
-        /* Slider inside Active Card */
         .select-card.active input[type="range"] { background: rgba(255,255,255,0.3); }
         .select-card.active input[type="range"]::-webkit-slider-thumb { background: white; border-color: white; box-shadow: none; }
-
-        /* Opt-In Control Visibility */
         .select-card .opt-in-control { display: none; }
         .select-card.active .opt-in-control { display: block; animation: fadeIn 0.3s ease; }
 
@@ -107,6 +102,15 @@
         .flash-update { animation: flash 0.4s ease-out; }
         @keyframes flash { 0% { background-color: rgba(34, 197, 94, 0.1); } 100% { background-color: transparent; } }
 
+        /* Custom SVG Diagram Animations */
+        @keyframes dashMarch { to { stroke-dashoffset: -24; } }
+        @keyframes pulseFill { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; fill: #000; } }
+        @keyframes slideRight { 0% { transform: translateX(0); } 50% { transform: translateX(5px); } 100% { transform: translateX(0); } }
+        
+        .group:hover .svg-animate-dash { animation: dashMarch 1s linear infinite; }
+        .group:hover .svg-animate-pulse { animation: pulseFill 2s ease-in-out infinite; }
+        .group:hover .svg-animate-slide { animation: slideRight 1.5s ease-in-out infinite; }
+
         /* Reveal on Scroll */
         .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-on-scroll.visible { opacity: 1; transform: translateY(0); }
@@ -129,14 +133,16 @@
 
         .mobile-calc-footer { box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
 
-        /* Guardrail Warning Styles */
-        .guardrail-warning { background-color: #fff1f2; border: 1px solid #fecdd3; color: #be123c; padding: 12px; border-radius: 8px; font-size: 11px; margin-top: 12px; display: none; }
-        .guardrail-warning.active { display: block; animation: fadeIn 0.3s ease-in; }
-
-        /* Architectural Patterns (New for Philosophy) */
+        /* Architectural Patterns */
         .arch-grid {
             background-image: linear-gradient(to right, #e5e7eb 1px, transparent 1px),
                               linear-gradient(to bottom, #e5e7eb 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .arch-grid-dark {
+            /* Blueprint grid with perfectly subtle opacity */
+            background-image: linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
             background-size: 40px 40px;
         }
 
@@ -148,9 +154,17 @@
             height: 100%; 
             object-fit: contain; 
             transition: opacity 1.5s ease-in-out; 
+            /* Invert to white lines and blend out background */
+            filter: invert(1);
+            mix-blend-mode: screen;
         }
         .plan-image.active { opacity: 1; z-index: 10; }
         .plan-image.inactive { opacity: 0; z-index: 0; pointer-events: none; }
+        
+        #plan-modal-img {
+            filter: invert(1);
+            mix-blend-mode: screen;
+        }
 
         /* 360 Viewer Overrides */
         .slider-360 { -webkit-appearance: none; height: 4px !important; background: rgba(0,0,0,0.15) !important; border-radius: 10px; outline: none; }
@@ -160,36 +174,38 @@
 
         /* Exploded View Anatomy Styles */
         .explode-wrapper {
-            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
             transform-style: preserve-3d;
             backface-visibility: hidden;
         }
         .explode-layer {
             position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
-            transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform, opacity;
             transform: translateZ(0);
+            opacity: 1; /* Safety override to ensure visibility */
         }
         .explode-view { z-index: 10; opacity: 1; cursor: pointer; }
         .explode-shell { z-index: 3; pointer-events: none; }
         .explode-interior { z-index: 2; pointer-events: none; }
         .explode-base { z-index: 1; pointer-events: none; }
 
-        /* Exploded State */
+        /* Exploded State - Tightly controlled spreading to prevent boundary cuts */
         #explode-stage.is-exploded .explode-view { opacity: 0; pointer-events: none; }
-        #explode-stage.is-exploded .explode-interior { pointer-events: auto; cursor: zoom-in; }
-        #explode-stage.is-exploded .explode-base { pointer-events: auto; }
+        #explode-stage.is-exploded .explode-interior { pointer-events: auto; cursor: zoom-in; opacity: 1;}
+        #explode-stage.is-exploded .explode-base { pointer-events: auto; opacity: 1;}
+        #explode-stage.is-exploded .explode-shell { opacity: 1;}
         
-        #explode-stage.is-exploded .explode-wrapper { transform: scale(0.65); }
-        #explode-stage.is-exploded .explode-shell { transform: translateY(-75%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
-        #explode-stage.is-exploded .explode-interior { transform: translateY(0%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
-        #explode-stage.is-exploded .explode-base { transform: translateY(75%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08)); }
+        #explode-stage.is-exploded .explode-wrapper { transform: scale(0.35) translateY(5%); }
+        #explode-stage.is-exploded .explode-shell { transform: translateY(-75%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12)); }
+        #explode-stage.is-exploded .explode-interior { transform: translateY(0%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12)); }
+        #explode-stage.is-exploded .explode-base { transform: translateY(75%); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12)); }
 
-        /* Focused State (Zoom) */
-        #explode-stage.is-focused .explode-wrapper { transform: scale(1.3); cursor: zoom-out; }
+        /* Focused State (Zoom) - Reduced scale to completely prevent top clipping */
+        #explode-stage.is-focused .explode-wrapper { transform: scale(0.95) translateY(2%); cursor: zoom-out; }
         #explode-stage.is-focused .explode-shell { transform: translateY(-100%); opacity: 0; }
         #explode-stage.is-focused .explode-base { transform: translateY(100%); opacity: 0; }
-        #explode-stage.is-focused .explode-interior { cursor: zoom-out; }
+        #explode-stage.is-focused .explode-interior { cursor: zoom-out; opacity: 1;}
 
         /* Explode UI Toggle Pill */
         .glass-toggle { width: 88px; height: 48px; border-radius: 24px; padding: 4px; position: relative; display: flex; }
@@ -223,73 +239,47 @@
 
     <!-- NAVIGATION -->
     <nav class="fixed top-0 w-full z-50 nav-glass transition-all duration-300">
-        <div class="max-w-screen-2xl mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('philosophy')">
+        <div class="max-w-screen-2xl mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center relative">
+            
+            <!-- Left: Logo -->
+            <div class="flex items-center gap-3 cursor-pointer shrink-0 w-[240px]" onclick="switchTab('concepts')">
                 <img src="logo/logo.png" alt="ArchDoor Logo" class="w-8 h-8 object-contain">
-                <div class="text-base md:text-lg font-bold tracking-tight uppercase">ArchDoor Ventures</div>
+                <div class="text-base md:text-lg font-bold tracking-tight uppercase whitespace-nowrap">ArchDoor Ventures</div>
             </div>
             
-            <!-- Desktop Links -->
-            <div class="hidden md:flex gap-8 lg:gap-10 text-xs font-semibold uppercase tracking-widest text-gray-500 h-full items-center">
-                <button onclick="switchTab('philosophy')" class="hover:text-black transition-colors nav-btn text-black" data-target="philosophy">Philosophy</button>
+            <!-- Center: Perfectly Aligned Links Container -->
+            <div class="hidden md:flex justify-between w-[550px] lg:w-[680px] text-[10px] lg:text-xs font-semibold uppercase tracking-widest text-gray-500 h-full items-center">
+                <!-- Distinct OTLO Collection Link (First) -->
+                <button onclick="switchTab('concepts')" class="transition-colors nav-btn text-black font-extrabold hover:opacity-80" data-target="concepts">
+                    OTLO Collection
+                </button>
+                <button onclick="switchTab('philosophy')" class="hover:text-black transition-colors nav-btn" data-target="philosophy">Philosophy</button>
                 <button onclick="switchTab('benchmarks')" class="hover:text-black transition-colors nav-btn" data-target="benchmarks">Benchmarks</button>
-                
-                <!-- Desktop Projects Dropdown -->
-                <div class="relative group flex items-center h-full">
-                    <button class="hover:text-black transition-colors nav-btn flex items-center gap-1 py-4 cursor-default" data-target="concepts">
-                        Projects <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <!-- Invisible bridge to keep hover state active -->
-                    <div class="absolute left-0 top-full pt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                        <div class="bg-white border border-gray-100 shadow-xl rounded-xl overflow-hidden">
-                            <button onclick="switchTab('concepts')" class="block text-left px-5 py-4 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:bg-gray-50 transition-colors w-full">
-                                OTLO Collection
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
                 <button onclick="switchTab('calculator')" class="hover:text-black transition-colors nav-btn" data-target="calculator">Investor Engine</button>
             </div>
 
-            <!-- Run Button (Desktop) -->
-            <div class="hidden md:block">
-                <button onclick="scrollToId('calculator')" class="bg-black text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-all shadow-lg transform hover:scale-105">Calculate ROI</button>
-            </div>
+            <!-- Right Spacer for Balance -->
+            <div class="hidden md:flex w-48 shrink-0 justify-end"></div>
 
             <!-- Mobile Hamburger -->
-            <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-black focus:outline-none">
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-black focus:outline-none absolute right-4">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
         </div>
 
         <!-- Mobile Dropdown -->
         <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full mobile-menu-glass md:hidden flex-col p-6 space-y-4 text-center z-40 transition-all duration-300">
+            <button onclick="switchTab('concepts'); toggleMobileMenu()" class="block w-full py-4 text-sm font-extrabold uppercase tracking-widest text-black border-b border-gray-100/50">OTLO Collection</button>
             <button onclick="switchTab('philosophy'); toggleMobileMenu()" class="block w-full py-4 text-sm font-bold uppercase tracking-widest text-gray-800 border-b border-gray-100/50">Philosophy</button>
             <button onclick="switchTab('benchmarks'); toggleMobileMenu()" class="block w-full py-4 text-sm font-bold uppercase tracking-widest text-gray-800 border-b border-gray-100/50">Benchmarks</button>
-            
-            <!-- Mobile Projects Accordion -->
-            <div class="w-full">
-                <button onclick="document.getElementById('mobile-projects-dropdown').classList.toggle('hidden')" class="w-full py-4 text-sm font-bold uppercase tracking-widest text-gray-800 border-b border-gray-100/50 flex justify-center items-center gap-2 focus:outline-none">
-                    Projects <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div id="mobile-projects-dropdown" class="hidden flex-col bg-gray-50/50 border-b border-gray-100/50 rounded-b-xl">
-                    <button onclick="switchTab('concepts'); toggleMobileMenu()" class="block w-full py-4 text-xs font-bold uppercase tracking-widest text-gray-600 hover:text-black">
-                        OTLO Collection
-                    </button>
-                </div>
-            </div>
-
             <button onclick="switchTab('calculator'); toggleMobileMenu()" class="block w-full py-4 text-sm font-bold uppercase tracking-widest text-gray-800">Investor Engine</button>
-            <button onclick="scrollToId('calculator'); toggleMobileMenu()" class="w-full bg-black text-white px-6 py-4 rounded-xl text-sm font-bold uppercase tracking-widest shadow-lg mt-2">Run Calculator</button>
         </div>
     </nav>
 
     <main class="pt-16 md:pt-20">
 
         <!-- TAB 1: PHILOSOPHY -->
-        <section id="tab-philosophy" class="tab-content min-h-screen animate-fade-in flex flex-col bg-white">
-            
+        <section id="tab-philosophy" class="tab-content hidden min-h-screen animate-fade-in flex flex-col bg-white">
             <!-- Hero Section with Architectural Grid -->
             <div class="relative w-full border-b border-gray-200">
                 <div class="absolute inset-0 arch-grid opacity-30 pointer-events-none"></div>
@@ -543,42 +533,51 @@
             <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12"><div id="benchmark-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div></div>
         </section>
 
-        <!-- TAB 3: PROJECTS -->
-        <section id="tab-concepts" class="tab-content hidden min-h-screen bg-white relative">
-            
-            <!-- OTLO Collection Header -->
-            <div class="w-full bg-[#fcfcfc] pt-20 md:pt-24 pb-6 flex flex-col items-center justify-center border-b border-gray-100">
-                <img src="stayotlo/logo/logo.png" alt="OTLO Logo" class="h-10 md:h-12 object-contain opacity-90">
-            </div>
+        <!-- TAB 3: PROJECTS (DEFAULT VIEW) -->
+        <section id="tab-concepts" class="tab-content min-h-screen bg-white relative">
 
-            <!-- Sticky Sub-Navigation -->
-            <div class="sticky top-16 md:top-20 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 w-full shadow-sm">
-                <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-start md:justify-center gap-6 md:gap-12 overflow-x-auto no-scrollbar text-[10px] md:text-xs font-bold uppercase tracking-widest text-gray-500">
-                    <button onclick="scrollToConceptSection('otlo-intro')" class="hover:text-black transition-colors whitespace-nowrap">Gallery</button>
-                    <button onclick="scrollToConceptSection('otlo-meaning')" class="hover:text-black transition-colors whitespace-nowrap">Philosophy</button>
-                    <button onclick="scrollToConceptSection('otlo-spatial')" class="hover:text-black transition-colors whitespace-nowrap">Spatial Flow</button>
-                    <button onclick="scrollToConceptSection('otlo-360')" class="hover:text-black transition-colors whitespace-nowrap">360° View</button>
-                    <button onclick="scrollToConceptSection('otlo-anatomy')" class="hover:text-black transition-colors whitespace-nowrap">Anatomy</button>
+            <!-- Sticky Sub-Navigation (Dark Frosted Glass & Perfectly Aligned) -->
+            <div id="otlo-subnav-sticky" class="sticky top-16 md:top-20 z-50 w-full bg-slate-900/85 backdrop-blur-2xl border-b border-white/10 shadow-md">
+                <div class="w-full overflow-x-auto no-scrollbar py-2.5">
+                    <div class="max-w-screen-2xl mx-auto px-4 md:px-6 flex items-center justify-between">
+                        <!-- Left spacer to match main nav logo width perfectly (~240px) -->
+                        <div class="w-[240px] hidden md:block shrink-0"></div>
+                        
+                        <!-- Perfectly Center Aligned Links -->
+                        <div class="flex items-center justify-between w-[550px] lg:w-[680px] text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all shrink-0">
+                            <button data-section="otlo-intro" onclick="scrollToConceptSection('otlo-intro')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Gallery</button>
+                            <button data-section="otlo-meaning" onclick="scrollToConceptSection('otlo-meaning')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Vision</button>
+                            <button data-section="otlo-spatial" onclick="scrollToConceptSection('otlo-spatial')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Spatial Flow</button>
+                            <button data-section="otlo-360" onclick="scrollToConceptSection('otlo-360')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">360° View</button>
+                            <button data-section="otlo-anatomy" onclick="scrollToConceptSection('otlo-anatomy')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Anatomy</button>
+                        </div>
+
+                        <!-- Right spacer to match main nav layout width -->
+                        <div class="w-48 hidden md:block shrink-0"></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Slideshow Hero -->
-            <div id="otlo-intro" class="relative w-full h-screen bg-black overflow-hidden group">
+            <!-- Slideshow Hero (Single Screen Fit, adjusted for sticky subnav height) -->
+            <div id="otlo-intro" class="relative w-full h-[calc(100vh-130px)] bg-black overflow-hidden group scroll-mt-32">
+                
                 <div class="absolute top-4 md:top-6 right-4 md:right-6 z-40">
-                    <button onclick="toggleMute()" id="mute-btn" class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full px-3 md:px-4 py-1.5 md:py-2 text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-white/20 transition-colors flex items-center gap-2"><span>Sound</span> <span id="sound-icon">🔊</span></button>
+                    <button onclick="toggleMute()" id="mute-btn" class="text-white hover:text-white/70 transition-colors drop-shadow-md">
+                        <svg id="sound-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        </svg>
+                    </button>
                 </div>
+                
                 <div class="carousel-track h-full" id="carousel-track">
                     <!-- Project 1 -->
                     <div class="carousel-slide min-w-full h-full relative group">
                         <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-mountain">
-                            <!-- Mountain Day -->
-                            <img src="images/msd.png" class="gallery-image active" data-index="0">
-                            <!-- Mountain Night -->
-                            <img src="images/msn.png" class="gallery-image inactive" data-index="1">
-                            <!-- Cabin Day -->
-                            <img src="images/mcd.png" class="gallery-image inactive" data-index="2">
-                            <!-- Cabin Night -->
-                            <img src="images/mcn.png" class="gallery-image inactive" data-index="3">
+                            <img src="images/msd.png" class="gallery-image active" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'">
+                            <img src="images/msn.png" class="gallery-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'">
+                            <img src="images/mcd.png" class="gallery-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'">
+                            <img src="images/mcn.png" class="gallery-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1518733057094-95b53143d2a7?auto=format&fit=crop&q=80'">
                             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20"></div>
                         </div>
                         <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
@@ -589,14 +588,10 @@
                     <!-- Project 2 -->
                     <div class="carousel-slide min-w-full h-full relative group">
                         <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-lake">
-                            <!-- Lake Day -->
-                            <img src="images/lsd.png" class="gallery-image active" data-index="0">
-                            <!-- Lake Night (New) -->
-                            <img src="images/lsn.png" class="gallery-image inactive" data-index="1">
-                            <!-- Lake Cabin -->
-                            <img src="images/lcd.png" class="gallery-image inactive" data-index="2">
-                            <!-- Lake Night -->
-                            <img src="images/lcn.png" class="gallery-image inactive" data-index="3">
+                            <img src="images/lsd.png" class="gallery-image active" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80'">
+                            <img src="images/lsn.png" class="gallery-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1504280390224-4bc343058814?auto=format&fit=crop&q=80'">
+                            <img src="images/lcd.png" class="gallery-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80'">
+                            <img src="images/lcn.png" class="gallery-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&q=80'">
                             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20"></div>
                         </div>
                         <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
@@ -609,8 +604,9 @@
                 <button onclick="moveCarousel(-1)" class="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
                 <button onclick="moveCarousel(1)" class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
 
-                <!-- Minimal Footer Overlay -->
-                <div class="absolute bottom-8 md:bottom-12 left-0 w-full z-40 flex justify-center pointer-events-none animate-fade-in" style="animation-delay: 0.8s">
+                <!-- Minimal Footer Overlay with Centered Logo Above It -->
+                <div class="absolute bottom-8 md:bottom-12 left-0 w-full z-40 flex flex-col items-center justify-center pointer-events-none animate-fade-in" style="animation-delay: 0.8s">
+                    <img src="logo/logoo.png" alt="OTLO Logo" class="w-24 md:w-32 object-contain mb-4 drop-shadow-xl" style="filter: brightness(0) invert(1);" onerror="this.style.display='none'">
                     <p class="text-[9px] md:text-[10px] font-light uppercase tracking-[0.25em] text-white/70 text-center px-4 leading-relaxed">
                         OTLO SHORES <span class="mx-2 md:mx-4 text-white/30">|</span> 
                         OTLO PEAK <span class="mx-2 md:mx-4 text-white/30">|</span> 
@@ -619,127 +615,128 @@
                 </div>
             </div>
 
-            <!-- EXPLANATION SECTION -->
-            <div id="otlo-meaning" class="w-full py-24 md:py-32 scroll-mt-24 md:scroll-mt-32">
-                <div class="max-w-7xl mx-auto px-6">
+            <!-- EXPLANATION SECTION (Dynamic & Interactive) -->
+            <div id="otlo-meaning" class="w-full min-h-[calc(100vh-140px)] flex flex-col justify-center py-16 scroll-mt-28">
+                <div class="max-w-7xl mx-auto px-6 w-full">
                     
-                    <!-- Header & Intro -->
-                    <div class="mb-20 md:mb-24 max-w-4xl mx-auto text-center reveal-on-scroll">
-                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-8">The Meaning of OTLO</h2>
-                        <div class="w-12 h-px bg-black mx-auto mb-8"></div>
-                        <p class="text-xl md:text-3xl text-gray-800 font-light leading-relaxed mb-6">
-                            OTLO is a design-driven micro-resort concept built around a universal architectural idea: <strong class="font-semibold text-black">the threshold.</strong>
+                    <!-- Header & Intro (Interactive Hover) -->
+                    <div class="mb-16 max-w-4xl mx-auto text-center reveal-on-scroll relative group cursor-default">
+                        <div class="absolute -inset-10 bg-gradient-to-r from-blue-50 via-gray-50 to-green-50 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-xl -z-10"></div>
+                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-8 relative z-10">The Meaning of OTLO</h2>
+                        <div class="w-0 group-hover:w-24 h-px bg-black mx-auto mb-8 transition-all duration-700 relative z-10"></div>
+                        <p class="text-xl md:text-3xl text-gray-800 font-light leading-relaxed mb-6 relative z-10 transition-colors duration-500 group-hover:text-black">
+                            OTLO is a design-driven micro-resort concept built around a universal architectural idea: <strong class="font-semibold text-black relative inline-block">the threshold<span class="absolute bottom-0 left-0 w-full h-1 bg-green-200 -z-10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span></strong>.
                         </p>
-                        <p class="text-base md:text-lg text-gray-500 font-light leading-relaxed max-w-3xl mx-auto">
+                        <p class="text-base md:text-lg text-gray-500 font-light leading-relaxed max-w-3xl mx-auto relative z-10">
                             Inspired by the Gujarati <em>otlo</em> — a transitional porch space between home and street — the project reinterprets this globally recognized spatial archetype (porch, portico, engawa) as a contemporary hospitality experience.
                         </p>
                     </div>
 
                     <!-- Narrative & Diagrams Grid -->
-                    <div class="grid lg:grid-cols-3 gap-16 md:gap-12 reveal-on-scroll">
+                    <div class="grid lg:grid-cols-3 gap-12 md:gap-8 reveal-on-scroll">
                         
                         <!-- Block 1: Threshold -->
-                        <div class="flex flex-col">
-                            <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-48 flex items-center justify-center border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow duration-300">
+                        <div class="flex flex-col group cursor-default">
+                            <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-56 flex items-center justify-center border border-gray-100 relative overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-white transition-all duration-500">
                                 <div class="absolute inset-0 arch-grid opacity-10 pointer-events-none"></div>
                                 <!-- Diagram 1: Urban -> Threshold -> Nature -->
-                                <svg viewBox="0 0 300 120" class="w-full h-full relative z-10 stroke-gray-900 fill-none" stroke-width="1.5">
-                                    <rect x="20" y="30" width="50" height="40" stroke-width="1"/>
+                                <svg viewBox="0 0 300 120" class="w-full h-full relative z-10 stroke-gray-900 fill-none transition-transform duration-500 group-hover:scale-105" stroke-width="1.5">
+                                    <rect x="20" y="30" width="50" height="40" stroke-width="1" class="transition-colors duration-500 group-hover:fill-gray-100"/>
                                     <line x1="30" y1="30" x2="30" y2="70" stroke-width="0.5" stroke-opacity="0.4"/>
                                     <line x1="40" y1="30" x2="40" y2="70" stroke-width="0.5" stroke-opacity="0.4"/>
                                     <line x1="50" y1="30" x2="50" y2="70" stroke-width="0.5" stroke-opacity="0.4"/>
                                     <line x1="60" y1="30" x2="60" y2="70" stroke-width="0.5" stroke-opacity="0.4"/>
                                     
-                                    <line x1="85" y1="50" x2="105" y2="50" stroke-dasharray="2 2" />
-                                    <polyline points="100,45 105,50 100,55" stroke-width="1" />
+                                    <line x1="85" y1="50" x2="105" y2="50" stroke-dasharray="2 2" class="svg-animate-slide" />
+                                    <polyline points="100,45 105,50 100,55" stroke-width="1" class="svg-animate-slide"/>
                                     
-                                    <rect x="120" y="25" width="60" height="50" stroke-dasharray="4 4" stroke-width="1.5" />
-                                    <circle cx="150" cy="50" r="3" fill="currentColor" stroke="none" />
+                                    <rect x="120" y="25" width="60" height="50" stroke-dasharray="4 4" stroke-width="1.5" class="svg-animate-dash transition-colors duration-500 group-hover:stroke-blue-600" />
+                                    <circle cx="150" cy="50" r="3" fill="currentColor" stroke="none" class="svg-animate-pulse" />
                                     
-                                    <line x1="195" y1="50" x2="215" y2="50" stroke-dasharray="2 2" />
-                                    <polyline points="210,45 215,50 210,55" stroke-width="1" />
+                                    <line x1="195" y1="50" x2="215" y2="50" stroke-dasharray="2 2" class="svg-animate-slide" />
+                                    <polyline points="210,45 215,50 210,55" stroke-width="1" class="svg-animate-slide" />
                                     
-                                    <path d="M 230 70 Q 245 20 260 70 T 290 70" stroke-width="1.5" />
-                                    <path d="M 240 70 Q 255 40 270 70" stroke-width="1" stroke-opacity="0.4" />
+                                    <path d="M 230 70 Q 245 20 260 70 T 290 70" stroke-width="1.5" class="transition-all duration-500 group-hover:stroke-green-600" />
+                                    <path d="M 240 70 Q 255 40 270 70" stroke-width="1" stroke-opacity="0.4" class="transition-all duration-500 group-hover:stroke-green-600" />
                                     
                                     <text x="45" y="95" font-size="7" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Urban</text>
-                                    <text x="150" y="95" font-size="7" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest font-bold">Threshold</text>
-                                    <text x="260" y="95" font-size="7" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Nature</text>
+                                    <text x="150" y="95" font-size="7" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest font-bold transition-colors duration-500 group-hover:fill-blue-600">Threshold</text>
+                                    <text x="260" y="95" font-size="7" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest transition-colors duration-500 group-hover:fill-green-600">Nature</text>
                                 </svg>
                             </div>
                             <h4 class="text-xs font-bold uppercase tracking-widest text-black mb-4">1. Liminal Environment</h4>
-                            <p class="text-sm text-gray-500 font-light leading-relaxed border-l-2 border-gray-200 pl-4">
+                            <p class="text-sm text-gray-500 font-light leading-relaxed border-l-2 border-transparent group-hover:border-black transition-colors pl-4">
                                 Each modular cabin is conceived as a liminal environment positioned between urban life and natural landscape. Rather than isolating guests from nature or fully immersing them in it, OTLO creates calibrated buffer spaces that foster restoration, mindfulness, and social connection.
                             </p>
                         </div>
 
                         <!-- Block 2: Archetypes -->
-                        <div class="flex flex-col">
-                            <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-48 flex items-center justify-center border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow duration-300">
+                        <div class="flex flex-col group cursor-default">
+                            <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-56 flex items-center justify-center border border-gray-100 relative overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-white transition-all duration-500">
                                 <div class="absolute inset-0 arch-grid opacity-10 pointer-events-none"></div>
                                 <!-- Diagram 2: Convergence of Archetypes -->
-                                <svg viewBox="0 0 300 120" class="w-full h-full relative z-10 stroke-gray-900 fill-none" stroke-width="1">
-                                    <rect x="30" y="20" width="60" height="30" />
+                                <svg viewBox="0 0 300 120" class="w-full h-full relative z-10 stroke-gray-900 fill-none transition-transform duration-500 group-hover:scale-105" stroke-width="1">
+                                    <rect x="30" y="20" width="60" height="30" class="transition-colors duration-500 group-hover:stroke-gray-400" />
                                     <line x1="40" y1="20" x2="40" y2="50" stroke-opacity="0.3"/>
                                     <line x1="80" y1="20" x2="80" y2="50" stroke-opacity="0.3"/>
-                                    <text x="60" y="70" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Porch</text>
+                                    <text x="60" y="70" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest transition-opacity duration-500 group-hover:opacity-50">Porch</text>
 
-                                    <rect x="120" y="20" width="60" height="30" />
+                                    <rect x="120" y="20" width="60" height="30" class="transition-colors duration-500 group-hover:stroke-gray-400" />
                                     <circle cx="135" cy="35" r="8" stroke-opacity="0.3"/>
                                     <circle cx="165" cy="35" r="8" stroke-opacity="0.3"/>
-                                    <text x="150" y="70" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Portico</text>
+                                    <text x="150" y="70" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest transition-opacity duration-500 group-hover:opacity-50">Portico</text>
 
-                                    <rect x="210" y="20" width="60" height="30" />
+                                    <rect x="210" y="20" width="60" height="30" class="transition-colors duration-500 group-hover:stroke-gray-400" />
                                     <line x1="210" y1="35" x2="270" y2="35" stroke-dasharray="2 2" stroke-opacity="0.4"/>
-                                    <text x="240" y="70" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Engawa</text>
+                                    <text x="240" y="70" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest transition-opacity duration-500 group-hover:opacity-50">Engawa</text>
 
-                                    <line x1="60" y1="80" x2="135" y2="100" stroke-dasharray="2 2" />
-                                    <line x1="150" y1="80" x2="150" y2="90" stroke-dasharray="2 2" />
-                                    <line x1="240" y1="80" x2="165" y2="100" stroke-dasharray="2 2" />
+                                    <line x1="60" y1="80" x2="135" y2="100" stroke-dasharray="2 2" class="svg-animate-dash" />
+                                    <line x1="150" y1="80" x2="150" y2="90" stroke-dasharray="2 2" class="svg-animate-dash" />
+                                    <line x1="240" y1="80" x2="165" y2="100" stroke-dasharray="2 2" class="svg-animate-dash" />
 
-                                    <rect x="130" y="90" width="40" height="20" fill="currentColor" />
-                                    <text x="150" y="103" font-size="7" stroke="none" fill="white" text-anchor="middle" class="font-bold tracking-widest">OTLO</text>
+                                    <rect x="130" y="90" width="40" height="20" fill="currentColor" class="transition-all duration-500 group-hover:scale-110 origin-[150px_100px]" />
+                                    <text x="150" y="103" font-size="7" stroke="none" fill="white" text-anchor="middle" class="font-bold tracking-widest transition-all duration-500 group-hover:scale-110 origin-[150px_100px]">OTLO</text>
                                 </svg>
                             </div>
                             <h4 class="text-xs font-bold uppercase tracking-widest text-black mb-4">2. The Spatial Experience</h4>
-                            <p class="text-sm text-gray-500 font-light leading-relaxed border-l-2 border-gray-200 pl-4">
+                            <p class="text-sm text-gray-500 font-light leading-relaxed border-l-2 border-transparent group-hover:border-black transition-colors pl-4">
                                 OTLO is not just accommodation — it is a spatial experience centered on pause, presence, and transition. The concept taps into growing demand for experiential travel, slow living, and wellness-focused retreats.
                             </p>
                         </div>
 
                         <!-- Block 3: Scalability -->
-                        <div class="flex flex-col">
-                            <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-48 flex items-center justify-center border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow duration-300">
+                        <div class="flex flex-col group cursor-default">
+                            <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-56 flex items-center justify-center border border-gray-100 relative overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-white transition-all duration-500">
                                 <div class="absolute inset-0 arch-grid opacity-10 pointer-events-none"></div>
                                 <!-- Diagram 3: Modular Scalability -->
-                                <svg viewBox="0 0 300 130" class="w-full h-full relative z-10 stroke-gray-900 fill-none" stroke-width="1.5">
-                                    <rect x="130" y="10" width="40" height="25" stroke-dasharray="3 3" />
-                                    <circle cx="150" cy="22.5" r="2.5" fill="currentColor" stroke="none" />
+                                <svg viewBox="0 0 300 130" class="w-full h-full relative z-10 stroke-gray-900 fill-none transition-transform duration-500 group-hover:scale-105" stroke-width="1.5">
+                                    <rect x="130" y="10" width="40" height="25" stroke-dasharray="3 3" class="svg-animate-dash transition-colors duration-500 group-hover:stroke-black" />
+                                    <circle cx="150" cy="22.5" r="2.5" fill="currentColor" stroke="none" class="svg-animate-pulse" />
                                     <text x="150" y="50" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest font-bold">Core Module</text>
 
-                                    <line x1="150" y1="55" x2="150" y2="65" stroke-width="1" stroke-opacity="0.4"/>
-                                    <line x1="50" y1="65" x2="250" y2="65" stroke-width="1" stroke-opacity="0.4"/>
-                                    <line x1="50" y1="65" x2="50" y2="75" stroke-width="1" stroke-opacity="0.4"/>
-                                    <line x1="150" y1="65" x2="150" y2="75" stroke-width="1" stroke-opacity="0.4"/>
-                                    <line x1="250" y1="65" x2="250" y2="75" stroke-width="1" stroke-opacity="0.4"/>
+                                    <line x1="150" y1="55" x2="150" y2="65" stroke-width="1" stroke-opacity="0.4" class="transition-opacity duration-500 group-hover:stroke-opacity-100"/>
+                                    <line x1="50" y1="65" x2="250" y2="65" stroke-width="1" stroke-opacity="0.4" class="transition-opacity duration-500 group-hover:stroke-opacity-100"/>
+                                    <line x1="50" y1="65" x2="50" y2="75" stroke-width="1" stroke-opacity="0.4" class="transition-opacity duration-500 group-hover:stroke-opacity-100"/>
+                                    <line x1="150" y1="65" x2="150" y2="75" stroke-width="1" stroke-opacity="0.4" class="transition-opacity duration-500 group-hover:stroke-opacity-100"/>
+                                    <line x1="250" y1="65" x2="250" y2="75" stroke-width="1" stroke-opacity="0.4" class="transition-opacity duration-500 group-hover:stroke-opacity-100"/>
 
-                                    <rect x="35" y="75" width="30" height="20" stroke-width="1"/>
+                                    <rect x="35" y="75" width="30" height="20" stroke-width="1" class="transition-colors duration-500 group-hover:fill-gray-100" />
                                     <line x1="25" y1="95" x2="25" y2="70" stroke-width="1" stroke-opacity="0.4"/>
                                     <line x1="75" y1="95" x2="75" y2="60" stroke-width="1" stroke-opacity="0.4"/>
-                                    <text x="50" y="115" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Forest</text>
+                                    <text x="50" y="115" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest transition-transform duration-500 group-hover:font-bold">Forest</text>
 
-                                    <rect x="135" y="75" width="30" height="20" stroke-width="1"/>
+                                    <rect x="135" y="75" width="30" height="20" stroke-width="1" class="transition-colors duration-500 group-hover:fill-gray-100" />
                                     <path d="M 120 95 L 140 60 L 155 80 L 165 50 L 180 95" stroke-width="1" stroke-opacity="0.4" />
-                                    <text x="150" y="115" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Mountain</text>
+                                    <text x="150" y="115" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest transition-transform duration-500 group-hover:font-bold">Mountain</text>
 
-                                    <rect x="235" y="75" width="30" height="20" stroke-width="1"/>
+                                    <rect x="235" y="75" width="30" height="20" stroke-width="1" class="transition-colors duration-500 group-hover:fill-gray-100" />
                                     <path d="M 220 90 Q 230 85, 240 90 T 260 90 T 280 90" stroke-width="1" stroke-opacity="0.4"/>
                                     <path d="M 220 95 Q 230 90, 240 95 T 260 95 T 280 95" stroke-width="1" stroke-opacity="0.4"/>
-                                    <text x="250" y="115" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest">Waterfront</text>
+                                    <text x="250" y="115" font-size="6" stroke="none" fill="currentColor" text-anchor="middle" class="font-mono uppercase tracking-widest transition-transform duration-500 group-hover:font-bold">Waterfront</text>
                                 </svg>
                             </div>
                             <h4 class="text-xs font-bold uppercase tracking-widest text-black mb-4">3. Contextual Scalability</h4>
-                            <p class="text-sm text-gray-500 font-light leading-relaxed border-l-2 border-gray-200 pl-4">
+                            <p class="text-sm text-gray-500 font-light leading-relaxed border-l-2 border-transparent group-hover:border-black transition-colors pl-4">
                                 Its modular strategy allows scalable development across forests, mountains, or waterfront contexts while maintaining a strong, culturally resonant brand identity.
                             </p>
                         </div>
@@ -749,107 +746,119 @@
             </div>
 
             <!-- ANATOMY OF OTLO SECTION -->
-            <div class="w-full py-24 md:py-32 bg-white border-t border-gray-100">
-                <div class="w-full max-w-screen-2xl mx-auto px-4 md:px-6">
-                    <!-- Header -->
-                    <div class="mb-20 md:mb-24 text-center reveal-on-scroll">
-                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-8">Anatomy of OTLO</h2>
+            <div class="w-full bg-white border-t border-gray-100">
+                
+                <!-- 1. Spatial Flow -->
+                <div id="otlo-spatial" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll">
+                    <div class="mb-10 text-center">
+                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-6">OTLO Design Anatomy</h2>
                         <div class="w-12 h-px bg-black mx-auto"></div>
                     </div>
 
-                    <!-- 1. Spatial Flow -->
-                    <div id="otlo-spatial" class="w-full mx-auto reveal-on-scroll scroll-mt-32 md:scroll-mt-40 flex flex-col items-center">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center md:text-left w-full max-w-7xl">1. Spatial Flow</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center md:text-left w-full max-w-[95%]">1. Spatial Flow</h3>
+                    
+                    <!-- Slideshow Container with Slate Blueprint background -->
+                    <div class="relative w-[95%] aspect-square md:aspect-[16/9] bg-[#111e30] shadow-2xl rounded-[2rem] overflow-hidden group border border-[#1e3450] cursor-zoom-in transition-all flex flex-col p-4 md:p-8 mb-6" onclick="openPlanModal()">
                         
-                        <!-- Slideshow Container (Enlarged) -->
-                        <div class="relative w-full max-w-7xl aspect-square md:aspect-[16/9] bg-gray-50/50 rounded-[2rem] overflow-hidden group border border-gray-100 cursor-zoom-in hover:shadow-sm transition-all mb-8" onclick="openPlanModal()">
-                            <div id="plan-gallery" class="w-full h-full relative">
-                                <img src="plans/plan1.png" class="plan-image active" data-index="0" alt="">
-                                <img src="plans/plan2.png" class="plan-image inactive" data-index="1" alt="">
-                                <img src="plans/plan3.png" class="plan-image inactive" data-index="2" alt="">
-                                <img src="plans/plan4.png" class="plan-image inactive" data-index="3" alt="">
-                                <img src="plans/plan5.png" class="plan-image inactive" data-index="4" alt="">
+                        <!-- Internal Playback Controls (Moved to Top Center) -->
+                        <div class="relative z-50 flex justify-center mb-6 md:mb-8" onclick="event.stopPropagation()">
+                            <div class="flex items-center gap-6 bg-white/10 backdrop-blur-md border border-white/10 px-5 py-2.5 rounded-full shadow-md">
+                                <button onclick="cyclePlan(-1)" class="text-white/50 hover:text-white transition-colors flex items-center justify-center">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+                                </button>
+                                <div class="w-px h-4 bg-white/20"></div>
+                                <button id="btn-play-pause" onclick="togglePlanPlay()" class="text-white hover:text-white/70 transition-opacity flex items-center justify-center w-5 h-5">
+                                    <!-- Pause SVG (Default) -->
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                                </button>
+                                <div class="w-px h-4 bg-white/20"></div>
+                                <button onclick="cyclePlan(1)" class="text-white/50 hover:text-white transition-colors flex items-center justify-center">
+                                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                                </button>
                             </div>
                         </div>
+
+                        <!-- Blueprint grid (Clipping mask removed for continuous grid) -->
+                        <div class="absolute inset-0 arch-grid-dark pointer-events-none z-0"></div>
                         
-                        <!-- External Controls -->
-                        <div class="flex items-center gap-6 bg-white border border-gray-200 px-6 py-3 rounded-full shadow-sm">
-                            <button onclick="cyclePlan(-1)" class="text-gray-400 hover:text-black transition-colors flex items-center justify-center">
-                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-                            </button>
-                            <div class="w-px h-4 bg-gray-200"></div>
-                            <button id="btn-play-pause" onclick="togglePlanPlay()" class="text-black hover:opacity-70 transition-opacity flex items-center justify-center w-6 h-6">
-                                <!-- Pause SVG (Default) -->
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-                            </button>
-                            <div class="w-px h-4 bg-gray-200"></div>
-                            <button onclick="cyclePlan(1)" class="text-gray-400 hover:text-black transition-colors flex items-center justify-center">
-                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-                            </button>
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.15),_transparent_40%)] pointer-events-none z-0"></div>
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(16,185,129,0.08),_transparent_40%)] pointer-events-none z-0"></div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none z-0"></div>
+                        
+                        <div id="plan-gallery" class="w-full flex-grow relative z-10">
+                            <img src="plans/plan1.png" class="plan-image active p-2 md:p-8" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan2.png" class="plan-image inactive p-2 md:p-8" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan3.png" class="plan-image inactive p-2 md:p-8" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan4.png" class="plan-image inactive p-2 md:p-8" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan5.png" class="plan-image inactive p-2 md:p-8" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
                         </div>
                     </div>
+                </div>
+                
+                <!-- 2. The 360° Experience -->
+                <div id="otlo-360" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center md:text-left w-full max-w-[95%]">2. The 360° Experience</h3>
                     
-                    <!-- 2. The 360° Experience -->
-                    <div id="otlo-360" class="w-full max-w-7xl mx-auto reveal-on-scroll mt-32 scroll-mt-32 md:scroll-mt-40">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center md:text-left">2. The 360° Experience</h3>
+                    <!-- Slideshow Container -->
+                    <div class="relative w-[95%] max-w-6xl bg-gray-50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all mb-8 flex flex-col p-4 md:p-8">
                         
-                        <!-- Slideshow Container -->
-                        <div class="relative w-full aspect-[4/3] md:aspect-[16/9] bg-gray-50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all mb-8">
-                            
-                            <!-- Dual Viewers (Overlapped for seamless crossfade) -->
-                            <div id="viewer-exterior" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-100 cursor-grab active:cursor-grabbing"></div>
-                            <div id="viewer-interior" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-0 pointer-events-none cursor-grab active:cursor-grabbing"></div>
-                            
-                            <!-- Internal Floating Toggle -->
-                            <div class="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1 bg-white/90 backdrop-blur-md border border-gray-200 px-2 py-1.5 rounded-full shadow-md">
+                        <!-- Internal Toggle (Moved safely above the image) -->
+                        <div class="relative z-50 flex justify-center mb-6 md:mb-8">
+                            <div class="flex items-center gap-1 bg-white/90 backdrop-blur-md border border-gray-200 px-2 py-1.5 rounded-full shadow-md">
                                 <button id="btn-ext" onclick="switch360View('exterior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-black text-white transition-colors">Exterior</button>
                                 <button id="btn-int" onclick="switch360View('interior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Interior</button>
                             </div>
                         </div>
 
-                        <!-- External Slider Control -->
-                        <div class="w-full max-w-md mx-auto flex flex-col items-center">
-                            <input type="range" id="slider-360" class="slider-360 w-full" min="1" max="51" value="1">
-                            <p class="text-[9px] text-gray-400 mt-3 text-center uppercase tracking-widest">Drag image or use slider to rotate</p>
+                        <!-- Single Viewer (Dynamically updated to prevent rendering bugs) -->
+                        <div class="relative w-full aspect-square md:aspect-[16/9] max-h-[60vh]">
+                            <div id="viewer-360" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-100 cursor-grab active:cursor-grabbing z-10"></div>
                         </div>
                     </div>
-                    
-                    <!-- 3. System Anatomy -->
-                    <div id="otlo-anatomy" class="w-full max-w-7xl mx-auto reveal-on-scroll mt-32 scroll-mt-32 md:scroll-mt-40">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 text-center md:text-left">3. System Anatomy</h3>
-                        
-                        <!-- Minimal Glass Toggle Button -->
-                        <div class="flex justify-center mb-8">
-                            <div class="relative flex items-center bg-gray-50 border border-gray-200 rounded-full p-1 shadow-sm w-[88px] h-12">
-                                <div id="explode-highlight" class="absolute w-10 h-10 bg-black rounded-full transition-transform duration-300 left-1 translate-x-0"></div>
-                                <button onclick="setExplodeState(false)" class="relative z-10 w-10 h-10 flex items-center justify-center transition-colors text-white" id="btn-col" aria-label="Collapse">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
-                                </button>
-                                <button onclick="setExplodeState(true)" class="relative z-10 w-10 h-10 flex items-center justify-center transition-colors text-gray-400 hover:text-black" id="btn-exp" aria-label="Explode">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="3" rx="1"/><rect x="4" y="10.5" width="16" height="3" rx="1"/><rect x="4" y="17" width="16" height="3" rx="1"/></svg>
-                                </button>
-                            </div>
-                        </div>
 
-                        <!-- Explode Container -->
-                        <div id="explode-stage" class="relative w-full h-[70vh] md:h-[80vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group shadow-sm transition-all">
-                            <div class="explode-wrapper relative w-full max-w-[1000px] h-full">
-                                <img src="stayotlo/exploded/view.png" class="explode-layer explode-view" alt="" onclick="setExplodeState(true)">
-                                <img src="stayotlo/exploded/shell.png" class="explode-layer explode-shell" alt="">
-                                <img src="stayotlo/exploded/interior.png" class="explode-layer explode-interior" alt="" onclick="toggleExplodeFocus()">
-                                <img src="stayotlo/exploded/base.png" class="explode-layer explode-base" alt="" onclick="setExplodeState(false)">
-                            </div>
-                        </div>
-                        <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest" id="explode-hint">Click interior to zoom</p>
+                    <!-- External Slider Control -->
+                    <div class="w-full max-w-lg mx-auto flex flex-col items-center px-6">
+                        <input type="range" id="slider-360" class="slider-360 w-full" min="1" max="51" value="1">
+                        <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest">Drag image or use slider to rotate</p>
                     </div>
-
                 </div>
+                
+                <!-- 3. System Anatomy -->
+                <div id="otlo-anatomy" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
+                    
+                    <div class="flex justify-between items-end w-full max-w-[95%] mb-6">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">3. System Anatomy</h3>
+                    </div>
+
+                    <!-- Minimal Glass Toggle Button safely above stage -->
+                    <div class="relative flex items-center bg-gray-50 border border-gray-200 rounded-full p-1 shadow-sm w-[88px] h-12 mb-4 z-50">
+                        <div id="explode-highlight" class="absolute w-10 h-10 bg-black rounded-full transition-transform duration-300 left-1 translate-x-0"></div>
+                        <button onclick="setExplodeState(false)" class="relative z-10 w-10 h-10 flex items-center justify-center transition-colors text-white" id="btn-col" aria-label="Collapse">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+                        </button>
+                        <button onclick="setExplodeState(true)" class="relative z-10 w-10 h-10 flex items-center justify-center transition-colors text-gray-400 hover:text-black" id="btn-exp" aria-label="Explode">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="3" rx="1"/><rect x="4" y="10.5" width="16" height="3" rx="1"/><rect x="4" y="17" width="16" height="3" rx="1"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Explode Container -->
+                    <div id="explode-stage" class="relative w-[95%] h-[55vh] md:h-[65vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group shadow-sm transition-all z-10">
+                        <div class="explode-wrapper relative w-full max-w-[1200px] h-full">
+                            <img src="images/view.png" class="explode-layer explode-view" alt="" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" onclick="setExplodeState(true)">
+                            <img src="images/shell.png" class="explode-layer explode-shell" onerror="this.style.display='none'" alt="">
+                            <img src="images/interior.png" class="explode-layer explode-interior" onerror="this.style.display='none'" alt="" onclick="toggleExplodeFocus()">
+                            <img src="images/base.png" class="explode-layer explode-base" onerror="this.style.display='none'" alt="" onclick="setExplodeState(false)">
+                        </div>
+                    </div>
+                    <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest" id="explode-hint">Click interior to zoom</p>
+                </div>
+
             </div>
 
             <!-- OTLO Footer -->
-            <div class="w-full bg-[#fcfcfc] py-16 flex flex-col items-center justify-center border-t border-gray-100">
-                <img src="stayotlo/logo/logo.png" alt="OTLO Logo" class="h-8 md:h-10 mb-3 opacity-40 grayscale object-contain">
-                <p class="text-[9px] md:text-[10px] text-gray-400 font-bold tracking-[0.3em] uppercase">&reg;</p>
+            <div class="w-full bg-[#fcfcfc] py-20 flex flex-col items-center justify-center border-t border-gray-100">
+                <img src="logo/logoo.png" alt="OTLO Logo" class="h-10 md:h-12 mb-3 object-contain" onerror="this.style.display='none'">
+                <p class="text-[9px] md:text-[10px] text-gray-500 font-bold tracking-[0.3em] uppercase">&reg;</p>
             </div>
 
         </section>
@@ -888,7 +897,7 @@
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                 </button>
                                 <button onclick="loadCustom(2)" id="btn-load-2" class="scenario-dot" title="Load Scenario 2">2</button>
-                                <button onclick="saveCustom(2)" id="btn-save-2" class="text-[10px] text-gray-400 hover:text-black hover:scale-110 transition-transform"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg></button>
+                                <button onclick="saveCustom(2)" id="btn-save-2" class="text-[10px] text-gray-400 hover:text-black hover:scale-110 transition-transform"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2-2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg></button>
                             </div>
 
                             <!-- DIVIDER -->
@@ -918,20 +927,6 @@
                     </div>
                     <div class="h-8 w-px bg-gray-200 mx-2"></div>
                     <button onclick="calculateWithEffect()" class="bg-black text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-all shadow-md flex items-center gap-2" title="Run Scenario"><span>Run</span><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-                </div>
-            </div>
-
-            <!-- EXPORT MODAL -->
-            <div id="export-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-                <div class="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl text-center">
-                    <h3 class="text-xl font-bold mb-2">Export Scenario</h3>
-                    <p class="text-sm text-gray-500 mb-6">Choose format for your financial model.</p>
-                    <div class="space-y-3">
-                        <button onclick="performExport('csv')" class="w-full py-3 rounded-xl border border-gray-200 font-bold hover:bg-gray-50 flex items-center justify-center gap-2">
-                            <span>📄 Download CSV</span>
-                        </button>
-                    </div>
-                    <button onclick="closeExportModal()" class="mt-6 text-xs text-gray-400 hover:text-black">Cancel</button>
                 </div>
             </div>
 
@@ -1220,14 +1215,19 @@
     </div>
 
     <!-- PLAN MODAL (FULLSCREEN) -->
-    <div id="plan-modal" class="fixed inset-0 z-[100] bg-white pointer-events-none opacity-0 transition-opacity duration-700 flex flex-col items-center justify-center p-6 md:p-12">
-        <div class="absolute top-0 left-0 w-full p-6 md:p-10 flex justify-start z-10">
-            <button onclick="closePlanModal()" class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors bg-white/80 backdrop-blur-md px-4 py-2 rounded-full border border-gray-100">
+    <div id="plan-modal" class="fixed inset-0 z-[100] bg-[#111e30] pointer-events-none opacity-0 transition-opacity duration-700 flex flex-col items-center justify-center p-6 md:p-12">
+        <!-- Blueprint Grid for Modal (Clipping mask removed) -->
+        <div class="absolute inset-0 arch-grid-dark pointer-events-none z-0"></div>
+        
+        <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none z-0"></div>
+        
+        <div class="absolute top-0 left-0 w-full p-6 md:p-10 flex justify-start z-20">
+            <button onclick="closePlanModal()" class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-300 hover:text-white transition-colors bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-sm">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                 Back to Projects
             </button>
         </div>
-        <img id="plan-modal-img" src="" class="max-w-full max-h-[85vh] object-contain drop-shadow-xl transition-all duration-500 scale-95" style="image-rendering: high-quality; image-rendering: -webkit-optimize-contrast;">
+        <img id="plan-modal-img" src="" class="max-w-full max-h-[85vh] object-contain transition-all duration-500 scale-95 relative z-10" style="image-rendering: high-quality; image-rendering: -webkit-optimize-contrast;">
     </div>
 
     <!-- LOGIC -->
@@ -1236,100 +1236,28 @@
         
         // --- CONFIG ---
         const AMENITIES_CONFIG = [
-            { 
-                id: 'sauna', name: 'Sauna / Spa', 
-                USD: { def: 50000, max: 150000, step: 1000 }, 
-                INR: { def: 2500000, max: 10000000, step: 25000 } 
-            },
-            { 
-                id: 'infpool', name: 'Infinity Pool', 
-                USD: { def: 150000, max: 300000, step: 1000 }, 
-                INR: { def: 7500000, max: 20000000, step: 50000 } 
-            },
-            { 
-                id: 'plunge', name: 'Plunge Pool', 
-                USD: { def: 40000, max: 80000, step: 500 }, 
-                INR: { def: 2000000, max: 5000000, step: 20000 } 
-            },
-            { 
-                id: 'bar', name: 'Bar / F&B', 
-                USD: { def: 100000, max: 250000, step: 1000 }, 
-                INR: { def: 5000000, max: 15000000, step: 50000 } 
-            },
-            { 
-                id: 'pickle', name: 'Pickleball Crt', 
-                USD: { def: 30000, max: 60000, step: 500 }, 
-                INR: { def: 1500000, max: 4000000, step: 20000 } 
-            },
-            { 
-                id: 'bike', name: 'Bike Rentals', 
-                USD: { def: 15000, max: 30000, step: 250 }, 
-                INR: { def: 500000, max: 2000000, step: 10000 } 
-            },
-            { 
-                id: 'kayak', name: 'Kayaks', 
-                USD: { def: 10000, max: 25000, step: 250 }, 
-                INR: { def: 400000, max: 1500000, step: 10000 } 
-            },
-            { 
-                id: 'event', name: 'Event Space', 
-                USD: { def: 200000, max: 500000, step: 5000 }, 
-                INR: { def: 10000000, max: 30000000, step: 100000 } 
-            }
+            { id: 'sauna', name: 'Sauna / Spa', USD: { def: 50000, max: 150000, step: 1000 }, INR: { def: 2500000, max: 10000000, step: 25000 } },
+            { id: 'infpool', name: 'Infinity Pool', USD: { def: 150000, max: 300000, step: 1000 }, INR: { def: 7500000, max: 20000000, step: 50000 } },
+            { id: 'plunge', name: 'Plunge Pool', USD: { def: 40000, max: 80000, step: 500 }, INR: { def: 2000000, max: 5000000, step: 20000 } },
+            { id: 'bar', name: 'Bar / F&B', USD: { def: 100000, max: 250000, step: 1000 }, INR: { def: 5000000, max: 15000000, step: 50000 } },
+            { id: 'pickle', name: 'Pickleball Crt', USD: { def: 30000, max: 60000, step: 500 }, INR: { def: 1500000, max: 4000000, step: 20000 } },
+            { id: 'bike', name: 'Bike Rentals', USD: { def: 15000, max: 30000, step: 250 }, INR: { def: 500000, max: 2000000, step: 10000 } },
+            { id: 'kayak', name: 'Kayaks', USD: { def: 10000, max: 25000, step: 250 }, INR: { def: 400000, max: 1500000, step: 10000 } },
+            { id: 'event', name: 'Event Space', USD: { def: 200000, max: 500000, step: 5000 }, INR: { def: 10000000, max: 30000000, step: 100000 } }
         ];
 
         // Refined Ancillary Config with Adoption & Caps
         const ANCILLARY_CONFIG = [
-            { 
-                id: 'fire', name: 'Firewood', type: 'convenience', adoption: 40,
-                USD: { def: 20, max: 60, step: 1 },
-                INR: { def: 500, max: 2500, step: 50 }
-            },
-            { 
-                id: 'minibar', name: 'F&B Basket', type: 'convenience', adoption: 45,
-                USD: { def: 45, max: 150, step: 1 },
-                INR: { def: 1500, max: 8000, step: 100 }
-            },
-            { 
-                id: 'sauna', name: 'Sauna Access', type: 'experiential', adoption: 25,
-                USD: { def: 75, max: 300, step: 5 },
-                INR: { def: 3000, max: 15000, step: 250 }
-            },
-            { 
-                id: 'hike', name: 'Guided Hike', type: 'experiential', adoption: 20,
-                USD: { def: 90, max: 400, step: 5 },
-                INR: { def: 4000, max: 20000, step: 250 }
-            },
-            { 
-                id: 'romance', name: 'Romance Package', type: 'occasional', adoption: 8,
-                USD: { def: 150, max: 500, step: 10 },
-                INR: { def: 7500, max: 25000, step: 500 }
-            },
-            { 
-                id: 'bday', name: 'Birthday Package', type: 'occasional', adoption: 8,
-                USD: { def: 125, max: 400, step: 10 },
-                INR: { def: 6000, max: 20000, step: 500 }
-            },
-            { 
-                id: 'vip', name: 'VIP Package', type: 'premium', adoption: 5,
-                USD: { def: 350, max: 1500, step: 25 },
-                INR: { def: 18000, max: 75000, step: 1000 }
-            },
-            { 
-                id: 'chef', name: 'Private Chef', type: 'premium', adoption: 5,
-                USD: { def: 250, max: 1000, step: 25 },
-                INR: { def: 12000, max: 60000, step: 500 }
-            },
-            { 
-                id: 'early', name: 'Early Check-in', type: 'occasional', adoption: 12,
-                USD: { def: 50, max: 200, step: 5 },
-                INR: { def: 2000, max: 8000, step: 250 }
-            },
-            { 
-                id: 'pet', name: 'Pet Fee', type: 'occasional', adoption: 12,
-                USD: { def: 75, max: 250, step: 5 },
-                INR: { def: 3000, max: 10000, step: 250 }
-            }
+            { id: 'fire', name: 'Firewood', type: 'convenience', adoption: 40, USD: { def: 20, max: 60, step: 1 }, INR: { def: 500, max: 2500, step: 50 } },
+            { id: 'minibar', name: 'F&B Basket', type: 'convenience', adoption: 45, USD: { def: 45, max: 150, step: 1 }, INR: { def: 1500, max: 8000, step: 100 } },
+            { id: 'sauna', name: 'Sauna Access', type: 'experiential', adoption: 25, USD: { def: 75, max: 300, step: 5 }, INR: { def: 3000, max: 15000, step: 250 } },
+            { id: 'hike', name: 'Guided Hike', type: 'experiential', adoption: 20, USD: { def: 90, max: 400, step: 5 }, INR: { def: 4000, max: 20000, step: 250 } },
+            { id: 'romance', name: 'Romance Package', type: 'occasional', adoption: 8, USD: { def: 150, max: 500, step: 10 }, INR: { def: 7500, max: 25000, step: 500 } },
+            { id: 'bday', name: 'Birthday Package', type: 'occasional', adoption: 8, USD: { def: 125, max: 400, step: 10 }, INR: { def: 6000, max: 20000, step: 500 } },
+            { id: 'vip', name: 'VIP Package', type: 'premium', adoption: 5, USD: { def: 350, max: 1500, step: 25 }, INR: { def: 18000, max: 75000, step: 1000 } },
+            { id: 'chef', name: 'Private Chef', type: 'premium', adoption: 5, USD: { def: 250, max: 1000, step: 25 }, INR: { def: 12000, max: 60000, step: 500 } },
+            { id: 'early', name: 'Early Check-in', type: 'occasional', adoption: 12, USD: { def: 50, max: 200, step: 5 }, INR: { def: 2000, max: 8000, step: 250 } },
+            { id: 'pet', name: 'Pet Fee', type: 'occasional', adoption: 12, USD: { def: 75, max: 250, step: 5 }, INR: { def: 3000, max: 10000, step: 250 } }
         ];
 
         const benchmarks = {
@@ -1354,7 +1282,9 @@
         let current360View = 'exterior';
 
         window.onload = function() {
-            renderBenchmarks('USA'); initCalculatorUI(); initCharts();
+            renderBenchmarks('USA'); 
+            initCalculatorUI(); 
+            initCharts();
             updateScenarioUI();
             
             fetchLiveRate().then(() => {
@@ -1372,8 +1302,8 @@
             
             startInternalGalleries(); 
             startPlanSlideshow();
-            init360(); // Initialize SpriteSpin 360 views
-            switchTab('philosophy');
+            init360(); 
+            switchTab('concepts'); 
             
             document.querySelectorAll('.reveal-on-scroll').forEach(el => {
                if(typeof IntersectionObserver !== 'undefined') {
@@ -1389,6 +1319,45 @@
                } else {
                    el.classList.add('visible');
                }
+            });
+
+            const subnavObserverOptions = {
+                root: null,
+                rootMargin: '-25% 0px -65% 0px',
+                threshold: 0
+            };
+
+            const subnavObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        
+                        document.querySelectorAll('.subnav-btn').forEach(btn => {
+                            if (btn.dataset.section === id) {
+                                btn.classList.add('bg-white/20', 'text-white', 'shadow-sm');
+                                btn.classList.remove('text-white/60', 'bg-transparent', 'hover:text-white');
+                            } else {
+                                btn.classList.remove('bg-white/20', 'text-white', 'shadow-sm');
+                                btn.classList.add('text-white/60', 'bg-transparent', 'hover:text-white');
+                            }
+                        });
+
+                        const audio = document.getElementById('bg-music');
+                        const conceptsTab = document.getElementById('tab-concepts');
+                        if (conceptsTab && !conceptsTab.classList.contains('hidden')) {
+                            if (id === 'otlo-intro' && audio) {
+                                audio.play().catch(()=>{});
+                            } else if (audio) {
+                                audio.pause();
+                            }
+                        }
+                    }
+                });
+            }, subnavObserverOptions);
+
+            ['otlo-intro', 'otlo-meaning', 'otlo-spatial', 'otlo-360', 'otlo-anatomy'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) subnavObserver.observe(el);
             });
             
             window.toggleMobileMenu = function() { const menu = document.getElementById('mobile-menu'); menu.classList.toggle('hidden'); }
@@ -1413,7 +1382,6 @@
             }
         }
 
-        // ... (Charts) ...
         function initCharts() {
             const commonOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(context) { return context.dataset.label + ': ' + format(context.raw); } } } } };
             
@@ -1425,7 +1393,6 @@
             charts.cf = new Chart(document.getElementById('cfChart').getContext('2d'), { type: 'bar', data: { labels: ['Y1', 'Y2', 'Y3', 'Y4', 'Y5'], datasets: [{ label: 'Debt Service', data: [0,0,0,0,0], backgroundColor: '#ef4444' }, { label: 'Cash Flow', data: [0,0,0,0,0], backgroundColor: '#22c55e' }] }, options: { ...commonOptions, scales: { x: { stacked: true }, y: { stacked: true, display: false } } } });
             charts.comp = new Chart(document.getElementById('compositionChart').getContext('2d'), { type: 'bar', data: { labels: ['Traditional', 'Boutique', 'Micro-Resort'], datasets: [ { label: 'Room', data: [75, 65, 45], backgroundColor: '#d1d5db' }, { label: 'F&B', data: [20, 25, 25], backgroundColor: '#4b5563' }, { label: 'Experience & Wellness', data: [5, 10, 30], backgroundColor: '#22c55e' } ] }, options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, display: false } }, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, usePointStyle: true } }, tooltip: { callbacks: { label: function(context) { return context.dataset.label + ': ' + context.raw + '%'; } } } } } });
             
-            // NEW: Debt Schedule Chart
             charts.debt = new Chart(document.getElementById('debtScheduleChart').getContext('2d'), { type: 'bar', data: { labels: ['Y1', 'Y2', 'Y3', 'Y4', 'Y5'], datasets: [{ label: 'Land Balance', data: [0,0,0,0,0], backgroundColor: '#94a3b8' }, { label: 'Perm Loan Balance', data: [0,0,0,0,0], backgroundColor: '#3b82f6' }] }, options: { ...commonOptions, scales: { x: { stacked: true }, y: { stacked: true, display: false } } } });
         }
 
@@ -1436,20 +1403,64 @@
             charts.revpar.update();
         }
 
-        // ... (Standard UI Logic) ...
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('text-black'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.add('text-gray-500'));
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            if(targetTab) targetTab.classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if(btn.dataset.target) {
+                    btn.classList.remove('text-black', 'text-stone-800');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+            
             const activeBtn = document.querySelector(`[data-target="${tabId}"]`);
-            if(activeBtn) { activeBtn.classList.add('text-black'); activeBtn.classList.remove('text-gray-500'); }
+            if(activeBtn) { 
+                if (tabId === 'concepts') {
+                    activeBtn.classList.add('text-black'); 
+                    activeBtn.classList.remove('text-gray-500');
+                } else {
+                    activeBtn.classList.add('text-black'); 
+                    activeBtn.classList.remove('text-gray-500'); 
+                }
+            }
+            
             const audio = document.getElementById('bg-music');
-            if(tabId === 'concepts') audio.play().catch(() => {}); else audio.pause();
+            if(tabId === 'concepts') {
+                const introEl = document.getElementById('otlo-intro');
+                if (introEl) {
+                    const rect = introEl.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 140 && audio) {
+                        audio.play().catch(() => {});
+                    }
+                }
+            } else {
+                if(audio) audio.pause();
+            }
+            
             setTimeout(() => { if(tabId === 'calculator') { charts.cost?.resize(); charts.cf?.resize(); charts.debt?.resize(); } if(tabId === 'philosophy') { charts.growth?.resize(); charts.revpar?.resize(); charts.comp?.resize(); } }, 50);
         }
+
         function scrollToId(id) { switchTab(id); document.getElementById(`tab-${id}`).scrollIntoView({ behavior: 'smooth' }); }
-        function calculateWithEffect() { calculate(); const panel = document.getElementById('results-panel'); panel.classList.remove('flash-update'); void panel.offsetWidth; panel.classList.add('flash-update'); }
+        
+        // This is the missing function
+        function scrollToConceptSection(id) {
+            const el = document.getElementById(id);
+            if(el) {
+                const isMobile = window.innerWidth < 768;
+                const headerOffset = isMobile ? 100 : 110; 
+                const elementPosition = el.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }
+        
+        function calculateWithEffect() { calculate(); const panel = document.getElementById('results-panel'); if(panel) { panel.classList.remove('flash-update'); void panel.offsetWidth; panel.classList.add('flash-update'); } }
 
         function calculate() {
             const rate = CURRENCY[currentCurr].rate;
@@ -1457,24 +1468,22 @@
             const hardCost = getVal('in-hard') || 200; const softCost = getVal('in-soft') || 50; const ffe = getVal('in-ffe') || 40;
             const landArea = getVal('in-land-area') || 2; const landCostPerAcre = getVal('in-land-cost') || 50000; const infraCost = getVal('in-infra') || 200000;
             const adr = getVal('in-adr') || 250; const occ = (getVal('in-occ') || 70) / 100; const opexRatio = (getVal('in-opex') || 30) / 100;
-            const leverage = (getVal('in-leverage') || 65) / 100; const interestRate = (getVal('in-rate') || 7) / 100; const term = getVal('in-term') || 10;
             const capRate = (getVal('in-cap') || 8) / 100;
-            const isLTC = document.querySelector('input[name="finance-type"]:checked')?.value === 'LTC';
             const closingCosts = (getVal('in-legal') || 15000) + (getVal('in-permit') || 10000);
             const reserve = getVal('in-reserve') || 20000;
             
-            // --- NEW DEBT INPUTS ---
             const landLTV = getVal('in-land-ltv') / 100;
             const landRate = getVal('in-land-rate') / 100;
-            const landAmort = getVal('in-land-amort');
-            const landIO = document.getElementById('in-land-io').checked;
+            const landAmort = getVal('in-land-amort') || 20;
+            const landIoEl = document.getElementById('in-land-io');
+            const landIO = landIoEl ? landIoEl.checked : false;
 
             const constLTC = getVal('in-const-ltc') / 100;
             const constRate = getVal('in-const-rate') / 100;
-            const constTermMonths = getVal('in-const-term');
+            const constTermMonths = getVal('in-const-term') || 18;
             
             const permRate = getVal('in-perm-rate') / 100;
-            const permAmort = getVal('in-perm-amort');
+            const permAmort = getVal('in-perm-amort') || 25;
             
             let amenityCost = 0;
             const amenityCards = document.querySelectorAll('.select-card[data-type="amenity"]');
@@ -1485,7 +1494,6 @@
                 }
             });
             
-            // --- ANCILLARY REVENUE CALCULATION ---
             const annualOccupiedNights = units * 365 * occ;
             let totalAncillaryRevenue = 0;
             let ancillaryBreakdownHTML = '';
@@ -1512,13 +1520,9 @@
                 }
             });
 
-            // --- COST & LOAN CALCULATIONS ---
-            
-            // 1. Land Loan Logic
             const totalLandCost = landArea * landCostPerAcre;
             const landLoanAmount = totalLandCost * landLTV;
             
-            // Calculate Annual Land Debt Service
             let annualLandDS = 0;
             if (landLoanAmount > 0) {
                 if (landIO) {
@@ -1531,36 +1535,26 @@
                 }
             }
 
-            // 2. Construction Loan Logic
             const totalUnitCost = units * unitArea * (hardCost + softCost + ffe);
-            const devBaseCost = totalUnitCost + infraCost + amenityCost + closingCosts; // Excludes land
+            const devBaseCost = totalUnitCost + infraCost + amenityCost + closingCosts; 
             
-            // Interest Reserve Calculation (Capitalized)
-            // Using average utilization of 60% over term
             const utilFactor = 0.60;
             const constLoanBase = devBaseCost * constLTC;
-            // Solve for Total Loan where Total = Base + Interest Reserve
-            // Reserve = Total * Rate * (Term/12) * Util
             const constYears = constTermMonths / 12;
             const interestReserve = (constLoanBase * constRate * constYears * utilFactor) / (1 - (constRate * constYears * utilFactor));
-            const constLoanTotal = constLoanBase + interestReserve; // Gross Loan Amount
+            const constLoanTotal = constLoanBase + interestReserve; 
             const totalProjectCost = totalLandCost + devBaseCost + interestReserve;
 
-            // 3. Permanent Loan Logic (Takeout)
-            // Assumes Perm Loan refinances Construction Loan Total
             const permLoanAmount = constLoanTotal; 
             
-            // Calculate Stabilized Perm Debt Service
             const monthlyPermRate = permRate / 12;
             const numPermPayments = permAmort * 12;
             const monthlyPermPayment = permLoanAmount * (monthlyPermRate * Math.pow(1 + monthlyPermRate, numPermPayments)) / (Math.pow(1 + monthlyPermRate, numPermPayments) - 1);
             const annualPermDS = monthlyPermPayment * 12;
 
-            // --- OPERATING METRICS ---
             const roomRev = units * adr * 365 * occ; 
             const grossRev = roomRev + totalAncillaryRevenue;
             
-            // Guardrails
             if (grossRev > 0) {
                 const roomShare = totalAncillaryRevenue / roomRev;
                 if (roomShare > 0.25) guardrailWarnings.push(`⚠️ Ancillary revenue exceeds 25% of room revenue. This may be flagged by lenders.`);
@@ -1572,15 +1566,10 @@
             const valuation = noi / capRate;
             const valueCreation = valuation - totalProjectCost;
             
-            // Total Annual Debt Service (Stabilized) = Land DS + Perm DS
-            // (Assuming Land Loan stays in place separate from Perm Loan which takes out Const Loan)
             const totalAnnualDS = annualLandDS + annualPermDS;
             const dscr = totalAnnualDS > 0 ? noi / totalAnnualDS : 0;
             const cashFlow = noi - totalAnnualDS;
 
-            // --- UI UPDATES ---
-            
-            // Financing Module Outputs
             setTxt('val-land-ltv', (landLTV*100).toFixed(0)+'%');
             setTxt('val-land-rate', (landRate*100).toFixed(2)+'%');
             setTxt('val-land-amort', landAmort);
@@ -1603,7 +1592,6 @@
                 else { dscrEl.classList.add('text-green-600'); dscrEl.classList.remove('text-red-500'); }
             }
 
-            // General Outputs
             setTxt('val-units', units); setTxt('val-area', unitArea); setTxt('val-hard', format(hardCost)); setTxt('val-soft', format(softCost)); setTxt('val-ffe', format(ffe));
             setTxt('val-land-area', landArea); setTxt('val-land-cost', format(landCostPerAcre)); setTxt('val-infra', format(infraCost));
             setTxt('val-legal', format(getVal('in-legal'))); setTxt('val-permit', format(getVal('in-permit')));
@@ -1619,39 +1607,39 @@
             if (document.getElementById('disp-noi-margin')) document.getElementById('disp-noi-margin').innerText = noiMargin.toFixed(1)+'%';
             if (document.getElementById('bar-noi-margin')) document.getElementById('bar-noi-margin').style.width = noiMargin+'%';
             
-            // Mobile Stats
             setTxt('mob-cost', format(totalProjectCost)); setTxt('mob-val', format(valuation)); setTxt('mob-cf', format(cashFlow));
 
-            document.getElementById('summary-text').innerHTML = `Project requires <strong>${format(totalProjectCost - landLoanAmount - constLoanTotal)}</strong> equity. Generates <strong>${format(cashFlow)}</strong> annual cash flow (stabilized). DSCR: <strong>${dscr.toFixed(2)}x</strong>.`;
+            const summaryEl = document.getElementById('summary-text');
+            if(summaryEl) summaryEl.innerHTML = `Project requires <strong>${format(totalProjectCost - landLoanAmount - constLoanTotal)}</strong> equity. Generates <strong>${format(cashFlow)}</strong> annual cash flow (stabilized). DSCR: <strong>${dscr.toFixed(2)}x</strong>.`;
             
-            // Ancillary Summary
-            document.getElementById('total-ancillary-revenue').innerText = format(totalAncillaryRevenue);
-            document.getElementById('ancillary-breakdown').innerHTML = ancillaryBreakdownHTML || '<span class="italic text-gray-300">No services selected</span>';
+            setTxt('total-ancillary-revenue', format(totalAncillaryRevenue));
+            const breakEl = document.getElementById('ancillary-breakdown');
+            if(breakEl) breakEl.innerHTML = ancillaryBreakdownHTML || '<span class="italic text-gray-300">No services selected</span>';
             const contribution = grossRev > 0 ? (totalAncillaryRevenue / grossRev * 100).toFixed(1) : 0;
-            document.getElementById('ancillary-contribution').innerText = contribution + '%';
+            setTxt('ancillary-contribution', contribution + '%');
             
             const warningEl = document.getElementById('guardrail-warning');
-            if (guardrailWarnings.length > 0) {
-                warningEl.innerHTML = guardrailWarnings.join('<br>');
-                warningEl.classList.add('active');
-            } else {
-                warningEl.classList.remove('active');
+            if(warningEl) {
+                if (guardrailWarnings.length > 0) {
+                    warningEl.innerHTML = guardrailWarnings.join('<br>');
+                    warningEl.classList.add('active');
+                } else {
+                    warningEl.classList.remove('active');
+                }
             }
 
-            // Update Bars
             const totalDebt = landLoanAmount + constLoanTotal;
             const equityAmount = totalProjectCost - totalDebt;
-            const debtPct = (totalDebt / totalProjectCost) * 100;
+            const debtPct = totalProjectCost > 0 ? (totalDebt / totalProjectCost) * 100 : 0;
             const equityPct = 100 - debtPct;
             
-            document.getElementById('bar-debt').style.width = debtPct + '%';
-            document.getElementById('bar-equity').style.width = equityPct + '%';
+            if(document.getElementById('bar-debt')) document.getElementById('bar-debt').style.width = debtPct + '%';
+            if(document.getElementById('bar-equity')) document.getElementById('bar-equity').style.width = equityPct + '%';
             setTxt('disp-debt-amt', format(totalDebt));
             setTxt('disp-debt-pct', debtPct.toFixed(0)+'%');
             setTxt('disp-equity-amt', format(equityAmount));
             setTxt('disp-equity-pct', equityPct.toFixed(0)+'%');
 
-            // --- DEBT SCHEDULE CALCULATION ---
             let landBal = landLoanAmount;
             let permBal = permLoanAmount;
             let debtScheduleHTML = '';
@@ -1659,20 +1647,16 @@
             let permBals = [];
 
             for (let i = 1; i <= 5; i++) {
-                // Land Loan Amortization (Annual approximation for timeline)
                 let annualLandPrincipal = 0;
                 let annualLandInterest = 0;
                 
                 if (landIO && i <= 2) {
                     annualLandInterest = landBal * landRate;
                 } else {
-                    // Standard amortization logic for year i
-                    // Simplified: Recalculate balance reduction based on remaining term? 
-                    // Better: Simulate monthly reduction x 12
                     let tempBal = landBal;
                     const monthlyRate = landRate / 12;
-                    const monthlyPmt = (tempBal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -(landAmort * 12 - (landIO ? 0 : (i-1)*12)))); // approx remaining
-                    // Actually, simpler to just iterate monthly
+                    const remTerm = landAmort * 12 - (landIO ? 0 : (i-1)*12);
+                    const monthlyPmt = remTerm > 0 ? (tempBal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -remTerm)) : 0; 
                     for(let m=0; m<12; m++) {
                         let ipmt = tempBal * monthlyRate;
                         let ppmt = monthlyPmt - ipmt;
@@ -1680,15 +1664,13 @@
                         annualLandPrincipal += ppmt;
                         tempBal -= ppmt;
                     }
-                    if(!landIO) landBal = tempBal; // Update outer balance
+                    if(!landIO) landBal = tempBal; 
                 }
 
-                // Perm Loan Amortization
                 let annualPermPrincipal = 0;
                 let annualPermInterest = 0;
                 let tempPermBal = permBal;
                 const monthlyPermRate = permRate / 12;
-                // Payment is fixed based on initial amt
                 const monthlyPermPmt = annualPermDS / 12; 
                 
                 for(let m=0; m<12; m++) {
@@ -1713,18 +1695,17 @@
                     </tr>
                 `;
             }
-            document.getElementById('debt-schedule-body').innerHTML = debtScheduleHTML;
+            const debtTable = document.getElementById('debt-schedule-body');
+            if(debtTable) debtTable.innerHTML = debtScheduleHTML;
 
-            // Update Debt Chart
             if(charts.debt) {
                 charts.debt.data.datasets[0].data = landBals;
                 charts.debt.data.datasets[1].data = permBals;
                 charts.debt.update();
             }
 
-            // Pro Forma & Other Charts
             const exitValuation = (noi * Math.pow(1.03, 4)) / capRate;
-            const remainingLoanBal = landBal + permBal; // Balance at end of Year 5
+            const remainingLoanBal = landBal + permBal; 
             
             updateProforma(grossRev, opex+reserve, totalAnnualDS, equityAmount, exitValuation, remainingLoanBal, totalProjectCost);
             updateCharts(totalLandCost, totalUnitCost, infraCost+amenityCost, closingCosts, cashFlow, totalAnnualDS, interestReserve);
@@ -1745,40 +1726,38 @@
             if(curr === currentCurr) return; 
             const oldRate = CURRENCY[currentCurr].rate; const newRate = CURRENCY[curr].rate; const conversionFactor = newRate / oldRate;
             currentCurr = curr; 
-            document.getElementById('curr-usd').className = curr === 'USD' ? 'w-1/2 text-[10px] font-bold py-1.5 rounded-full bg-white shadow-sm transition-all' : 'w-1/2 text-[10px] font-bold py-1.5 rounded-full text-gray-500 hover:text-black transition-all';
-            document.getElementById('curr-inr').className = curr === 'INR' ? 'w-1/2 text-[10px] font-bold py-1.5 rounded-full bg-white shadow-sm transition-all' : 'w-1/2 text-[10px] font-bold py-1.5 rounded-full text-gray-500 hover:text-black transition-all';
+            const cUsd = document.getElementById('curr-usd');
+            const cInr = document.getElementById('curr-inr');
+            if(cUsd) cUsd.className = curr === 'USD' ? 'w-1/2 text-[10px] font-bold py-1.5 rounded-full bg-white shadow-sm transition-all' : 'w-1/2 text-[10px] font-bold py-1.5 rounded-full text-gray-500 hover:text-black transition-all';
+            if(cInr) cInr.className = curr === 'INR' ? 'w-1/2 text-[10px] font-bold py-1.5 rounded-full bg-white shadow-sm transition-all' : 'w-1/2 text-[10px] font-bold py-1.5 rounded-full text-gray-500 hover:text-black transition-all';
             
-            // Standard inputs conversion
             monetaryInputs.forEach(id => { const el = document.getElementById(id); if(el) { const newVal = parseFloat(el.value) * conversionFactor; const newMin = parseFloat(el.min) * conversionFactor; const newMax = parseFloat(el.max) * conversionFactor; const newStep = parseFloat(el.step) * conversionFactor; updateInput(id, newVal, newMin, newMax, newStep); } });
             
-            // Update Amenities with specialized config
             AMENITIES_CONFIG.forEach(am => { 
                 const id = `cost-${am.id}`; 
                 const el = document.getElementById(id); 
                 if(el) { 
                     const conf = am[curr];
-                    const newVal = parseFloat(el.value) * conversionFactor; // Preserve relative value
+                    const newVal = parseFloat(el.value) * conversionFactor; 
                     updateInput(id, newVal, 0, conf.max, conf.step); 
-                    document.getElementById(`disp-cost-${am.id}`).innerText = format(parseFloat(el.value)); 
+                    setTxt(`disp-cost-${am.id}`, format(parseFloat(el.value))); 
                 } 
             });
             
-            // Reserves
             const res = document.getElementById('in-reserve'); 
             if(res) {
                  const newVal = parseFloat(res.value) * conversionFactor; 
                  updateInput('in-reserve', newVal, 0, 500000 * (newRate/75), 5000 * (newRate/75));
             }
 
-            // Update Ancillary with specialized config
              ANCILLARY_CONFIG.forEach(am => { 
                  const id = `rev-${am.id}`; 
                  const el = document.getElementById(id); 
                  if(el) {
                      const conf = am[curr];
-                     const newVal = parseFloat(el.value) * conversionFactor; // Preserve relative value
+                     const newVal = parseFloat(el.value) * conversionFactor; 
                      updateInput(id, newVal, 0, conf.max, conf.step);
-                     document.getElementById(`disp-rev-${am.id}`).innerText = 'Fee: ' + format(parseFloat(el.value));
+                     setTxt(`disp-rev-${am.id}`, 'Fee: ' + format(parseFloat(el.value)));
                  }
              });
             
@@ -1787,23 +1766,21 @@
 
         function updateInput(id, val, min, max, step) { const el = document.getElementById(id); if(el) { el.min = min; el.max = max; el.step = step; el.value = val; } }
 
-        // --- EXPORT FUNCTIONS ---
-
         function triggerExportOptions(slot) {
             exportSlot = slot;
-            // Open modal to let user choose format
-            document.getElementById('export-modal').classList.remove('hidden');
+            const modal = document.getElementById('export-modal');
+            if(modal) modal.classList.remove('hidden');
         }
 
         function closeExportModal() {
-            document.getElementById('export-modal').classList.add('hidden');
+            const modal = document.getElementById('export-modal');
+            if(modal) modal.classList.add('hidden');
         }
 
         function performExport(type) {
             if (type === 'csv') {
                 exportToCSV(exportSlot);
             } 
-            // Removed PDF logic
             closeExportModal();
         }
         
@@ -1811,19 +1788,9 @@
             let scenarioName = slot ? `Scenario_${slot}` : "Current_State";
             const date = new Date().toLocaleDateString();
             
-            // Helper to clean text
-            const getTxt = (id) => {
-                const el = document.getElementById(id);
-                return el ? el.innerText.replace(/,/g, '') : '';
-            };
-            const getVal = (id) => {
-                const el = document.getElementById(id);
-                return el ? el.value : '';
-            };
-            const getCheck = (id) => {
-                const el = document.getElementById(id);
-                return el && el.checked ? "Yes" : "No";
-            };
+            const getTxtOrEmpty = (id) => { const el = document.getElementById(id); return el ? el.innerText.replace(/,/g, '') : ''; };
+            const getValOrEmpty = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
+            const getCheckOrNo = (id) => { const el = document.getElementById(id); return el && el.checked ? "Yes" : "No"; };
 
             let rows = [
                 ["ArchDoor Capital - Investment Model Export"],
@@ -1833,119 +1800,113 @@
                 []
             ];
 
-            // --- SECTION 1: INVESTMENT SUMMARY ---
             rows.push(["--- INVESTMENT SUMMARY ---"]);
-            rows.push(["Total Project Cost", getTxt("out-tpc")]);
-            rows.push(["Stabilized NOI", getTxt("out-noi")]);
-            rows.push(["Valuation (Exit)", getTxt("out-val")]);
-            rows.push(["Value Creation", getTxt("out-value-creation")]);
-            rows.push(["Levered IRR", getTxt("val-irr")]);
-            rows.push(["Equity Multiple", getTxt("val-em")]);
-            rows.push(["Unlevered IRR", getTxt("val-irr-unlev")]);
-            rows.push(["Unlevered Multiple", getTxt("val-em-unlev")]);
-            rows.push(["Stabilized DSCR", getTxt("out-dscr")]);
+            rows.push(["Total Project Cost", getTxtOrEmpty("out-tpc")]);
+            rows.push(["Stabilized NOI", getTxtOrEmpty("out-noi")]);
+            rows.push(["Valuation (Exit)", getTxtOrEmpty("out-val")]);
+            rows.push(["Value Creation", getTxtOrEmpty("out-value-creation")]);
+            rows.push(["Levered IRR", getTxtOrEmpty("val-irr")]);
+            rows.push(["Equity Multiple", getTxtOrEmpty("val-em")]);
+            rows.push(["Unlevered IRR", getTxtOrEmpty("val-irr-unlev")]);
+            rows.push(["Unlevered Multiple", getTxtOrEmpty("val-em-unlev")]);
+            rows.push(["Stabilized DSCR", getTxtOrEmpty("out-dscr")]);
             rows.push([]);
 
-            // --- SECTION 2: PROJECT INPUTS ---
             rows.push(["--- DEVELOPMENT INPUTS ---"]);
-            rows.push(["Unit Count", getVal("in-units")]);
-            rows.push(["Unit Area (sq.ft)", getVal("in-area")]);
-            rows.push(["Hard Costs (/sq.ft)", getVal("in-hard")]);
-            rows.push(["Soft Costs (/sq.ft)", getVal("in-soft")]);
-            rows.push(["FF&E (/sq.ft)", getVal("in-ffe")]);
-            rows.push(["Land Area (Acres)", getVal("in-land-area")]);
-            rows.push(["Land Cost (/Acre)", getVal("in-land-cost")]);
-            rows.push(["Site Infrastructure", getVal("in-infra")]);
-            rows.push(["Legal & Admin", getVal("in-legal")]);
-            rows.push(["Permitting", getVal("in-permit")]);
+            rows.push(["Unit Count", getValOrEmpty("in-units")]);
+            rows.push(["Unit Area (sq.ft)", getValOrEmpty("in-area")]);
+            rows.push(["Hard Costs (/sq.ft)", getValOrEmpty("in-hard")]);
+            rows.push(["Soft Costs (/sq.ft)", getValOrEmpty("in-soft")]);
+            rows.push(["FF&E (/sq.ft)", getValOrEmpty("in-ffe")]);
+            rows.push(["Land Area (Acres)", getValOrEmpty("in-land-area")]);
+            rows.push(["Land Cost (/Acre)", getValOrEmpty("in-land-cost")]);
+            rows.push(["Site Infrastructure", getValOrEmpty("in-infra")]);
+            rows.push(["Legal & Admin", getValOrEmpty("in-legal")]);
+            rows.push(["Permitting", getValOrEmpty("in-permit")]);
             rows.push([]);
 
-            // Amenities
             rows.push(["--- SELECTED AMENITIES ---"]);
             rows.push(["Amenity", "Status", "Budget"]);
             AMENITIES_CONFIG.forEach(am => {
                 const card = document.querySelector(`.select-card[data-type="amenity"][data-id="${am.id}"]`);
-                const isActive = card.classList.contains('active') ? "Selected" : "Not Selected";
-                const cost = document.getElementById(`cost-${am.id}`).value;
-                rows.push([am.name, isActive, isActive === "Selected" ? cost : 0]);
+                if(card) {
+                    const isActive = card.classList.contains('active') ? "Selected" : "Not Selected";
+                    const costEl = document.getElementById(`cost-${am.id}`);
+                    const cost = costEl ? costEl.value : 0;
+                    rows.push([am.name, isActive, isActive === "Selected" ? cost : 0]);
+                }
             });
             rows.push([]);
 
-            // --- SECTION 3: FINANCING ---
             rows.push(["--- FINANCING STRUCTURE ---"]);
             rows.push(["A. Land Loan"]);
-            rows.push(["LTV", getVal("in-land-ltv") + "%"]);
-            rows.push(["Interest Rate", getVal("in-land-rate") + "%"]);
-            rows.push(["Amortization", getVal("in-land-amort") + " Years"]);
-            rows.push(["Interest Only Period", getCheck("in-land-io")]);
-            rows.push(["Loan Amount", getTxt("out-land-loan")]);
-            rows.push(["Annual Debt Service", getTxt("out-land-ds")]);
+            rows.push(["LTV", getValOrEmpty("in-land-ltv") + "%"]);
+            rows.push(["Interest Rate", getValOrEmpty("in-land-rate") + "%"]);
+            rows.push(["Amortization", getValOrEmpty("in-land-amort") + " Years"]);
+            rows.push(["Interest Only Period", getCheckOrNo("in-land-io")]);
+            rows.push(["Loan Amount", getTxtOrEmpty("out-land-loan")]);
+            rows.push(["Annual Debt Service", getTxtOrEmpty("out-land-ds")]);
             
             rows.push(["B. Construction Loan"]);
-            rows.push(["LTC", getVal("in-const-ltc") + "%"]);
-            rows.push(["Interest Rate", getVal("in-const-rate") + "%"]);
-            rows.push(["Term", getVal("in-const-term") + " Months"]);
-            rows.push(["Loan Amount (Total)", getTxt("out-const-loan")]);
-            rows.push(["Interest Reserve", getTxt("out-int-reserve")]);
+            rows.push(["LTC", getValOrEmpty("in-const-ltc") + "%"]);
+            rows.push(["Interest Rate", getValOrEmpty("in-const-rate") + "%"]);
+            rows.push(["Term", getValOrEmpty("in-const-term") + " Months"]);
+            rows.push(["Loan Amount (Total)", getTxtOrEmpty("out-const-loan")]);
+            rows.push(["Interest Reserve", getTxtOrEmpty("out-int-reserve")]);
 
             rows.push(["C. Permanent Loan"]);
-            rows.push(["Interest Rate", getVal("in-perm-rate") + "%"]);
-            rows.push(["Amortization", getVal("in-perm-amort") + " Years"]);
-            rows.push(["Annual Debt Service", getTxt("out-perm-ds")]);
+            rows.push(["Interest Rate", getValOrEmpty("in-perm-rate") + "%"]);
+            rows.push(["Amortization", getValOrEmpty("in-perm-amort") + " Years"]);
+            rows.push(["Annual Debt Service", getTxtOrEmpty("out-perm-ds")]);
             
             rows.push(["D. Capital Stack"]);
-            rows.push(["Total Debt", getTxt("disp-debt-amt")]);
-            rows.push(["Debt %", getTxt("disp-debt-pct")]);
-            rows.push(["Total Equity", getTxt("disp-equity-amt")]);
-            rows.push(["Equity %", getTxt("disp-equity-pct")]);
+            rows.push(["Total Debt", getTxtOrEmpty("disp-debt-amt")]);
+            rows.push(["Debt %", getTxtOrEmpty("disp-debt-pct")]);
+            rows.push(["Total Equity", getTxtOrEmpty("disp-equity-amt")]);
+            rows.push(["Equity %", getTxtOrEmpty("disp-equity-pct")]);
             rows.push([]);
 
-            // --- SECTION 4: REVENUE & OPS ---
             rows.push(["--- REVENUE & OPERATIONS ---"]);
-            rows.push(["Target ADR", getVal("in-adr")]);
-            rows.push(["Stabilized Occupancy", getVal("in-occ") + "%"]);
-            rows.push(["OpEx Ratio", getVal("in-opex") + "%"]);
-            rows.push(["Annual FF&E Reserve", getVal("in-reserve")]);
-            rows.push(["Exit Cap Rate", getVal("in-cap") + "%"]);
-            rows.push(["RevPAR", getTxt("out-revpar")]);
-            rows.push(["Total Ancillary Revenue", getTxt("total-ancillary-revenue")]);
-            rows.push(["Ancillary % of Gross", getTxt("ancillary-contribution")]);
+            rows.push(["Target ADR", getValOrEmpty("in-adr")]);
+            rows.push(["Stabilized Occupancy", getValOrEmpty("in-occ") + "%"]);
+            rows.push(["OpEx Ratio", getValOrEmpty("in-opex") + "%"]);
+            rows.push(["Annual FF&E Reserve", getValOrEmpty("in-reserve")]);
+            rows.push(["Exit Cap Rate", getValOrEmpty("in-cap") + "%"]);
+            rows.push(["RevPAR", getTxtOrEmpty("out-revpar")]);
+            rows.push(["Total Ancillary Revenue", getTxtOrEmpty("total-ancillary-revenue")]);
+            rows.push(["Ancillary % of Gross", getTxtOrEmpty("ancillary-contribution")]);
             rows.push([]);
 
-            // Ancillary Details
             rows.push(["--- ANCILLARY SERVICES ---"]);
             rows.push(["Service", "Status", "Fee", "Opt-In %"]);
             ANCILLARY_CONFIG.forEach(am => {
                 const card = document.querySelector(`.select-card[data-type="ancillary"][data-id="${am.id}"]`);
-                const isActive = card.classList.contains('active') ? "Active" : "Inactive";
-                const fee = document.getElementById(`rev-${am.id}`).value;
-                const opt = document.getElementById(`opt-${am.id}`).value;
-                rows.push([am.name, isActive, fee, isActive === "Active" ? opt + "%" : "-"]);
+                if(card) {
+                    const isActive = card.classList.contains('active') ? "Active" : "Inactive";
+                    const fee = getValOrEmpty(`rev-${am.id}`);
+                    const opt = getValOrEmpty(`opt-${am.id}`);
+                    rows.push([am.name, isActive, fee, isActive === "Active" ? opt + "%" : "-"]);
+                }
             });
             rows.push([]);
 
-            // --- SECTION 5: 5-YEAR PRO FORMA ---
             rows.push(["--- 5-YEAR PRO FORMA ---"]);
             const tableBody = document.getElementById("proforma-body");
             const headerRow = ["Metric", "Year 1", "Year 2", "Year 3", "Year 4", "Year 5"];
             rows.push(headerRow);
 
-            // Parse the HTML table rows
             if(tableBody) {
                 const trs = tableBody.querySelectorAll("tr");
                 trs.forEach(tr => {
                     const cells = tr.querySelectorAll("td");
                     let rowData = [];
-                    // The label is in the first td
                     cells.forEach(td => rowData.push(td.innerText.replace(/,/g, '').replace(/[()]/g, ''))); 
-                    // Note: cleaning parenthesis for debt/negative numbers for cleaner CSV, though some might prefer -
                     if(rowData.length > 0) rows.push(rowData);
                 });
             }
             
             let csvContent = rows.map(e => e.join(",")).join("\n");
             
-            // BLOB METHOD (More Robust)
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -1956,7 +1917,6 @@
             document.body.removeChild(link);
         }
 
-        // --- SCENARIO SAVE/LOAD ---
         function saveCustom(slot) { 
             const data = { 
                 curr: currentCurr, 
@@ -1969,26 +1929,31 @@
             }); 
             AMENITIES_CONFIG.forEach(am => { 
                 const card = document.querySelector(`.select-card[data-id="${am.id}"]`);
-                data.amenities[am.id] = { 
-                    active: card.classList.contains('active'), 
-                    cost: document.getElementById(`cost-${am.id}`).value 
-                }; 
+                if(card) {
+                    data.amenities[am.id] = { 
+                        active: card.classList.contains('active'), 
+                        cost: getVal(`cost-${am.id}`)
+                    }; 
+                }
             });
              ANCILLARY_CONFIG.forEach(am => { 
                 const card = document.querySelector(`.select-card[data-type="ancillary"][data-id="${am.id}"]`);
-                data.ancillary[am.id] = { 
-                    active: card.classList.contains('active'),
-                    val: document.getElementById(`rev-${am.id}`).value,
-                    opt: document.getElementById(`opt-${am.id}`).value
-                }; 
+                if(card) {
+                    data.ancillary[am.id] = { 
+                        active: card.classList.contains('active'),
+                        val: getVal(`rev-${am.id}`),
+                        opt: getVal(`opt-${am.id}`)
+                    }; 
+                }
             });
             localStorage.setItem(`archdoor_scenario_${slot}`, JSON.stringify(data)); 
             updateScenarioUI();
             activeScenario = slot;
             const btn = document.getElementById(`btn-save-${slot}`);
-            const origColor = btn.classList.contains('text-gray-400') ? 'text-gray-400' : 'text-green-500';
-            btn.classList.remove('text-gray-400'); btn.classList.add('text-green-500');
-            setTimeout(() => { btn.classList.remove('text-green-500'); btn.classList.add('text-gray-400'); }, 1000);
+            if(btn) {
+                btn.classList.remove('text-gray-400'); btn.classList.add('text-green-500');
+                setTimeout(() => { btn.classList.remove('text-green-500'); btn.classList.add('text-gray-400'); }, 1000);
+            }
         }
 
         function loadCustom(slot) { 
@@ -2002,25 +1967,27 @@
                 } 
             } 
             
-            // Amenities
             for (const [id, config] of Object.entries(data.amenities)) { 
                 const card = document.querySelector(`.select-card[data-type="amenity"][data-id="${id}"]`);
                 if(card) { if(config.active) card.classList.add('active'); else card.classList.remove('active'); }
-                document.getElementById(`cost-${id}`).value = config.cost; 
-                document.getElementById(`disp-cost-${id}`).innerText = format(parseFloat(config.cost)); 
+                const costEl = document.getElementById(`cost-${id}`);
+                if(costEl) costEl.value = config.cost; 
+                setTxt(`disp-cost-${id}`, format(parseFloat(config.cost))); 
             } 
-            // Ancillary
+            
             if(data.ancillary) {
                  for (const [id, config] of Object.entries(data.ancillary)) { 
                     const card = document.querySelector(`.select-card[data-type="ancillary"][data-id="${id}"]`);
                     if(card) { 
                         if(config.active) card.classList.add('active'); else card.classList.remove('active'); 
-                        document.getElementById(`rev-${id}`).value = config.val;
-                        document.getElementById(`disp-rev-${id}`).innerText = 'Fee: ' + format(parseFloat(config.val));
+                        const revEl = document.getElementById(`rev-${id}`);
+                        if(revEl) revEl.value = config.val;
+                        setTxt(`disp-rev-${id}`, 'Fee: ' + format(parseFloat(config.val)));
                         
                         if(config.opt) {
-                            document.getElementById(`opt-${id}`).value = config.opt;
-                            document.getElementById(`disp-opt-${id}`).innerText = 'Opt-In: ' + config.opt + '%';
+                            const optEl = document.getElementById(`opt-${id}`);
+                            if(optEl) optEl.value = config.opt;
+                            setTxt(`disp-opt-${id}`, 'Opt-In: ' + config.opt + '%');
                         }
                     }
                 }
@@ -2032,69 +1999,88 @@
             for(let i=1; i<=3; i++) { 
                 const hasData = localStorage.getItem(`archdoor_scenario_${i}`); 
                 const loadBtn = document.getElementById(`btn-load-${i}`); 
-                loadBtn.classList.remove('active', 'has-data');
-                if(hasData) loadBtn.classList.add('has-data');
-                if(activeScenario === i) loadBtn.classList.add('active');
+                if(loadBtn) {
+                    loadBtn.classList.remove('active', 'has-data');
+                    if(hasData) loadBtn.classList.add('has-data');
+                    if(activeScenario === i) loadBtn.classList.add('active');
+                }
             } 
         }
 
         function initCalculatorUI() {
-            // Amenities
-            document.getElementById('amenities-list').innerHTML = AMENITIES_CONFIG.map(am => `
-                <div class="select-card p-4 rounded-xl relative overflow-hidden" data-type="amenity" data-id="${am.id}" onclick="toggleCard(this)">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-bold amenity-title">${am.name}</span>
+            const amList = document.getElementById('amenities-list');
+            if(amList) {
+                amList.innerHTML = AMENITIES_CONFIG.map(am => `
+                    <div class="select-card p-4 rounded-xl relative overflow-hidden" data-type="amenity" data-id="${am.id}" onclick="toggleCard(this)">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-bold amenity-title">${am.name}</span>
+                        </div>
+                        <input type="range" id="cost-${am.id}" value="${am[currentCurr].def}" min="0" max="${am[currentCurr].max}" step="${am[currentCurr].step}" oninput="calculate()" onclick="event.stopPropagation()">
+                        <div class="text-right text-[10px] text-gray-500 font-mono mt-1 amenity-subtext" id="disp-cost-${am.id}">Budget</div>
                     </div>
-                    <input type="range" id="cost-${am.id}" value="${am[currentCurr].def}" min="0" max="${am[currentCurr].max}" step="${am[currentCurr].step}" oninput="calculate()" onclick="event.stopPropagation()">
-                    <div class="text-right text-[10px] text-gray-500 font-mono mt-1 amenity-subtext" id="disp-cost-${am.id}">Budget</div>
-                </div>
-            `).join('');
+                `).join('');
+            }
             
-            // Ancillary
-            document.getElementById('ancillary-list').innerHTML = ANCILLARY_CONFIG.map(am => `
-                <div class="select-card p-4 rounded-xl relative overflow-hidden" data-type="ancillary" data-id="${am.id}" onclick="toggleCard(this)">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-bold amenity-title">${am.name}</span>
-                        <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">${am.type}</span>
+            const ancList = document.getElementById('ancillary-list');
+            if(ancList) {
+                ancList.innerHTML = ANCILLARY_CONFIG.map(am => `
+                    <div class="select-card p-4 rounded-xl relative overflow-hidden" data-type="ancillary" data-id="${am.id}" onclick="toggleCard(this)">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold amenity-title">${am.name}</span>
+                            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">${am.type}</span>
+                        </div>
+                        <div class="mb-3">
+                             <div class="flex justify-between items-center mb-1">
+                                <span class="text-[9px] uppercase font-bold text-gray-400">Fee</span>
+                                <span class="text-[10px] font-mono text-gray-600" id="disp-rev-${am.id}">Fee: $${am[currentCurr].def}</span>
+                             </div>
+                             <input type="range" id="rev-${am.id}" value="${am[currentCurr].def}" min="0" max="${am[currentCurr].max}" step="${am[currentCurr].step}" oninput="calculate()" onclick="event.stopPropagation()">
+                        </div>
+                        <div class="opt-in-control">
+                             <div class="flex justify-between items-center mb-1">
+                                <span class="text-[9px] uppercase font-bold text-white/80">Opt-In %</span>
+                                <span class="text-[10px] font-mono font-bold text-white" id="disp-opt-${am.id}">Opt-In: ${am.adoption}%</span>
+                             </div>
+                             <input type="range" id="opt-${am.id}" value="${am.adoption}" min="0" max="100" step="1" oninput="calculate()" onclick="event.stopPropagation()">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                         <div class="flex justify-between items-center mb-1">
-                            <span class="text-[9px] uppercase font-bold text-gray-400">Fee</span>
-                            <span class="text-[10px] font-mono text-gray-600" id="disp-rev-${am.id}">Fee: $${am[currentCurr].def}</span>
-                         </div>
-                         <input type="range" id="rev-${am.id}" value="${am[currentCurr].def}" min="0" max="${am[currentCurr].max}" step="${am[currentCurr].step}" oninput="calculate()" onclick="event.stopPropagation()">
-                    </div>
-                    <div class="opt-in-control">
-                         <div class="flex justify-between items-center mb-1">
-                            <span class="text-[9px] uppercase font-bold text-white/80">Opt-In %</span>
-                            <span class="text-[10px] font-mono font-bold text-white" id="disp-opt-${am.id}">Opt-In: ${am.adoption}%</span>
-                         </div>
-                         <input type="range" id="opt-${am.id}" value="${am.adoption}" min="0" max="100" step="1" oninput="calculate()" onclick="event.stopPropagation()">
-                    </div>
-                </div>
-            `).join('');
+                `).join('');
+            }
             
             AMENITIES_CONFIG.forEach(am => {
-                document.getElementById(`cost-${am.id}`).addEventListener('input', (e) => { document.getElementById(`disp-cost-${am.id}`).innerText = format(parseFloat(e.target.value)); });
-                document.getElementById(`disp-cost-${am.id}`).innerText = format(am[currentCurr].def);
+                const el = document.getElementById(`cost-${am.id}`);
+                if(el) {
+                    el.addEventListener('input', (e) => { setTxt(`disp-cost-${am.id}`, format(parseFloat(e.target.value))); });
+                    setTxt(`disp-cost-${am.id}`, format(am[currentCurr].def));
+                }
             });
             
             ANCILLARY_CONFIG.forEach(am => {
-                document.getElementById(`rev-${am.id}`).addEventListener('input', (e) => { document.getElementById(`disp-rev-${am.id}`).innerText = 'Fee: ' + format(parseFloat(e.target.value)); });
-                
-                document.getElementById(`opt-${am.id}`).addEventListener('input', (e) => { 
-                    document.getElementById(`disp-opt-${am.id}`).innerText = 'Opt-In: ' + e.target.value + '%'; 
-                });
+                const revEl = document.getElementById(`rev-${am.id}`);
+                if(revEl) {
+                    revEl.addEventListener('input', (e) => { setTxt(`disp-rev-${am.id}`, 'Fee: ' + format(parseFloat(e.target.value))); });
+                }
+                const optEl = document.getElementById(`opt-${am.id}`);
+                if(optEl) {
+                    optEl.addEventListener('input', (e) => { setTxt(`disp-opt-${am.id}`, 'Opt-In: ' + e.target.value + '%'); });
+                }
             });
         }
         
         function toggleCard(card) {
-            if(event.target.type === 'range') return;
+            if(event && event.target && event.target.type === 'range') return;
             card.classList.toggle('active');
             calculate();
         }
 
-        function switchCalcTab(tabName) { document.querySelectorAll('.calc-section').forEach(el => el.classList.add('hidden')); document.getElementById(`calc-${tabName}`).classList.remove('hidden'); document.querySelectorAll('.calc-tab-btn').forEach(el => el.classList.remove('active')); document.querySelector(`[data-tab="${tabName}"]`).classList.add('active'); }
+        function switchCalcTab(tabName) { 
+            document.querySelectorAll('.calc-section').forEach(el => el.classList.add('hidden')); 
+            const target = document.getElementById(`calc-${tabName}`);
+            if(target) target.classList.remove('hidden'); 
+            document.querySelectorAll('.calc-tab-btn').forEach(el => el.classList.remove('active')); 
+            const btn = document.querySelector(`[data-tab="${tabName}"]`);
+            if(btn) btn.classList.add('active'); 
+        }
         
         function updateProforma(gross, opex, totalDebt, equity, exitVal, loanBal, totalCost) {
             const growth = 1.03; let cashFlows = []; 
@@ -2103,32 +2089,33 @@
             for(let i=1; i<=5; i++) { 
                 const g = Math.pow(growth, i-1); 
                 const noiYr = (gross * g) - (opex * g);
-                const yrCF = noiYr - totalDebt; // Assumes fixed debt service for simplicity in Pro Forma view
+                const yrCF = noiYr - totalDebt;
                 cashFlows.push(yrCF);
                 unlevCashFlows.push(noiYr);
             }
             
             const buildRow = (label, startVal, factor) => { let html = `<tr class="border-b border-gray-100"><td class="text-left py-2 text-gray-500">${label}</td>`; for(let i=0; i<5; i++) html += `<td class="py-2">${format(startVal * Math.pow(growth, i) * factor)}</td>`; html += '</tr>'; return html; }; 
             
-            document.getElementById('proforma-body').innerHTML = buildRow('Gross Revenue', gross, 1) + buildRow('OpEx', opex, 1) + buildRow('NOI', gross - opex, 1) + 
-                `<tr class="border-b border-gray-100"><td class="text-left py-2 text-gray-500">Debt Service</td>${Array(5).fill(`<td class="py-2 text-red-400">(${format(totalDebt)})</td>`).join('')}</tr>` + 
-                `<tr class="font-bold bg-gray-50"><td class="text-left py-2">Cash Flow</td>${cashFlows.map(cf => `<td class="py-2 text-green-600">${format(cf)}</td>`).join('')}</tr>`;
+            const body = document.getElementById('proforma-body');
+            if(body) {
+                body.innerHTML = buildRow('Gross Revenue', gross, 1) + buildRow('OpEx', opex, 1) + buildRow('NOI', gross - opex, 1) + 
+                    `<tr class="border-b border-gray-100"><td class="text-left py-2 text-gray-500">Debt Service</td>${Array(5).fill(`<td class="py-2 text-red-400">(${format(totalDebt)})</td>`).join('')}</tr>` + 
+                    `<tr class="font-bold bg-gray-50"><td class="text-left py-2">Cash Flow</td>${cashFlows.map(cf => `<td class="py-2 text-green-600">${format(cf)}</td>`).join('')}</tr>`;
+            }
             
-            // Levered (Equity) Metrics
             const totalReturn = cashFlows.reduce((a,b)=>a+b, 0) + (exitVal - loanBal); 
             const em = (totalReturn + equity) / equity; 
             const irrEstimate = ((Math.pow(em, 1/5) - 1)*100).toFixed(1);
             
-            // Unlevered (Project) Metrics
             const totalReturnUnlev = unlevCashFlows.reduce((a,b)=>a+b, 0) + exitVal;
             const emUnlev = totalReturnUnlev / totalCost;
             const irrUnlevEstimate = ((Math.pow(emUnlev, 1/5) - 1)*100).toFixed(1);
             
-            document.getElementById('val-em').innerText = isNaN(em) ? '0.0x' : em.toFixed(2) + 'x'; 
-            document.getElementById('val-irr').innerText = isNaN(em) ? '0.0%' : irrEstimate + '%'; 
+            setTxt('val-em', isNaN(em) ? '0.0x' : em.toFixed(2) + 'x'); 
+            setTxt('val-irr', isNaN(em) ? '0.0%' : irrEstimate + '%'); 
             
-            document.getElementById('val-em-unlev').innerText = isNaN(emUnlev) ? '0.0x' : emUnlev.toFixed(2) + 'x';
-            document.getElementById('val-irr-unlev').innerText = isNaN(emUnlev) ? '0.0%' : irrUnlevEstimate + '%';
+            setTxt('val-em-unlev', isNaN(emUnlev) ? '0.0x' : emUnlev.toFixed(2) + 'x');
+            setTxt('val-irr-unlev', isNaN(emUnlev) ? '0.0%' : irrUnlevEstimate + '%');
             
             const irrVal = parseFloat(irrEstimate);
             let verdict = "Analyzing...";
@@ -2137,7 +2124,7 @@
             else if(irrVal > 12) verdict = "Moderate (Value-Add Required)";
             else verdict = "Below Market (Re-evaluate)";
             
-            document.getElementById('investment-inference').innerText = `Based on a Levered IRR of ${irrEstimate}%, this project represents a "${verdict}" investment opportunity.`;
+            setTxt('investment-inference', `Based on a Levered IRR of ${irrEstimate}%, this project represents a "${verdict}" investment opportunity.`);
         }
         
         function updateCharts(land, units, infra, closing, cf, debt, intReserve) { 
@@ -2145,79 +2132,133 @@
             charts.cost.data.datasets[0].data = [land, units, infra, closing, intReserve]; 
             charts.cost.update(); 
             const growth = 1.03; 
-            charts.cf.data.datasets[0].data = Array(5).fill(debt); 
-            charts.cf.data.datasets[1].data = Array(5).fill(0).map((_, i) => cf * Math.pow(growth, i)); 
-            charts.cf.update(); 
+            if(charts.cf) {
+                charts.cf.data.datasets[0].data = Array(5).fill(debt); 
+                charts.cf.data.datasets[1].data = Array(5).fill(0).map((_, i) => cf * Math.pow(growth, i)); 
+                charts.cf.update(); 
+            }
         }
-        function updatePhilosophyCharts() { if(!charts.revpar) return; const rate = CURRENCY[currentCurr].rate; charts.revpar.data.datasets[0].data = [120 * rate, 200 * rate, 350 * rate]; charts.revpar.update(); }
-        function renderBenchmarks(region) { const data = benchmarks[region]; const btnClassActive = "px-10 py-3 rounded-full text-sm font-bold uppercase tracking-widest transition-all shadow-sm bg-black text-white"; const btnClassInactive = "px-10 py-3 rounded-full text-sm font-bold uppercase tracking-widest transition-all text-gray-500 hover:text-black"; document.getElementById('btn-usa').className = region === 'USA' ? btnClassActive : btnClassInactive; document.getElementById('btn-ind').className = region === 'IND' ? btnClassActive : btnClassInactive; document.getElementById('benchmark-grid').innerHTML = data.map(item => `<a href="${item.url}" target="_blank" class="block p-8 bg-white border border-gray-100 rounded-[2rem] hover:shadow-xl hover:border-gray-200 transition-all group relative overflow-hidden"><div class="absolute top-0 left-0 w-2 h-full brand-gradient opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="flex justify-between items-start mb-8"><div><h3 class="text-2xl font-bold tracking-tight text-black mb-1 group-hover:text-blue-600 transition-colors">${item.name}</h3><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">${item.loc}</p></div><div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-sm font-bold text-gray-400 group-hover:bg-black group-hover:text-white transition-colors">↗</div></div><div class="grid grid-cols-2 gap-y-8 gap-x-6 border-t border-gray-100 pt-8"><div><span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Target ADR</span><span class="block text-xl font-bold brand-gradient-text">${item.adr}</span></div><div><span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Occupancy</span><span class="block text-xl font-bold text-black">${item.occ}</span></div></div></a>`).join(''); }
+
+        function renderBenchmarks(region) { 
+            const data = benchmarks[region]; 
+            if(!data) return;
+            const btnClassActive = "px-10 py-3 rounded-full text-sm font-bold uppercase tracking-widest transition-all shadow-sm bg-black text-white"; 
+            const btnClassInactive = "px-10 py-3 rounded-full text-sm font-bold uppercase tracking-widest transition-all text-gray-500 hover:text-black"; 
+            
+            const btnUsa = document.getElementById('btn-usa');
+            const btnInd = document.getElementById('btn-ind');
+            const grid = document.getElementById('benchmark-grid');
+            
+            if(btnUsa) btnUsa.className = region === 'USA' ? btnClassActive : btnClassInactive; 
+            if(btnInd) btnInd.className = region === 'IND' ? btnClassActive : btnClassInactive; 
+            
+            if(grid) {
+                grid.innerHTML = data.map(item => `<a href="${item.url}" target="_blank" class="block p-8 bg-white border border-gray-100 rounded-[2rem] hover:shadow-xl hover:border-gray-200 transition-all group relative overflow-hidden"><div class="absolute top-0 left-0 w-2 h-full brand-gradient opacity-0 group-hover:opacity-100 transition-opacity"></div><div class="flex justify-between items-start mb-8"><div><h3 class="text-2xl font-bold tracking-tight text-black mb-1 group-hover:text-blue-600 transition-colors">${item.name}</h3><p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">${item.loc}</p></div><div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-sm font-bold text-gray-400 group-hover:bg-black group-hover:text-white transition-colors">↗</div></div><div class="grid grid-cols-2 gap-y-8 gap-x-6 border-t border-gray-100 pt-8"><div><span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Target ADR</span><span class="block text-xl font-bold brand-gradient-text">${item.adr}</span></div><div><span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Occupancy</span><span class="block text-xl font-bold text-black">${item.occ}</span></div></div></a>`).join(''); 
+            }
+        }
+        
         function filterBenchmarks(r) { renderBenchmarks(r); }
-        function moveCarousel(dir) { const track = document.getElementById('carousel-track'); currentSlide += dir; if (currentSlide < 0) currentSlide = 1; if (currentSlide > 1) currentSlide = 0; track.style.transform = `translateX(-${currentSlide * 100}%)`; }
-        function toggleMute() { const audio = document.getElementById('bg-music'); audio.muted = !audio.muted; document.getElementById('mute-btn').classList.toggle('opacity-50'); }
-        function cycleInternalImage(galleryId, dir) { const container = document.getElementById(galleryId); const images = container.querySelectorAll('img'); let idx = galleryState[galleryId]; images[idx].classList.remove('active'); images[idx].classList.add('inactive'); idx += dir; if (idx >= images.length) idx = 0; if (idx < 0) idx = images.length - 1; images[idx].classList.remove('inactive'); images[idx].classList.add('active'); galleryState[galleryId] = idx; }
+        
+        function moveCarousel(dir) { 
+            const track = document.getElementById('carousel-track'); 
+            if(!track) return;
+            currentSlide += dir; 
+            if (currentSlide < 0) currentSlide = 1; 
+            if (currentSlide > 1) currentSlide = 0; 
+            track.style.transform = `translateX(-${currentSlide * 100}%)`; 
+        }
+
+        function toggleMute() { 
+            const audio = document.getElementById('bg-music'); 
+            if(!audio) return;
+            audio.muted = !audio.muted; 
+            const svg = document.getElementById('sound-icon-svg');
+            if(svg) {
+                if(audio.muted) {
+                    svg.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
+                } else {
+                    svg.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
+                }
+            }
+        }
+
+        function cycleInternalImage(galleryId, dir) { 
+            const container = document.getElementById(galleryId); 
+            if(!container) return;
+            const images = container.querySelectorAll('img'); 
+            if(!images.length) return;
+            let idx = galleryState[galleryId] || 0; 
+            if(images[idx]) {
+                images[idx].classList.remove('active'); 
+                images[idx].classList.add('inactive'); 
+            }
+            idx += dir; 
+            if (idx >= images.length) idx = 0; 
+            if (idx < 0) idx = images.length - 1; 
+            if(images[idx]) {
+                images[idx].classList.remove('inactive'); 
+                images[idx].classList.add('active'); 
+            }
+            galleryState[galleryId] = idx; 
+        }
         
         function startInternalGalleries() { 
-            // Updated Timing: 7000ms to accommodate slower transitions
             const slideDuration = 7000;
-
             setInterval(() => { 
-                // Determine active project based on main carousel index (0 = Mountain, 1 = Lake)
                 const isProject1 = currentSlide === 0;
                 const activeGalleryId = isProject1 ? 'gallery-mountain' : 'gallery-lake';
                 
                 const container = document.getElementById(activeGalleryId);
-                // Safety check in case DOM isn't ready or IDs changed
                 if (!container) return;
 
                 const images = container.querySelectorAll('img');
-                const currentIndex = galleryState[activeGalleryId];
+                const currentIndex = galleryState[activeGalleryId] || 0;
 
-                // Change 1: Sequencing Logic
-                // If we are showing the last image of the current project...
                 if (currentIndex >= images.length - 1) {
-                    // 1. Reset the current gallery to the first image (wraps to 0) so it's ready for next loop
                     cycleInternalImage(activeGalleryId, 1);
-                    
-                    // 2. Automatically transition the main carousel to the next project
                     moveCarousel(1);
                 } else {
-                    // Otherwise, just advance to the next slide within the current project
                     cycleInternalImage(activeGalleryId, 1);
                 }
             }, slideDuration); 
         }
 
-        // --- PLAN SLIDESHOW LOGIC ---
         function cyclePlan(dir) {
             const container = document.getElementById('plan-gallery');
+            if(!container) return;
             const images = container.querySelectorAll('.plan-image');
+            if(!images.length) return;
             
-            images[planIdx].classList.remove('active');
-            images[planIdx].classList.add('inactive');
+            if(images[planIdx]) {
+                images[planIdx].classList.remove('active');
+                images[planIdx].classList.add('inactive');
+            }
             
             planIdx += dir;
             if(planIdx >= images.length) planIdx = 0;
             if(planIdx < 0) planIdx = images.length - 1;
             
-            images[planIdx].classList.remove('inactive');
-            images[planIdx].classList.add('active');
+            if(images[planIdx]) {
+                images[planIdx].classList.remove('inactive');
+                images[planIdx].classList.add('active');
+            }
 
-            // Sync modal image if open
             const modalImg = document.getElementById('plan-modal-img');
-            if (modalImg && !document.getElementById('plan-modal').classList.contains('pointer-events-none')) {
+            const modal = document.getElementById('plan-modal');
+            if (modalImg && modal && !modal.classList.contains('pointer-events-none')) {
                 modalImg.src = images[planIdx].src;
             }
         }
 
         function startPlanSlideshow() {
             if(planTimer) clearInterval(planTimer);
-            // Slower transition speed (e.g. 5.5s) to allow reading
             planTimer = setInterval(() => cyclePlan(1), 5500); 
         }
 
         function togglePlanPlay() {
             planPlaying = !planPlaying;
             const btn = document.getElementById('btn-play-pause');
+            if(!btn) return;
             if(planPlaying) {
                 btn.innerHTML = pauseSvg;
                 startPlanSlideshow();
@@ -2231,98 +2272,70 @@
             const modal = document.getElementById('plan-modal');
             const modalImg = document.getElementById('plan-modal-img');
             const container = document.getElementById('plan-gallery');
+            if(!modal || !modalImg || !container) return;
+
             const images = container.querySelectorAll('.plan-image');
+            if(images[planIdx]) modalImg.src = images[planIdx].src;
             
-            modalImg.src = images[planIdx].src;
-            
-            // Show Modal & apply zoom effect to img
             modal.classList.remove('pointer-events-none', 'opacity-0');
             modal.classList.add('pointer-events-auto', 'opacity-100');
             setTimeout(() => { modalImg.classList.remove('scale-95'); modalImg.classList.add('scale-100'); }, 50);
             
-            // Auto-pause the background slideshow so user can read
             if(planPlaying) togglePlanPlay();
         }
 
         function closePlanModal() {
             const modal = document.getElementById('plan-modal');
             const modalImg = document.getElementById('plan-modal-img');
+            if(!modal || !modalImg) return;
             
-            // Hide Modal & revert zoom
             modal.classList.remove('pointer-events-auto', 'opacity-100');
             modal.classList.add('pointer-events-none', 'opacity-0');
             modalImg.classList.remove('scale-100');
             modalImg.classList.add('scale-95');
         }
 
-        // --- SUB-NAVIGATION SCROLL LOGIC ---
-        function scrollToConceptSection(id) {
-            const el = document.getElementById(id);
-            if(el) {
-                // Determine offset based on viewport to account for dual sticky headers
-                const isMobile = window.innerWidth < 768;
-                const headerOffset = isMobile ? 120 : 140; 
-                const elementPosition = el.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-          
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
-                });
-            }
-        }
+        let extFrames = [];
+        let intFrames = [];
 
-        // --- 360 VIEWER LOGIC ---
         function init360() {
-            // Failsafe in case CDN hasn't loaded yet
             if(typeof jQuery === 'undefined' || !$.fn.spritespin) {
                 setTimeout(init360, 100);
                 return;
             }
 
-            // Create arrays to prevent string parsing issues. 
-            const extFrames = [];
-            const intFrames = [];
+            extFrames = [];
+            intFrames = [];
             for(let i=1; i<=51; i++) {
-                // Pad single digits with a leading zero (e.g., 1 -> '01')
                 let paddedIndex = String(i).padStart(2, '0');
-                extFrames.push(`stayotlo/360e/Image${paddedIndex}.png`);
-                intFrames.push(`stayotlo/360i/Image${paddedIndex}.png`);
+                extFrames.push(`360e/Image${paddedIndex}.png`);
+                intFrames.push(`360i/Image${paddedIndex}.png`);
             }
 
             const spinOptions = {
                 sense: -1,
                 responsive: true,
                 loop: true,
+                sizeMode: 'fit',
+                animate: false
             };
 
-            // Initialize Exterior (Active by Default)
-            $('#viewer-exterior').spritespin({
-                ...spinOptions,
-                animate: false, // Removed auto rotate
-                source: extFrames,
-                onFrame: function(e, data) {
-                    if(current360View === 'exterior') $('#slider-360').val(data.frame);
-                }
-            });
+            const viewer = $('#viewer-360');
+            if(viewer.length) {
+                viewer.spritespin({
+                    ...spinOptions,
+                    source: extFrames,
+                    onFrame: function(e, data) {
+                        $('#slider-360').val(data.frame);
+                    }
+                });
+            }
 
-            // Initialize Interior (Hidden by Default)
-            $('#viewer-interior').spritespin({
-                ...spinOptions,
-                animate: false, // Removed auto rotate
-                source: intFrames,
-                onFrame: function(e, data) {
-                    if(current360View === 'interior') $('#slider-360').val(data.frame);
-                }
-            });
-
-            // Sync Slider input to active viewer manually when dragged
-            $('#slider-360').on('input change', function() {
+            $('#slider-360').off('input change').on('input change', function() {
                 const frameIndex = parseInt($(this).val(), 10);
-                if(current360View === 'exterior') {
-                    $('#viewer-exterior').spritespin("api").updateFrame(frameIndex);
-                } else {
-                    $('#viewer-interior').spritespin("api").updateFrame(frameIndex);
+                const api = $('#viewer-360').spritespin("api");
+                if(api) {
+                    api.updateFrame(frameIndex);
                 }
             });
         }
@@ -2330,44 +2343,46 @@
         function switch360View(view) {
             if(view === current360View) return;
             
-            const extApi = $('#viewer-exterior').spritespin("api");
-            const intApi = $('#viewer-interior').spritespin("api");
+            const slider = $('#slider-360');
+            const currentFrame = slider.length ? (parseInt(slider.val(), 10) || 0) : 0;
+            const viewer = $('#viewer-360');
             
+            const btnInt = document.getElementById('btn-int');
+            const btnExt = document.getElementById('btn-ext');
+
             if (view === 'interior') {
-                // Pre-sync interior frame to match current exterior before showing
-                intApi.updateFrame(extApi.data.frame);
+                if(viewer.length) {
+                    viewer.spritespin({
+                        source: intFrames,
+                        frame: currentFrame
+                    });
+                }
                 
-                // Crossfade
-                document.getElementById('viewer-interior').classList.replace('opacity-0', 'opacity-100');
-                document.getElementById('viewer-interior').classList.remove('pointer-events-none');
-                document.getElementById('viewer-exterior').classList.replace('opacity-100', 'opacity-0');
-                document.getElementById('viewer-exterior').classList.add('pointer-events-none');
-                
-                // Toggle Buttons
-                document.getElementById('btn-int').classList.add('bg-black', 'text-white');
-                document.getElementById('btn-int').classList.remove('text-gray-500', 'hover:text-black');
-                document.getElementById('btn-ext').classList.remove('bg-black', 'text-white');
-                document.getElementById('btn-ext').classList.add('text-gray-500', 'hover:text-black');
+                if(btnInt && btnExt) {
+                    btnInt.classList.add('bg-black', 'text-white');
+                    btnInt.classList.remove('text-gray-500', 'hover:text-black');
+                    btnExt.classList.remove('bg-black', 'text-white');
+                    btnExt.classList.add('text-gray-500', 'hover:text-black');
+                }
             } else {
-                // Pre-sync exterior frame to match current interior before showing
-                extApi.updateFrame(intApi.data.frame);
+                if(viewer.length) {
+                    viewer.spritespin({
+                        source: extFrames,
+                        frame: currentFrame
+                    });
+                }
                 
-                // Crossfade
-                document.getElementById('viewer-exterior').classList.replace('opacity-0', 'opacity-100');
-                document.getElementById('viewer-exterior').classList.remove('pointer-events-none');
-                document.getElementById('viewer-interior').classList.replace('opacity-100', 'opacity-0');
-                document.getElementById('viewer-interior').classList.add('pointer-events-none');
-                
-                // Toggle Buttons
-                document.getElementById('btn-ext').classList.add('bg-black', 'text-white');
-                document.getElementById('btn-ext').classList.remove('text-gray-500', 'hover:text-black');
-                document.getElementById('btn-int').classList.remove('bg-black', 'text-white');
-                document.getElementById('btn-int').classList.add('text-gray-500', 'hover:text-black');
+                if(btnInt && btnExt) {
+                    btnExt.classList.add('bg-black', 'text-white');
+                    btnExt.classList.remove('text-gray-500', 'hover:text-black');
+                    btnInt.classList.remove('bg-black', 'text-white');
+                    btnInt.classList.add('text-gray-500', 'hover:text-black');
+                }
             }
+            
             current360View = view;
         }
 
-        // --- EXPLODED ANATOMY LOGIC ---
         let isExploded = false;
 
         function setExplodeState(explode) {
@@ -2376,12 +2391,12 @@
             const btnCol = document.getElementById('btn-col');
             const btnExp = document.getElementById('btn-exp');
             
+            if(!stage || !highlight || !btnCol || !btnExp) return;
+
             isExploded = explode;
             
             if (explode) {
                 stage.classList.add('is-exploded');
-                // The toggle container is 88px wide. The button is 40px wide. Left offset is 4px.
-                // 40px translation shifts it perfectly over the right button.
                 highlight.style.transform = 'translateX(40px)';
                 
                 btnExp.classList.replace('text-gray-400', 'text-white');
@@ -2390,7 +2405,7 @@
                 btnCol.classList.add('hover:text-black');
             } else {
                 stage.classList.remove('is-exploded');
-                stage.classList.remove('is-focused'); // collapse focus too if open
+                stage.classList.remove('is-focused'); 
                 
                 highlight.style.transform = 'translateX(0)';
                 
@@ -2404,6 +2419,7 @@
         function toggleExplodeFocus() {
             if (!isExploded) return;
             const stage = document.getElementById('explode-stage');
+            if(!stage) return;
             
             if (stage.classList.contains('is-focused')) {
                 stage.classList.remove('is-focused');
