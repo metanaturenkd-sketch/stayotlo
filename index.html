@@ -3,23 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ArchDoor Ventures | Interactive Investment Platform</title>
+    <title>ArchDoor Ventures | OTLO Collection</title>
     <link rel="icon" href="logo/logo.png" type="image/png">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- 360 Viewer Dependencies -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/spritespin@4.1.0/release/spritespin.js"></script>
 
-    <!-- Google Fonts: Inter & Cormorant Garamond (Elegant Serif) -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
         .brand-gradient { background: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%); }
@@ -237,19 +232,15 @@
 
     <audio id="bg-music" loop><source src="music/borealis.mp3" type="audio/mpeg"></audio>
 
-    <!-- NAVIGATION -->
     <nav class="fixed top-0 w-full z-50 nav-glass transition-all duration-300">
         <div class="max-w-screen-2xl mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center relative">
             
-            <!-- Left: Logo -->
             <div class="flex items-center gap-3 cursor-pointer shrink-0 w-[240px]" onclick="switchTab('concepts')">
-                <img src="./logo/logo.png" alt="ArchDoor Logo" class="w-8 h-8 object-contain">
+                <img src="logo/logo.png" alt="ArchDoor Logo" class="w-8 h-8 object-contain">
                 <div class="text-base md:text-lg font-bold tracking-tight uppercase whitespace-nowrap">ArchDoor Ventures</div>
             </div>
             
-            <!-- Center: Perfectly Aligned Links Container -->
             <div class="hidden md:flex justify-between w-[550px] lg:w-[680px] text-[10px] lg:text-xs font-semibold uppercase tracking-widest text-gray-500 h-full items-center">
-                <!-- Distinct OTLO Collection Link (First) -->
                 <button onclick="switchTab('concepts')" class="transition-colors nav-btn text-black font-extrabold hover:opacity-80" data-target="concepts">
                     OTLO Collection
                 </button>
@@ -258,16 +249,13 @@
                 <button onclick="switchTab('calculator')" class="hover:text-black transition-colors nav-btn" data-target="calculator">Investor Engine</button>
             </div>
 
-            <!-- Right Spacer for Balance -->
             <div class="hidden md:flex w-48 shrink-0 justify-end"></div>
 
-            <!-- Mobile Hamburger -->
             <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-black focus:outline-none absolute right-4">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
         </div>
 
-        <!-- Mobile Dropdown -->
         <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full mobile-menu-glass md:hidden flex-col p-6 space-y-4 text-center z-40 transition-all duration-300">
             <button onclick="switchTab('concepts'); toggleMobileMenu()" class="block w-full py-4 text-sm font-extrabold uppercase tracking-widest text-black border-b border-gray-100/50">OTLO Collection</button>
             <button onclick="switchTab('philosophy'); toggleMobileMenu()" class="block w-full py-4 text-sm font-bold uppercase tracking-widest text-gray-800 border-b border-gray-100/50">Philosophy</button>
@@ -278,9 +266,7 @@
 
     <main class="pt-16 md:pt-20">
 
-        <!-- TAB 1: PHILOSOPHY -->
         <section id="tab-philosophy" class="tab-content hidden min-h-screen animate-fade-in flex flex-col bg-white">
-            <!-- Hero Section with Architectural Grid -->
             <div class="relative w-full border-b border-gray-200">
                 <div class="absolute inset-0 arch-grid opacity-30 pointer-events-none"></div>
                 <div class="absolute inset-0 bg-gradient-to-b from-white/0 to-white/80 pointer-events-none"></div>
@@ -296,7 +282,6 @@
                 </div>
             </div>
 
-            <!-- Stats Bar - Architectural Rhythm -->
             <div class="w-full border-b border-gray-200 bg-white">
                 <div class="max-w-6xl mx-auto px-6 py-12">
                     <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-100 reveal-on-scroll">
@@ -326,10 +311,8 @@
             
             <div class="w-full bg-gray-50/50 py-20 md:py-32">
                 <div class="max-w-7xl mx-auto px-6">
-                    <!-- Design Ecosystem -->
                     <div class="grid lg:grid-cols-2 gap-16 md:gap-24 mb-24 md:mb-32 reveal-on-scroll items-start">
                         
-                        <!-- Left Content -->
                         <div class="space-y-10 sticky top-24">
                             <div>
                                 <div class="flex items-center gap-3 mb-4">
@@ -366,17 +349,14 @@
                             </ul>
                         </div>
                         
-                        <!-- Right Content - Value Creation Cycle -->
                         <div class="bg-white p-10 md:p-12 rounded-[2rem] shadow-xl shadow-gray-100/50 border border-gray-100 relative">
                             <div class="absolute inset-0 arch-grid opacity-10 pointer-events-none rounded-[2rem]"></div>
                             <div class="relative z-10">
                                 <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-10 text-center">The Value Creation Cycle</h3>
                                 <div class="relative">
-                                    <!-- Connecting Line -->
                                     <div class="absolute left-[23px] top-4 bottom-4 w-px bg-gradient-to-b from-gray-200 via-gray-300 to-gray-200"></div>
                                     
                                     <div class="space-y-12">
-                                        <!-- Item 1 -->
                                         <div class="flex gap-8 group">
                                             <div class="relative z-10 w-12 h-12 rounded-full bg-white border border-black text-black flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 transition-transform duration-300">
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 22h20M2 22V2l20 20"/></svg>
@@ -387,7 +367,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Item 2 -->
                                         <div class="flex gap-8 group">
                                             <div class="relative z-10 w-12 h-12 rounded-full bg-white border border-black text-black flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 transition-transform duration-300">
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -398,7 +377,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Item 3 -->
                                         <div class="flex gap-8 group">
                                             <div class="relative z-10 w-12 h-12 rounded-full bg-white border border-black text-black flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 transition-transform duration-300">
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
@@ -409,7 +387,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Item 4 -->
                                         <div class="flex gap-8 group">
                                             <div class="relative z-10 w-12 h-12 rounded-full bg-white border border-black text-black flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 transition-transform duration-300">
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
@@ -425,7 +402,6 @@
                         </div>
                     </div>
 
-                    <!-- Market Comparison -->
                     <div class="mb-24 md:mb-32 reveal-on-scroll">
                         <div class="text-center mb-16">
                             <h3 class="text-xs font-bold uppercase tracking-widest text-purple-600 mb-3">Market Positioning</h3>
@@ -477,9 +453,7 @@
                         </div>
                     </div>
 
-                    <!-- Financial Outlook -->
                     <div class="reveal-on-scroll pb-20 mb-20">
-                        <!-- Top Row: Text & Growth Chart -->
                         <div class="grid lg:grid-cols-2 gap-12 md:gap-20 mb-12 items-center">
                             <div>
                                 <div class="flex items-center gap-3 mb-4">
@@ -495,7 +469,6 @@
                             </div>
                         </div>
 
-                        <!-- Bottom Row: Aligned Charts -->
                         <div class="grid lg:grid-cols-2 gap-8 md:gap-12">
                             <div class="bg-white p-8 rounded-[2rem] border border-gray-200 shadow-lg relative overflow-hidden group flex flex-col h-full">
                                 <div class="absolute inset-0 arch-grid opacity-5 pointer-events-none"></div>
@@ -517,7 +490,6 @@
             </div>
         </section>
 
-        <!-- TAB 2: BENCHMARKS -->
         <section id="tab-benchmarks" class="tab-content hidden min-h-screen bg-gray-50 relative">
             <div class="absolute inset-0 arch-grid opacity-20 pointer-events-none"></div>
             <div class="py-8 md:py-12 px-6 border-b border-gray-200 bg-white sticky top-16 md:top-20 z-10 shadow-sm md:shadow-none">
@@ -533,32 +505,27 @@
             <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12"><div id="benchmark-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div></div>
         </section>
 
-        <!-- TAB 3: PROJECTS (DEFAULT VIEW) -->
         <section id="tab-concepts" class="tab-content min-h-screen bg-white relative">
 
-            <!-- Sticky Sub-Navigation (Dark Frosted Glass & Perfectly Aligned) -->
             <div id="otlo-subnav-sticky" class="sticky top-16 md:top-20 z-50 w-full bg-slate-900/85 backdrop-blur-2xl border-b border-white/10 shadow-md">
                 <div class="w-full overflow-x-auto no-scrollbar py-2.5">
                     <div class="max-w-screen-2xl mx-auto px-4 md:px-6 flex items-center justify-between">
-                        <!-- Left spacer to match main nav logo width perfectly (~240px) -->
                         <div class="w-[240px] hidden md:block shrink-0"></div>
                         
-                        <!-- Perfectly Center Aligned Links -->
                         <div class="flex items-center justify-between w-[550px] lg:w-[680px] text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all shrink-0">
                             <button data-section="otlo-intro" onclick="scrollToConceptSection('otlo-intro')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Gallery</button>
                             <button data-section="otlo-meaning" onclick="scrollToConceptSection('otlo-meaning')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Vision</button>
                             <button data-section="otlo-spatial" onclick="scrollToConceptSection('otlo-spatial')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Spatial Flow</button>
                             <button data-section="otlo-360" onclick="scrollToConceptSection('otlo-360')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">360° View</button>
                             <button data-section="otlo-anatomy" onclick="scrollToConceptSection('otlo-anatomy')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Anatomy</button>
+                            <button data-section="otlo-amenities" onclick="scrollToConceptSection('otlo-amenities')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Amenities</button>
                         </div>
 
-                        <!-- Right spacer to match main nav layout width -->
                         <div class="w-48 hidden md:block shrink-0"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Slideshow Hero (Single Screen Fit, adjusted for sticky subnav height) -->
             <div id="otlo-intro" class="relative w-full h-[calc(100vh-130px)] bg-black overflow-hidden group scroll-mt-32">
                 
                 <div class="absolute top-4 md:top-6 right-4 md:right-6 z-40">
@@ -571,13 +538,12 @@
                 </div>
                 
                 <div class="carousel-track h-full" id="carousel-track">
-                    <!-- Project 1 -->
                     <div class="carousel-slide min-w-full h-full relative group">
                         <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-mountain">
-                            <img src="./images/msd.png" class="gallery-image active" data-index="0" alt="Mountain View 1">
-                            <img src="./images/msn.png" class="gallery-image inactive" data-index="1" alt="Mountain View 2">
-                            <img src="./images/mcd.png" class="gallery-image inactive" data-index="2" alt="Mountain View 3">
-                            <img src="./images/mcn.png" class="gallery-image inactive" data-index="3" alt="Mountain View 4">
+                            <img src="images/msd.png" class="gallery-image active" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'">
+                            <img src="images/msn.png" class="gallery-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'">
+                            <img src="images/mcd.png" class="gallery-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'">
+                            <img src="images/mcn.png" class="gallery-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1518733057094-95b53143d2a7?auto=format&fit=crop&q=80'">
                             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20"></div>
                         </div>
                         <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
@@ -585,13 +551,12 @@
                             <button onclick="cycleInternalImage('gallery-mountain', 1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">→</button>
                         </div>
                     </div>
-                    <!-- Project 2 -->
                     <div class="carousel-slide min-w-full h-full relative group">
                         <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-lake">
-                            <img src="./images/lsd.png" class="gallery-image active" data-index="0" alt="Lake View 1">
-                            <img src="./images/lsn.png" class="gallery-image inactive" data-index="1" alt="Lake View 2">
-                            <img src="./images/lcd.png" class="gallery-image inactive" data-index="2" alt="Lake View 3">
-                            <img src="./images/lcn.png" class="gallery-image inactive" data-index="3" alt="Lake View 4">
+                            <img src="images/lsd.png" class="gallery-image active" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80'">
+                            <img src="images/lsn.png" class="gallery-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1504280390224-4bc343058814?auto=format&fit=crop&q=80'">
+                            <img src="images/lcd.png" class="gallery-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80'">
+                            <img src="images/lcn.png" class="gallery-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&q=80'">
                             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20"></div>
                         </div>
                         <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
@@ -600,13 +565,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- Main Nav Arrows -->
                 <button onclick="moveCarousel(-1)" class="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
                 <button onclick="moveCarousel(1)" class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
 
-                <!-- Minimal Footer Overlay with Centered Logo Above It -->
                 <div class="absolute bottom-8 md:bottom-12 left-0 w-full z-40 flex flex-col items-center justify-center pointer-events-none animate-fade-in" style="animation-delay: 0.8s">
-                    <img src="./logo/logoo.png" alt="OTLO Logo" class="w-24 md:w-32 object-contain mb-4 drop-shadow-xl" style="filter: brightness(0) invert(1);">
+                    <img src="logo/logoo.png" alt="OTLO Logo" class="w-24 md:w-32 object-contain mb-4 drop-shadow-xl" style="filter: brightness(0) invert(1);" onerror="this.style.display='none'">
                     <p class="text-[9px] md:text-[10px] font-light uppercase tracking-[0.25em] text-white/70 text-center px-4 leading-relaxed">
                         OTLO SHORES <span class="mx-2 md:mx-4 text-white/30">|</span> 
                         OTLO PEAK <span class="mx-2 md:mx-4 text-white/30">|</span> 
@@ -615,11 +578,9 @@
                 </div>
             </div>
 
-            <!-- EXPLANATION SECTION (Dynamic & Interactive) -->
             <div id="otlo-meaning" class="w-full min-h-[calc(100vh-140px)] flex flex-col justify-center py-16 scroll-mt-28">
                 <div class="max-w-7xl mx-auto px-6 w-full">
                     
-                    <!-- Header & Intro (Interactive Hover) -->
                     <div class="mb-16 max-w-4xl mx-auto text-center reveal-on-scroll relative group cursor-default">
                         <div class="absolute -inset-10 bg-gradient-to-r from-blue-50 via-gray-50 to-green-50 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-xl -z-10"></div>
                         <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-8 relative z-10">The Meaning of OTLO</h2>
@@ -632,14 +593,11 @@
                         </p>
                     </div>
 
-                    <!-- Narrative & Diagrams Grid -->
                     <div class="grid lg:grid-cols-3 gap-12 md:gap-8 reveal-on-scroll">
                         
-                        <!-- Block 1: Threshold -->
                         <div class="flex flex-col group cursor-default">
                             <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-56 flex items-center justify-center border border-gray-100 relative overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-white transition-all duration-500">
                                 <div class="absolute inset-0 arch-grid opacity-10 pointer-events-none"></div>
-                                <!-- Diagram 1: Urban -> Threshold -> Nature -->
                                 <svg viewBox="0 0 300 120" class="w-full h-full relative z-10 stroke-gray-900 fill-none transition-transform duration-500 group-hover:scale-105" stroke-width="1.5">
                                     <rect x="20" y="30" width="50" height="40" stroke-width="1" class="transition-colors duration-500 group-hover:fill-gray-100"/>
                                     <line x1="30" y1="30" x2="30" y2="70" stroke-width="0.5" stroke-opacity="0.4"/>
@@ -670,11 +628,9 @@
                             </p>
                         </div>
 
-                        <!-- Block 2: Archetypes -->
                         <div class="flex flex-col group cursor-default">
                             <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-56 flex items-center justify-center border border-gray-100 relative overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-white transition-all duration-500">
                                 <div class="absolute inset-0 arch-grid opacity-10 pointer-events-none"></div>
-                                <!-- Diagram 2: Convergence of Archetypes -->
                                 <svg viewBox="0 0 300 120" class="w-full h-full relative z-10 stroke-gray-900 fill-none transition-transform duration-500 group-hover:scale-105" stroke-width="1">
                                     <rect x="30" y="20" width="60" height="30" class="transition-colors duration-500 group-hover:stroke-gray-400" />
                                     <line x1="40" y1="20" x2="40" y2="50" stroke-opacity="0.3"/>
@@ -704,11 +660,9 @@
                             </p>
                         </div>
 
-                        <!-- Block 3: Scalability -->
                         <div class="flex flex-col group cursor-default">
                             <div class="bg-gray-50 rounded-[2rem] p-8 mb-8 h-56 flex items-center justify-center border border-gray-100 relative overflow-hidden hover:-translate-y-2 hover:shadow-xl hover:bg-white transition-all duration-500">
                                 <div class="absolute inset-0 arch-grid opacity-10 pointer-events-none"></div>
-                                <!-- Diagram 3: Modular Scalability -->
                                 <svg viewBox="0 0 300 130" class="w-full h-full relative z-10 stroke-gray-900 fill-none transition-transform duration-500 group-hover:scale-105" stroke-width="1.5">
                                     <rect x="130" y="10" width="40" height="25" stroke-dasharray="3 3" class="svg-animate-dash transition-colors duration-500 group-hover:stroke-black" />
                                     <circle cx="150" cy="22.5" r="2.5" fill="currentColor" stroke="none" class="svg-animate-pulse" />
@@ -745,10 +699,8 @@
                 </div>
             </div>
 
-            <!-- ANATOMY OF OTLO SECTION -->
             <div class="w-full bg-white border-t border-gray-100">
                 
-                <!-- 1. Spatial Flow -->
                 <div id="otlo-spatial" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll">
                     <div class="mb-10 text-center">
                         <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-6">OTLO Design Anatomy</h2>
@@ -757,10 +709,8 @@
 
                     <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center md:text-left w-full max-w-[95%]">1. Spatial Flow</h3>
                     
-                    <!-- Slideshow Container with Slate Blueprint background -->
                     <div class="relative w-[95%] aspect-square md:aspect-[16/9] bg-[#111e30] shadow-2xl rounded-[2rem] overflow-hidden group border border-[#1e3450] cursor-zoom-in transition-all flex flex-col p-4 md:p-8 mb-6" onclick="openPlanModal()">
                         
-                        <!-- Internal Playback Controls (Moved to Top Center) -->
                         <div class="relative z-50 flex justify-center mb-6 md:mb-8" onclick="event.stopPropagation()">
                             <div class="flex items-center gap-6 bg-white/10 backdrop-blur-md border border-white/10 px-5 py-2.5 rounded-full shadow-md">
                                 <button onclick="cyclePlan(-1)" class="text-white/50 hover:text-white transition-colors flex items-center justify-center">
@@ -768,7 +718,6 @@
                                 </button>
                                 <div class="w-px h-4 bg-white/20"></div>
                                 <button id="btn-play-pause" onclick="togglePlanPlay()" class="text-white hover:text-white/70 transition-opacity flex items-center justify-center w-5 h-5">
-                                    <!-- Pause SVG (Default) -->
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
                                 </button>
                                 <div class="w-px h-4 bg-white/20"></div>
@@ -778,7 +727,6 @@
                             </div>
                         </div>
 
-                        <!-- Blueprint grid (Clipping mask removed for continuous grid) -->
                         <div class="absolute inset-0 arch-grid-dark pointer-events-none z-0"></div>
                         
                         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.15),_transparent_40%)] pointer-events-none z-0"></div>
@@ -786,51 +734,48 @@
                         <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none z-0"></div>
                         
                         <div id="plan-gallery" class="w-full flex-grow relative z-10">
-                            <img src="./plans/plan1.png" class="plan-image active p-2 md:p-8" data-index="0" alt="Plan 1">
-                            <img src="./plans/plan2.png" class="plan-image inactive p-2 md:p-8" data-index="1" alt="Plan 2">
-                            <img src="./plans/plan3.png" class="plan-image inactive p-2 md:p-8" data-index="2" alt="Plan 3">
-                            <img src="./plans/plan4.png" class="plan-image inactive p-2 md:p-8" data-index="3" alt="Plan 4">
-                            <img src="./plans/plan5.png" class="plan-image inactive p-2 md:p-8" data-index="4" alt="Plan 5">
+                            <img src="plans/plan1.png" class="plan-image active p-2 md:p-8" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan2.png" class="plan-image inactive p-2 md:p-8" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan3.png" class="plan-image inactive p-2 md:p-8" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan4.png" class="plan-image inactive p-2 md:p-8" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan5.png" class="plan-image inactive p-2 md:p-8" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
                         </div>
                     </div>
                 </div>
                 
-                <!-- 2. The 360° Experience -->
                 <div id="otlo-360" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
                     <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center md:text-left w-full max-w-[95%]">2. The 360° Experience</h3>
                     
-                    <!-- Slideshow Container -->
                     <div class="relative w-[95%] max-w-6xl bg-gray-50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all mb-8 flex flex-col p-4 md:p-8">
                         
-                        <!-- Internal Toggle (Moved safely above the image) -->
                         <div class="relative z-50 flex justify-center mb-6 md:mb-8">
                             <div class="flex items-center gap-1 bg-white/90 backdrop-blur-md border border-gray-200 px-2 py-1.5 rounded-full shadow-md">
                                 <button id="btn-ext" onclick="switch360View('exterior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-black text-white transition-colors">Exterior</button>
                                 <button id="btn-int" onclick="switch360View('interior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Interior</button>
+                                <div class="w-px h-4 bg-gray-300 mx-1"></div>
+                                <button id="btn-360-play" onclick="toggle360Play()" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-black transition-colors rounded-full" title="Play/Pause Rotation">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                                </button>
                             </div>
                         </div>
 
-                        <!-- Single Viewer (Dynamically updated to prevent rendering bugs) -->
                         <div class="relative w-full aspect-square md:aspect-[16/9] max-h-[60vh]">
                             <div id="viewer-360" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-100 cursor-grab active:cursor-grabbing z-10"></div>
                         </div>
                     </div>
 
-                    <!-- External Slider Control -->
                     <div class="w-full max-w-lg mx-auto flex flex-col items-center px-6">
                         <input type="range" id="slider-360" class="slider-360 w-full" min="1" max="51" value="1">
                         <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest">Drag image or use slider to rotate</p>
                     </div>
                 </div>
                 
-                <!-- 3. System Anatomy -->
                 <div id="otlo-anatomy" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
                     
                     <div class="flex justify-between items-end w-full max-w-[95%] mb-6">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">3. System Anatomy</h3>
                     </div>
 
-                    <!-- Minimal Glass Toggle Button safely above stage -->
                     <div class="relative flex items-center bg-gray-50 border border-gray-200 rounded-full p-1 shadow-sm w-[88px] h-12 mb-4 z-50">
                         <div id="explode-highlight" class="absolute w-10 h-10 bg-black rounded-full transition-transform duration-300 left-1 translate-x-0"></div>
                         <button onclick="setExplodeState(false)" class="relative z-10 w-10 h-10 flex items-center justify-center transition-colors text-white" id="btn-col" aria-label="Collapse">
@@ -841,32 +786,333 @@
                         </button>
                     </div>
 
-                    <!-- Explode Container -->
                     <div id="explode-stage" class="relative w-[95%] h-[55vh] md:h-[65vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group shadow-sm transition-all z-10">
                         <div class="explode-wrapper relative w-full max-w-[1200px] h-full">
-                            <img src="./images/view.png" class="explode-layer explode-view" alt="Explode View" onclick="setExplodeState(true)">
-                            <img src="./images/shell.png" class="explode-layer explode-shell" alt="Shell">
-                            <img src="./images/interior.png" class="explode-layer explode-interior" alt="Interior" onclick="toggleExplodeFocus()">
-                            <img src="./images/base.png" class="explode-layer explode-base" alt="Base" onclick="setExplodeState(false)">
+                            <img src="images/view.png" class="explode-layer explode-view" alt="" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" onclick="setExplodeState(true)">
+                            <img src="images/shell.png" class="explode-layer explode-shell" onerror="this.style.display='none'" alt="">
+                            <img src="images/interior.png" class="explode-layer explode-interior" onerror="this.style.display='none'" alt="" onclick="toggleExplodeFocus()">
+                            <img src="images/base.png" class="explode-layer explode-base" onerror="this.style.display='none'" alt="" onclick="setExplodeState(false)">
                         </div>
                     </div>
                     <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest" id="explode-hint">Click interior to zoom</p>
                 </div>
 
+                <!-- NEW AMENITIES SECTION -->
+                <div id="otlo-amenities" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
+                    
+                    <!-- Intro / Concept -->
+                    <div class="max-w-4xl mx-auto text-center px-6 mb-20">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">4. Curated Amenities</h3>
+                        <h2 class="text-3xl md:text-5xl font-bold tracking-tight leading-tight mb-6 text-black">OTLO — A Porch to Pause.<br><span class="text-gray-400">A Retreat to Remember.</span></h2>
+                        <div class="w-12 h-px bg-black mx-auto mb-6"></div>
+                        <p class="text-gray-500 font-light leading-relaxed text-base md:text-lg">
+                            At OTLO, every space is conceived as a threshold — between architecture and landscape, solitude and gathering, ritual and celebration. Inspired by the idea of the porch as a place of transition and connection, OTLO invites guests to slow down, step outside, and stay awhile. Our amenities are intentionally layered to create a refined yet immersive hospitality experience rooted in wellness, design, and meaningful connection.
+                        </p>
+                    </div>
+
+                    <!-- Resort Experiences Grid -->
+                    <div class="w-full max-w-[95%] mb-24">
+                        <div class="text-center mb-12">
+                            <h3 class="text-2xl font-bold mb-4">Resort Experiences</h3>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            
+                            <!-- Card 1 -->
+                            <div class="bg-gray-50 rounded-[2rem] p-8 border border-gray-100 hover:bg-white hover:shadow-xl transition-all duration-500 group relative overflow-hidden flex flex-col h-full">
+                                <div class="absolute inset-0 arch-grid opacity-5 pointer-events-none"></div>
+                                <div class="mb-6 w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-900 group-hover:scale-110 transition-transform duration-500 relative z-10">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                                </div>
+                                <h4 class="text-sm font-bold uppercase tracking-widest text-black mb-6 relative z-10">Recreation & Movement</h4>
+                                <ul class="space-y-5 relative z-10 flex-grow">
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Infinity Edge Pool</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">A resort-style infinity pool designed for sunrise swims and golden-hour lounging.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Professional Pickleball Courts</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">Competition-grade courts for spirited matches or relaxed play.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Nature Walking Trails</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">Curated trails woven into the landscape, encouraging exploration and reflection.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Children’s Discovery Garden</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">A thoughtfully designed outdoor play environment that fosters creativity and connection.</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="bg-gray-50 rounded-[2rem] p-8 border border-gray-100 hover:bg-white hover:shadow-xl transition-all duration-500 group relative overflow-hidden flex flex-col h-full">
+                                <div class="absolute inset-0 arch-grid opacity-5 pointer-events-none"></div>
+                                <div class="mb-6 w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-900 group-hover:scale-110 transition-transform duration-500 relative z-10">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                                </div>
+                                <h4 class="text-sm font-bold uppercase tracking-widest text-black mb-6 relative z-10">Wellness & Restoration</h4>
+                                <ul class="space-y-5 relative z-10 flex-grow">
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Sauna Vaults</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">Architectural heat sanctuaries crafted for detoxification and deep relaxation.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Cold Immersion Experiences</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">Purpose-built cold plunge facilities supporting contrast therapy and recovery rituals.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Wellness Pavilions</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">Open-air structures hosting yoga, breathwork, meditation, and guided retreats.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Signature Spa Experiences</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">Seasonal treatments and curated wellness packages designed to restore balance.</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="bg-gray-50 rounded-[2rem] p-8 border border-gray-100 hover:bg-white hover:shadow-xl transition-all duration-500 group relative overflow-hidden flex flex-col h-full">
+                                <div class="absolute inset-0 arch-grid opacity-5 pointer-events-none"></div>
+                                <div class="mb-6 w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-900 group-hover:scale-110 transition-transform duration-500 relative z-10">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+                                </div>
+                                <h4 class="text-sm font-bold uppercase tracking-widest text-black mb-6 relative z-10">Culinary & Experiences</h4>
+                                <ul class="space-y-5 relative z-10 flex-grow">
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Chef’s Table & Private Dining</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">Intimate culinary experiences led by guest chefs or curated for private in-cabin dining.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Farm-to-Table Breakfasts</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">Locally sourced morning provisions delivered directly to your cabin.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Wine & Cocktail Tastings</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">Guided tastings featuring regional selections and signature mixology experiences.</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Card 4 -->
+                            <div class="bg-gray-50 rounded-[2rem] p-8 border border-gray-100 hover:bg-white hover:shadow-xl transition-all duration-500 group relative overflow-hidden flex flex-col h-full">
+                                <div class="absolute inset-0 arch-grid opacity-5 pointer-events-none"></div>
+                                <div class="mb-6 w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-900 group-hover:scale-110 transition-transform duration-500 relative z-10">
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                </div>
+                                <h4 class="text-sm font-bold uppercase tracking-widest text-black mb-6 relative z-10">Social & Gathering</h4>
+                                <ul class="space-y-5 relative z-10 flex-grow">
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">OTLO Pavilion</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">A central gathering space for connection, conversation, and shared moments.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Event Pavilion & Lawn</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">A flexible venue designed for intimate weddings, retreats, and private celebrations.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Elevated Bar Lounge</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">A refined cocktail setting offering curated wines and seasonal menus.</span>
+                                    </li>
+                                    <li class="group/item cursor-default">
+                                        <strong class="block text-black text-sm mb-1 group-hover/item:text-blue-600 transition-colors">Private Resort Buy-Outs</strong>
+                                        <span class="text-xs text-gray-500 font-light leading-relaxed">Exclusive full-property reservations for destination events.</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- The OTLO Cabins (Accordions) -->
+                    <div class="w-full max-w-[95%] grid lg:grid-cols-12 gap-12 border-t border-gray-100 pt-16 mb-20">
+                        <div class="lg:col-span-5 sticky top-24 self-start">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">The OTLO Cabins</h3>
+                            <h4 class="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-black leading-tight">Private Architecture.<br><span class="text-gray-400">Personal Sanctuary.</span></h4>
+                            <div class="w-10 h-px bg-black mb-6"></div>
+                            <p class="text-gray-500 font-light leading-relaxed text-sm md:text-base pr-8">
+                                Each OTLO cabin is designed as a self-contained retreat — where architecture frames nature and comfort meets intention. Thoughtfully crafted interiors and private outdoor spaces create a seamless extension between shelter and landscape.
+                            </p>
+                        </div>
+                        
+                        <div class="lg:col-span-7 pt-4 lg:pt-0">
+                            <!-- Accordion Item 1 -->
+                            <div class="border-b border-gray-200">
+                                <button onclick="toggleAccordion('acc-outdoor')" class="w-full py-6 flex justify-between items-center group text-left focus:outline-none">
+                                    <span class="text-lg md:text-xl font-bold text-gray-900 group-hover:translate-x-2 transition-transform duration-300">Outdoor Living & Wellness</span>
+                                    <span class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 transition-all duration-300 shrink-0" id="icon-acc-outdoor">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform duration-300"><path d="M6 9l6 6 6-6"/></svg>
+                                    </span>
+                                </button>
+                                <div id="acc-outdoor" class="overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 0px;">
+                                    <div class="pb-8 pt-2 grid sm:grid-cols-2 gap-x-6 gap-y-4">
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Private Outdoor Hot Tub</strong>
+                                            <span class="text-xs text-gray-500 font-light">Year-round soaking beneath open skies.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Dedicated Cold Plunge</strong>
+                                            <span class="text-xs text-gray-500 font-light">Invigorating contrast therapy on your deck.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Fire Pit Lounge</strong>
+                                            <span class="text-xs text-gray-500 font-light">Evenings centered around warmth and conversation.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Expansive Private Deck</strong>
+                                            <span class="text-xs text-gray-500 font-light">Generous seating extending your living space.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Freestanding Soaking Tub</strong>
+                                            <span class="text-xs text-gray-500 font-light">Immersive bathing positioned for tranquility.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Outdoor Privacy Screening</strong>
+                                            <span class="text-xs text-gray-500 font-light">Architectural layering ensuring seclusion.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Accordion Item 2 -->
+                            <div class="border-b border-gray-200">
+                                <button onclick="toggleAccordion('acc-interior')" class="w-full py-6 flex justify-between items-center group text-left focus:outline-none">
+                                    <span class="text-lg md:text-xl font-bold text-gray-900 group-hover:translate-x-2 transition-transform duration-300">Interior Comfort & Design</span>
+                                    <span class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 transition-all duration-300 shrink-0" id="icon-acc-interior">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform duration-300"><path d="M6 9l6 6 6-6"/></svg>
+                                    </span>
+                                </button>
+                                <div id="acc-interior" class="overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 0px;">
+                                    <div class="pb-8 pt-2 grid sm:grid-cols-2 gap-x-6 gap-y-4">
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Fully Equipped Kitchenette</strong>
+                                            <span class="text-xs text-gray-500 font-light">A complete culinary setup ideal for extended stays.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Premium Bedding</strong>
+                                            <span class="text-xs text-gray-500 font-light">King Suites, Queen Suites, Family Bunk Options.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Luxury Bath Amenities</strong>
+                                            <span class="text-xs text-gray-500 font-light">Curated bath products that elevate everyday rituals.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Rainfall Shower Fixtures</strong>
+                                            <span class="text-xs text-gray-500 font-light">Spa-inspired bathing experiences.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Climate-Controlled Interiors</strong>
+                                            <span class="text-xs text-gray-500 font-light">Year-round comfort in every season.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Integrated Surround Sound</strong>
+                                            <span class="text-xs text-gray-500 font-light">Seamless audio for curated ambiance.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Accordion Item 3 -->
+                            <div class="border-b border-gray-200">
+                                <button onclick="toggleAccordion('acc-smart')" class="w-full py-6 flex justify-between items-center group text-left focus:outline-none">
+                                    <span class="text-lg md:text-xl font-bold text-gray-900 group-hover:translate-x-2 transition-transform duration-300">Smart Living & Convenience</span>
+                                    <span class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 transition-all duration-300 shrink-0" id="icon-acc-smart">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform duration-300"><path d="M6 9l6 6 6-6"/></svg>
+                                    </span>
+                                </button>
+                                <div id="acc-smart" class="overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 0px;">
+                                    <div class="pb-8 pt-2 grid sm:grid-cols-2 gap-x-6 gap-y-4">
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Technology Package</strong>
+                                            <span class="text-xs text-gray-500 font-light">High-Speed Wi-Fi, Smart TV, Keyless Entry.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Dedicated Covered Parking</strong>
+                                            <span class="text-xs text-gray-500 font-light">Private, convenient access for each cabin.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">EV Charging Stations</strong>
+                                            <span class="text-xs text-gray-500 font-light">On-site charging supporting sustainable travel.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Accordion Item 4 -->
+                            <div class="border-b border-gray-200">
+                                <button onclick="toggleAccordion('acc-addons')" class="w-full py-6 flex justify-between items-center group text-left focus:outline-none">
+                                    <span class="text-lg md:text-xl font-bold text-gray-900 group-hover:translate-x-2 transition-transform duration-300">Curated Add-Ons</span>
+                                    <span class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 transition-all duration-300 shrink-0" id="icon-acc-addons">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform duration-300"><path d="M6 9l6 6 6-6"/></svg>
+                                    </span>
+                                </button>
+                                <div id="acc-addons" class="overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 0px;">
+                                    <div class="pb-8 pt-2 grid sm:grid-cols-2 gap-x-6 gap-y-4">
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Pet-Friendly Cabins</strong>
+                                            <span class="text-xs text-gray-500 font-light">Select accommodations offering dedicated pet packages.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Celebration Styling</strong>
+                                            <span class="text-xs text-gray-500 font-light">Birthdays, Proposals, Custom Curated Moments.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Merchandise Collection</strong>
+                                            <span class="text-xs text-gray-500 font-light">Branded Robes, Firewood Kits, Wellness Ritual Kits.</span>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all">
+                                            <strong class="block text-sm text-black mb-1">Flexible Scheduling</strong>
+                                            <span class="text-xs text-gray-500 font-light">Early Check-In & Late Check-Out options.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accommodation Options -->
+                    <div class="w-full max-w-[95%] mb-12">
+                        <div class="text-center max-w-2xl mx-auto mb-12">
+                            <h3 class="text-2xl font-bold mb-4">Accommodation Options</h3>
+                            <p class="text-gray-500 font-light text-sm">Three architecturally distinct cabin models designed to accommodate a variety of stays:</p>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-white border border-gray-200 rounded-[2rem] p-8 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                <h4 class="text-xl font-bold mb-2">1.5 Bed / 1 Bath</h4>
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Sleeps 2</p>
+                                <p class="text-sm text-gray-500 font-light">Perfect for couples and extended stays with a dedicated workstation.</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 rounded-[2rem] p-8 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                <h4 class="text-xl font-bold mb-2">2 Bedroom / 1 Bath</h4>
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Sleeps 4</p>
+                                <p class="text-sm text-gray-500 font-light">Perfectly balanced layout designed for families or small groups.</p>
+                            </div>
+                            <div class="bg-white border border-gray-200 rounded-[2rem] p-8 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                <h4 class="text-xl font-bold mb-2">2 Bedroom / 2 Bath</h4>
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Sleeps 4 to 6</p>
+                                <p class="text-sm text-gray-500 font-light">Spacious floor plans designed with group stays and privacy in mind.</p>
+                            </div>
+                        </div>
+                        <div class="max-w-4xl mx-auto text-center bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                            <p class="text-xs text-gray-500 font-light leading-relaxed">
+                                Select accommodations are <strong>ADA accessible</strong> to ensure comfort and accessibility for all guests. Every cabin blends privacy, comfort, and intentional design to create a stay that feels both elevated and personal.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
-            <!-- OTLO Footer -->
             <div class="w-full bg-[#fcfcfc] py-20 flex flex-col items-center justify-center border-t border-gray-100">
-                <img src="./logo/logoo.png" alt="OTLO Logo" class="h-10 md:h-12 mb-3 object-contain">
+                <img src="logo/logoo.png" alt="OTLO Logo" class="h-10 md:h-12 mb-3 object-contain" onerror="this.style.display='none'">
                 <p class="text-[9px] md:text-[10px] text-gray-500 font-bold tracking-[0.3em] uppercase">&reg;</p>
             </div>
 
         </section>
 
-        <!-- TAB 4: INVESTOR CALCULATOR -->
         <section id="tab-calculator" class="tab-content hidden min-h-screen bg-gray-50 flex flex-col print-header">
             <div class="bg-white border-b border-gray-200 px-4 md:px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center sticky top-16 md:top-20 z-40 shadow-sm">
-                <!-- Calc Tabs -->
                 <div class="flex items-center gap-6 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
                     <button onclick="switchCalcTab('inputs')" class="calc-tab-btn active text-xs md:text-sm font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors whitespace-nowrap" data-tab="inputs">Project Inputs</button>
                     <button onclick="switchCalcTab('financing')" class="calc-tab-btn text-xs md:text-sm font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors whitespace-nowrap" data-tab="financing">Financing</button>
@@ -875,11 +1121,9 @@
                 </div>
                 
                 <div class="flex items-center gap-3 mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                    <!-- Scenario Manager -->
                     <div class="flex items-center gap-3 mr-2 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-200">
                         <span class="text-[9px] uppercase font-bold text-gray-400 hidden sm:inline">Scenarios</span>
                         <div class="flex items-center gap-2">
-                            <!-- Scenario 1 -->
                             <div class="flex items-center gap-1 group relative">
                                 <button onclick="triggerExportOptions(1)" class="text-[10px] text-gray-400 hover:text-black hover:scale-110 transition-transform mr-1" title="Export">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -888,22 +1132,18 @@
                                 <button onclick="saveCustom(1)" id="btn-save-1" class="text-[10px] text-gray-400 hover:text-black hover:scale-110 transition-transform"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg></button>
                             </div>
                             
-                            <!-- DIVIDER -->
                             <div class="w-px h-3 bg-gray-300 mx-1"></div>
 
-                            <!-- Scenario 2 -->
                             <div class="flex items-center gap-1 group relative">
                                 <button onclick="triggerExportOptions(2)" class="text-[10px] text-gray-400 hover:text-black hover:scale-110 transition-transform mr-1" title="Export">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                 </button>
                                 <button onclick="loadCustom(2)" id="btn-load-2" class="scenario-dot" title="Load Scenario 2">2</button>
-                                <button onclick="saveCustom(2)" id="btn-save-2" class="text-[10px] text-gray-400 hover:text-black hover:scale-110 transition-transform"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2-2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg></button>
+                                <button onclick="saveCustom(2)" id="btn-save-2" class="text-[10px] text-gray-400 hover:text-black hover:scale-110 transition-transform"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg></button>
                             </div>
 
-                            <!-- DIVIDER -->
                             <div class="w-px h-3 bg-gray-300 mx-1"></div>
 
-                            <!-- Scenario 3 -->
                             <div class="flex items-center gap-1 group relative">
                                 <button onclick="triggerExportOptions(3)" class="text-[10px] text-gray-400 hover:text-black hover:scale-110 transition-transform mr-1" title="Export">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -931,7 +1171,6 @@
             </div>
 
             <div class="flex-grow grid lg:grid-cols-12 gap-0">
-                <!-- Left Panel -->
                 <div class="lg:col-span-5 bg-white border-r border-gray-200 overflow-y-auto lg:h-[calc(100vh-140px)] p-6 md:p-8">
                     <div id="calc-inputs" class="calc-section space-y-8">
                         <div class="space-y-6">
@@ -972,7 +1211,6 @@
                             </div>
                         </div>
 
-                        <!-- 1. LAND PURCHASE FINANCING MODULE -->
                         <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
                             <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-2">
                                 <h3 class="text-xs font-bold uppercase tracking-widest text-gray-700">A. Land Purchase Financing</h3>
@@ -1004,7 +1242,6 @@
                             </div>
                         </div>
 
-                        <!-- 2. CONSTRUCTION / PERMANENT LOAN MODULE -->
                         <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
                             <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-2">
                                 <h3 class="text-xs font-bold uppercase tracking-widest text-blue-600">B. Construction & Permanent Loan</h3>
@@ -1047,7 +1284,6 @@
                             </div>
                         </div>
 
-                        <!-- 3. DEBT REPAYMENT TIMELINE -->
                         <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                             <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">C. Debt Repayment Timeline</h3>
                             <div class="relative h-40 w-full mb-4">
@@ -1084,12 +1320,10 @@
                             <div><div class="flex justify-between text-xs font-bold mb-2"><span>Exit Cap Rate (%)</span><span class="font-mono" id="val-cap">8.0%</span></div><input type="range" id="in-cap" min="3" max="15" value="8" step="0.25" oninput="calculate()"></div>
                         </div>
                         
-                        <!-- ANCILLARY REVENUE STREAMS -->
                         <div class="space-y-4">
                             <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 border-b border-gray-100 pb-2">Ancillary Revenue Services</h3>
                             <div id="ancillary-list" class="grid grid-cols-2 gap-3 mb-4"></div>
                             
-                            <!-- Ancillary Summary & Breakdown -->
                             <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
                                 <div class="flex justify-between items-center mb-3">
                                     <span class="text-xs font-bold uppercase text-gray-500">Total Ancillary Revenue</span>
@@ -1108,8 +1342,7 @@
                                         </span>
                                     </summary>
                                     <div class="text-[10px] text-gray-500 mt-3 space-y-2 border-t border-gray-200 pt-3" id="ancillary-breakdown">
-                                        <!-- Breakdown Items Injected Here -->
-                                    </div>
+                                        </div>
                                     <p class="text-[9px] text-gray-400 italic mt-3 text-center">Note: Ancillary revenue varies by seasonality & guest behavior.</p>
                                 </details>
                             </div>
@@ -1121,7 +1354,6 @@
                             <div><div class="flex justify-between text-xs font-bold mb-2"><span>FF&E Reserves (Annual)</span><span class="font-mono" id="val-reserve"></span></div><input type="range" id="in-reserve" min="10000" max="500000" step="5000" oninput="calculate()"></div>
                         </div>
                         
-                        <!-- RevPAR Analysis Dashboard -->
                         <div class="border-t border-gray-100 pt-8 mt-4">
                             <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">RevPAR Analysis</h3>
                             <div class="bg-black text-white p-6 rounded-2xl mb-4">
@@ -1174,7 +1406,6 @@
                     </div>
                 </div>
 
-                <!-- Right Panel -->
                 <div class="lg:col-span-7 bg-gray-50 p-6 md:p-12 flex flex-col h-[calc(100vh-140px)] overflow-y-auto" id="results-panel">
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                         <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200"><p class="text-[10px] uppercase font-bold text-gray-400">Total Project Cost</p><p class="text-lg font-bold font-mono mt-1" id="out-tpc">$0</p></div>
@@ -1189,7 +1420,6 @@
                     <div class="bg-white p-6 rounded-2xl border border-gray-200 text-sm text-gray-600 leading-relaxed mb-10 lg:mb-0"><p id="summary-text">Adjust inputs to generate analysis.</p></div>
                 </div>
 
-                <!-- Sticky Mobile Footer -->
                 <div class="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 mobile-calc-footer z-50 flex justify-between items-center">
                     <div><p class="text-[10px] uppercase text-gray-400 font-bold">Total Cost</p><p class="font-mono font-bold text-sm" id="mob-cost">$0</p></div>
                     <div><p class="text-[10px] uppercase text-gray-400 font-bold">Valuation</p><p class="font-mono font-bold text-sm text-green-600" id="mob-val">$0</p></div>
@@ -1200,7 +1430,6 @@
 
     </main>
 
-    <!-- EXPORT MODAL -->
     <div id="export-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl text-center">
             <h3 class="text-xl font-bold mb-2">Export Scenario</h3>
@@ -1214,9 +1443,7 @@
         </div>
     </div>
 
-    <!-- PLAN MODAL (FULLSCREEN) -->
     <div id="plan-modal" class="fixed inset-0 z-[100] bg-[#111e30] pointer-events-none opacity-0 transition-opacity duration-700 flex flex-col items-center justify-center p-6 md:p-12">
-        <!-- Blueprint Grid for Modal (Clipping mask removed) -->
         <div class="absolute inset-0 arch-grid-dark pointer-events-none z-0"></div>
         
         <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none z-0"></div>
@@ -1230,7 +1457,6 @@
         <img id="plan-modal-img" src="" class="max-w-full max-h-[85vh] object-contain transition-all duration-500 scale-95 relative z-10" style="image-rendering: high-quality; image-rendering: -webkit-optimize-contrast;">
     </div>
 
-    <!-- LOGIC -->
     <script>
         const CURRENCY = { USD: { symbol: '$', rate: 1, locale: 'en-US' }, INR: { symbol: '₹', rate: 75, locale: 'en-IN' } };
         
@@ -1280,6 +1506,7 @@
 
         // 360 Viewer Variables
         let current360View = 'exterior';
+        let is360Playing = true;
 
         window.onload = function() {
             renderBenchmarks('USA'); 
@@ -1351,11 +1578,27 @@
                                 audio.pause();
                             }
                         }
+
+                        // Reset Spatial Flow to first slide when entering view
+                        if (id === 'otlo-spatial') {
+                            resetPlanSlideshow();
+                        }
+
+                        // Handle Anatomy Auto-Explode
+                        if (id === 'otlo-anatomy') {
+                            // Slight delay to ensure the user has scrolled to the section before animating
+                            setTimeout(() => {
+                                setExplodeState(true);
+                            }, 300);
+                        } else {
+                            // Reset state when scrolling to other sections so it re-animates upon return
+                            setExplodeState(false);
+                        }
                     }
                 });
             }, subnavObserverOptions);
 
-            ['otlo-intro', 'otlo-meaning', 'otlo-spatial', 'otlo-360', 'otlo-anatomy'].forEach(id => {
+            ['otlo-intro', 'otlo-meaning', 'otlo-spatial', 'otlo-360', 'otlo-anatomy', 'otlo-amenities'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) subnavObserver.observe(el);
             });
@@ -1439,12 +1682,14 @@
                 if(audio) audio.pause();
             }
             
-            setTimeout(() => { if(tabId === 'calculator') { charts.cost?.resize(); charts.cf?.resize(); charts.debt?.resize(); } if(tabId === 'philosophy') { charts.growth?.resize(); charts.revpar?.resize(); charts.comp?.resize(); } }, 50);
+            setTimeout(() => { 
+                if(tabId === 'calculator') { charts.cost?.resize(); charts.cf?.resize(); charts.debt?.resize(); } 
+                if(tabId === 'philosophy') { charts.growth?.resize(); charts.revpar?.resize(); charts.comp?.resize(); } 
+            }, 150);
         }
 
         function scrollToId(id) { switchTab(id); document.getElementById(`tab-${id}`).scrollIntoView({ behavior: 'smooth' }); }
         
-        // This is the missing function
         function scrollToConceptSection(id) {
             const el = document.getElementById(id);
             if(el) {
@@ -1457,6 +1702,23 @@
                     top: offsetPosition,
                     behavior: "smooth"
                 });
+            }
+        }
+
+        // Accordion Toggle Logic
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (!el || !icon) return;
+
+            if (el.style.maxHeight && el.style.maxHeight !== '0px') {
+                el.style.maxHeight = '0px';
+                icon.style.transform = 'rotate(0deg)';
+                icon.classList.remove('bg-black', 'text-white');
+            } else {
+                el.style.maxHeight = el.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)';
+                icon.classList.add('bg-black', 'text-white');
             }
         }
         
@@ -1928,7 +2190,7 @@
                 if(el.id) data.inputs[el.id] = el.type === 'checkbox' ? el.checked : el.value; 
             }); 
             AMENITIES_CONFIG.forEach(am => { 
-                const card = document.querySelector(`.select-card[data-id="${am.id}"]`);
+                const card = document.querySelector(`.select-card[data-type="amenity"][data-id="${am.id}"]`);
                 if(card) {
                     data.amenities[am.id] = { 
                         active: card.classList.contains('active'), 
@@ -2011,7 +2273,7 @@
             const amList = document.getElementById('amenities-list');
             if(amList) {
                 amList.innerHTML = AMENITIES_CONFIG.map(am => `
-                    <div class="select-card p-4 rounded-xl relative overflow-hidden" data-type="amenity" data-id="${am.id}" onclick="toggleCard(this)">
+                    <div class="select-card p-4 rounded-xl relative overflow-hidden" data-type="amenity" data-id="${am.id}" onclick="toggleCard(event, this)">
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-xs font-bold amenity-title">${am.name}</span>
                         </div>
@@ -2024,7 +2286,7 @@
             const ancList = document.getElementById('ancillary-list');
             if(ancList) {
                 ancList.innerHTML = ANCILLARY_CONFIG.map(am => `
-                    <div class="select-card p-4 rounded-xl relative overflow-hidden" data-type="ancillary" data-id="${am.id}" onclick="toggleCard(this)">
+                    <div class="select-card p-4 rounded-xl relative overflow-hidden" data-type="ancillary" data-id="${am.id}" onclick="toggleCard(event, this)">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-xs font-bold amenity-title">${am.name}</span>
                             <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">${am.type}</span>
@@ -2067,8 +2329,8 @@
             });
         }
         
-        function toggleCard(card) {
-            if(event && event.target && event.target.type === 'range') return;
+        function toggleCard(e, card) {
+            if(e && e.target && e.target.type === 'range') return;
             card.classList.toggle('active');
             calculate();
         }
@@ -2250,6 +2512,31 @@
             }
         }
 
+        function resetPlanSlideshow() {
+            const container = document.getElementById('plan-gallery');
+            if(!container) return;
+            const images = container.querySelectorAll('.plan-image');
+            if(!images.length) return;
+            
+            images.forEach((img, idx) => {
+                if (idx === 0) {
+                    img.classList.remove('inactive');
+                    img.classList.add('active');
+                } else {
+                    img.classList.remove('active');
+                    img.classList.add('inactive');
+                }
+            });
+            
+            planIdx = 0;
+            
+            // Restart the timer so the user has time to look at the first slide before it changes
+            if(planPlaying) {
+                clearInterval(planTimer);
+                planTimer = setInterval(() => cyclePlan(1), 5500);
+            }
+        }
+
         function startPlanSlideshow() {
             if(planTimer) clearInterval(planTimer);
             planTimer = setInterval(() => cyclePlan(1), 5500); 
@@ -2298,6 +2585,20 @@
         let extFrames = [];
         let intFrames = [];
 
+        function toggle360Play() {
+            is360Playing = !is360Playing;
+            const api = $('#viewer-360').spritespin("api");
+            const btn = document.getElementById('btn-360-play');
+            
+            if(is360Playing) {
+                if(api) api.startAnimation();
+                if(btn) btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+            } else {
+                if(api) api.stopAnimation();
+                if(btn) btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+            }
+        }
+
         function init360() {
             if(typeof jQuery === 'undefined' || !$.fn.spritespin) {
                 setTimeout(init360, 100);
@@ -2308,8 +2609,8 @@
             intFrames = [];
             for(let i=1; i<=51; i++) {
                 let paddedIndex = String(i).padStart(2, '0');
-                extFrames.push(`./360e/Image${paddedIndex}.png`);
-                intFrames.push(`./360i/Image${paddedIndex}.png`);
+                extFrames.push(`360e/Image${paddedIndex}.png`);
+                intFrames.push(`360i/Image${paddedIndex}.png`);
             }
 
             const spinOptions = {
@@ -2317,7 +2618,8 @@
                 responsive: true,
                 loop: true,
                 sizeMode: 'fit',
-                animate: false
+                animate: is360Playing,
+                frameTime: 250 // Slower rotation
             };
 
             const viewer = $('#viewer-360');
@@ -2329,13 +2631,28 @@
                         $('#slider-360').val(data.frame);
                     }
                 });
+
+                // Pause auto-rotation on manual interaction, resume on release only if playing
+                viewer.on('mousedown touchstart', function() {
+                    const api = $(this).spritespin("api");
+                    if(api) api.stopAnimation();
+                }).on('mouseup touchend mouseleave', function() {
+                    const api = $(this).spritespin("api");
+                    if(api && is360Playing) api.startAnimation();
+                });
             }
 
-            $('#slider-360').off('input change').on('input change', function() {
+            $('#slider-360').off('input change').on('input', function() {
                 const frameIndex = parseInt($(this).val(), 10);
                 const api = $('#viewer-360').spritespin("api");
                 if(api) {
+                    api.stopAnimation();
                     api.updateFrame(frameIndex);
+                }
+            }).on('change', function() {
+                const api = $('#viewer-360').spritespin("api");
+                if(api && is360Playing) {
+                    api.startAnimation();
                 }
             });
         }
@@ -2354,7 +2671,9 @@
                 if(viewer.length) {
                     viewer.spritespin({
                         source: intFrames,
-                        frame: currentFrame
+                        frame: currentFrame,
+                        animate: is360Playing,
+                        frameTime: 250
                     });
                 }
                 
@@ -2368,7 +2687,9 @@
                 if(viewer.length) {
                     viewer.spritespin({
                         source: extFrames,
-                        frame: currentFrame
+                        frame: currentFrame,
+                        animate: is360Playing,
+                        frameTime: 250
                     });
                 }
                 
