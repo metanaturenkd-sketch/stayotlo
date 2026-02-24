@@ -132,9 +132,9 @@
             background-size: 40px 40px;
         }
         .arch-grid-dark {
-            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 24px 24px;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 16px 16px;
         }
 
         /* Floor Plan Slideshow */
@@ -148,7 +148,7 @@
             filter: invert(1);
             mix-blend-mode: screen;
             will-change: opacity;
-            transform: translateZ(0);
+            transform: scale(1.08) translateZ(0);
         }
         .plan-image.active { opacity: 1; z-index: 10; }
         .plan-image.inactive { opacity: 0; z-index: 0; pointer-events: none; }
@@ -772,11 +772,11 @@
                         <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none z-0"></div>
                         
                         <div id="plan-gallery" class="w-full flex-grow relative z-10">
-                            <img src="plans/plan1.png" class="plan-image active p-1 md:p-2" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan2.png" loading="lazy" class="plan-image inactive p-1 md:p-2" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan3.png" loading="lazy" class="plan-image inactive p-1 md:p-2" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan4.png" loading="lazy" class="plan-image inactive p-1 md:p-2" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan5.png" loading="lazy" class="plan-image inactive p-1 md:p-2" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan1.png" class="plan-image active" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan2.png" loading="lazy" class="plan-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan3.png" loading="lazy" class="plan-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan4.png" loading="lazy" class="plan-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan5.png" loading="lazy" class="plan-image inactive" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
                         </div>
                     </div>
                 </div>
