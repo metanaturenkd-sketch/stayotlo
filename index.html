@@ -556,6 +556,7 @@
                             <button data-section="otlo-intro" onclick="scrollToConceptSection('otlo-intro')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Gallery</button>
                             <button data-section="otlo-meaning" onclick="scrollToConceptSection('otlo-meaning')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Vision</button>
                             <button data-section="otlo-spatial" onclick="scrollToConceptSection('otlo-spatial')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Spatial Flow</button>
+                            <button data-section="otlo-360" onclick="scrollToConceptSection('otlo-360')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">360° View</button>
                             <button data-section="otlo-anatomy" onclick="scrollToConceptSection('otlo-anatomy')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Anatomy</button>
                             <button data-section="otlo-amenities" onclick="scrollToConceptSection('otlo-amenities')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Amenities</button>
                         </div>
@@ -2725,7 +2726,7 @@
             canvas: null,
             ctx: null,
             lastDrawTime: 0,
-            fps: 12, // Slow and smooth
+            fps: 7, // Reduced from 12 for an even slower, smoother rotation
             dragStartX: 0,
             isDragging: false,
             hasInitialized: false,
