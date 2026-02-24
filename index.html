@@ -581,10 +581,10 @@
                 <div class="carousel-track h-full" id="carousel-track" style="will-change: transform;">
                     <div class="carousel-slide min-w-full h-full relative group">
                         <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-mountain">
-                            <img src="images/msd.png" class="gallery-image active" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'">
-                            <img src="images/msn.png" loading="lazy" class="gallery-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'">
-                            <img src="images/mcd.png" loading="lazy" class="gallery-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'">
-                            <img src="images/mcn.png" loading="lazy" class="gallery-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1518733057094-95b53143d2a7?auto=format&fit=crop&q=80'">
+                            <img src="images/msd.png" class="gallery-image active" data-index="0">
+                            <img src="images/msn.png" class="gallery-image inactive" data-index="1">
+                            <img src="images/mcd.png" class="gallery-image inactive" data-index="2">
+                            <img src="images/mcn.png" class="gallery-image inactive" data-index="3">
                             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20"></div>
                         </div>
                         <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
@@ -594,10 +594,10 @@
                     </div>
                     <div class="carousel-slide min-w-full h-full relative group">
                         <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-lake">
-                            <img src="images/lsd.png" class="gallery-image active" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80'">
-                            <img src="images/lsn.png" loading="lazy" class="gallery-image inactive" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1504280390224-4bc343058814?auto=format&fit=crop&q=80'">
-                            <img src="images/lcd.png" loading="lazy" class="gallery-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80'">
-                            <img src="images/lcn.png" loading="lazy" class="gallery-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&q=80'">
+                            <img src="images/lsd.png" class="gallery-image active" data-index="0">
+                            <img src="images/lsn.png" class="gallery-image inactive" data-index="1">
+                            <img src="images/lcd.png" class="gallery-image inactive" data-index="2">
+                            <img src="images/lcn.png" class="gallery-image inactive" data-index="3">
                             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20"></div>
                         </div>
                         <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
@@ -1661,6 +1661,18 @@
             // Force scroll to top on reload so gallery is perfectly framed
             window.scrollTo(0, 0);
             
+            // --- NEW: Hardware Accelerated Image Preloading for Hero Gallery ---
+            const heroImagesToPreload = [
+                'images/msd.png', 'images/msn.png', 'images/mcd.png', 'images/mcn.png',
+                'images/lsd.png', 'images/lsn.png', 'images/lcd.png', 'images/lcn.png'
+            ];
+            heroImagesToPreload.forEach(src => {
+                const img = new Image();
+                img.src = src;
+                // Asynchronously decode off the main thread to prevent UI freezing
+                img.decode().catch(() => {}); 
+            });
+
             switchTab('concepts'); 
             attemptPlayMusic();
             
@@ -2611,8 +2623,14 @@
                 const currentIndex = galleryState[activeGalleryId] || 0;
 
                 if (currentIndex >= images.length - 1) {
-                    cycleInternalImage(activeGalleryId, 1);
+                    // 1. Move carousel track FIRST
                     moveCarousel(1);
+                    
+                    // 2. Wait for the 3s physical CSS slide transition to finish before cross-fading the left-behind gallery. 
+                    // This strictly fixes the visual flicker/glitch just before lsd.png and lsn.png.
+                    setTimeout(() => {
+                        cycleInternalImage(activeGalleryId, 1);
+                    }, 3000);
                 } else {
                     cycleInternalImage(activeGalleryId, 1);
                 }
@@ -2726,7 +2744,7 @@
             canvas: null,
             ctx: null,
             lastDrawTime: 0,
-            fps: 7, // Reduced from 12 for an even slower, smoother rotation
+            fps: 4, // Reduced further for an extremely slow, smooth rotation
             dragStartX: 0,
             isDragging: false,
             hasInitialized: false,
