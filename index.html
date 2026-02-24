@@ -9,7 +9,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://unpkg.com/spritespin@4.1.0/release/spritespin.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
@@ -156,58 +155,6 @@
         #plan-modal-img {
             filter: invert(1);
             mix-blend-mode: screen;
-        }
-
-        /* 360 Viewer Overrides & Structural Fixes */
-        .slider-360 {
-            -webkit-appearance: none;
-            height: 4px !important;
-            background: rgba(0,0,0,0.15) !important;
-            border-radius: 10px;
-            outline: none;
-        }
-
-        .slider-360::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px !important;
-            height: 18px !important;
-            background: #1d1d1f !important;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #fff !important;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
-        }
-
-        .slider-360::-webkit-slider-thumb:hover {
-            transform: scale(1.15);
-        }
-
-        /* ===== STABLE 360 VIEWER FIX ===== */
-
-        .viewer-360-wrapper {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            height: 80vh;          /* ← THIS FIXES YOUR HEIGHT CUTTING */
-            max-height: 900px;
-            position: relative;
-        }
-
-        #viewer-360 {
-            width: 100%;
-            height: 100%;
-            position: relative;    /* ← remove absolute */
-            overflow: hidden;
-        }
-
-        #viewer-360 .spritespin-stage,
-        #viewer-360 canvas,
-        #viewer-360 .spritespin-image {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: contain;
-            display: block;
         }
 
         /* Exploded View Anatomy Styles */
@@ -563,7 +510,6 @@
                             <button data-section="otlo-intro" onclick="scrollToConceptSection('otlo-intro')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Gallery</button>
                             <button data-section="otlo-meaning" onclick="scrollToConceptSection('otlo-meaning')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Vision</button>
                             <button data-section="otlo-spatial" onclick="scrollToConceptSection('otlo-spatial')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Spatial Flow</button>
-                            <button data-section="otlo-360" onclick="scrollToConceptSection('otlo-360')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">360° View</button>
                             <button data-section="otlo-anatomy" onclick="scrollToConceptSection('otlo-anatomy')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Anatomy</button>
                             <button data-section="otlo-amenities" onclick="scrollToConceptSection('otlo-amenities')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Amenities</button>
                         </div>
@@ -788,35 +734,6 @@
                             <img src="plans/plan4.png" loading="lazy" class="plan-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
                             <img src="plans/plan5.png" loading="lazy" class="plan-image inactive" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
                         </div>
-                    </div>
-                </div>
-                
-                <div id="otlo-360" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center md:text-left w-full max-w-[95%]">2. The 360° Experience</h3>
-                    
-                    <div class="relative w-[95%] h-auto min-h-[60vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all mb-8 flex flex-col items-center">
-                        
-                        <div class="relative z-50 flex justify-center mt-6 md:mt-8 mb-4">
-                            <div class="flex items-center gap-1 bg-white/90 backdrop-blur-md border border-gray-200 px-2 py-1.5 rounded-full shadow-md">
-                                <button id="btn-ext" onclick="switch360View('exterior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-black text-white transition-colors">Exterior</button>
-                                <button id="btn-int" onclick="switch360View('interior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Interior</button>
-                                <div class="w-px h-4 bg-gray-300 mx-1"></div>
-                                <button id="btn-360-play" onclick="toggle360Play()" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-black transition-colors rounded-full" title="Play/Pause Rotation">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="w-full flex-grow p-4 md:p-8 flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing z-10">
-                            <div class="viewer-360-wrapper">
-                                <div id="viewer-360"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full max-w-lg mx-auto flex flex-col items-center px-6">
-                        <input type="range" id="slider-360" class="slider-360 w-full" min="1" max="51" value="1">
-                        <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest">Drag image or use slider to rotate</p>
                     </div>
                 </div>
                 
@@ -1561,12 +1478,6 @@
         const playSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
         const pauseSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
 
-        // 360 Viewer Variables
-        let current360View = 'exterior';
-        let is360Playing = true;
-        let is360Initialized = false;
-        let interiorLoaded = false;
-
         // --- Typology Preloading & State ---
         const typologyImages = {
             A: { interior: 'images/interior.png', view: 'images/view.png' },
@@ -1663,17 +1574,6 @@
             startInternalGalleries(); 
             startPlanSlideshow();
             
-            // DELAY 360 initialization using Intersection Observer to prevent UI locking
-            const observer360 = new IntersectionObserver((entries) => {
-                if(entries[0].isIntersecting && !is360Initialized) {
-                    is360Initialized = true;
-                    init360();
-                }
-            }, { rootMargin: "600px" }); // Initialize when user is within 600px of scrolling to it
-            
-            const viewerContainer = document.getElementById('otlo-360');
-            if(viewerContainer) observer360.observe(viewerContainer);
-
             // Force scroll to top on reload so gallery is perfectly framed
             window.scrollTo(0, 0);
             
@@ -1735,7 +1635,7 @@
                 });
             }, subnavObserverOptions);
 
-            ['otlo-intro', 'otlo-meaning', 'otlo-spatial', 'otlo-360', 'otlo-anatomy', 'otlo-amenities'].forEach(id => {
+            ['otlo-intro', 'otlo-meaning', 'otlo-spatial', 'otlo-anatomy', 'otlo-amenities'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) subnavObserver.observe(el);
             });
@@ -2729,119 +2629,6 @@
             modal.classList.add('pointer-events-none', 'opacity-0');
             modalImg.classList.remove('scale-100');
             modalImg.classList.add('scale-95');
-        }
-
-        let extFrames = [];
-        let intFrames = [];
-
-        // Pre-fill both arrays immediately to prevent loading lag
-        for(let i=1; i<=51; i++) {
-            let paddedIndex = String(i).padStart(2, '0');
-            extFrames.push(`360e/Image${paddedIndex}.png`);
-            intFrames.push(`360i/Image${paddedIndex}.png`);
-        }
-
-        function toggle360Play() {
-            is360Playing = !is360Playing;
-            const api = $('#viewer-360').spritespin("api");
-            const btn = document.getElementById('btn-360-play');
-            
-            if(is360Playing) {
-                if(api) api.startAnimation();
-                if(btn) btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
-            } else {
-                if(api) api.stopAnimation();
-                if(btn) btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
-            }
-        }
-
-        function renderSpriteSpin(framesArray, startFrame) {
-            const viewer = $('#viewer-360');
-            
-            // Destroy existing instance safely before drawing a new one to prevent layout bugs
-            if (viewer.data('spritespin')) {
-                viewer.spritespin('destroy');
-            }
-
-            viewer.spritespin({
-                source: framesArray,
-                width: 1458, 
-                height: 774,
-                sense: -1,
-                loop: true,
-                animate: is360Playing,
-                frameTime: 240,
-                frame: startFrame,
-                responsive: false,    /* Disabled so it doesn't fight our CSS overrides */
-                sizeMode: 'original', /* Renders internal canvas strictly at 1458x774, allowing CSS to cleanly shrink it */
-                onFrame: function(e, data) {
-                    $('#slider-360').val(data.frame);
-                }
-            });
-
-            // Re-attach interaction events on the new instance
-            viewer.off('mousedown touchstart').on('mousedown touchstart', function() {
-                const api = $(this).spritespin("api");
-                if(api) api.stopAnimation();
-            }).off('mouseup touchend mouseleave').on('mouseup touchend mouseleave', function() {
-                const api = $(this).spritespin("api");
-                if(api && is360Playing) api.startAnimation();
-            });
-        }
-
-        function init360() {
-            if(typeof jQuery === 'undefined' || !$.fn.spritespin) {
-                setTimeout(init360, 200);
-                return;
-            }
-
-            renderSpriteSpin(extFrames, 0);
-
-            $('#slider-360').off('input change').on('input', function() {
-                const frameIndex = parseInt($(this).val(), 10);
-                const api = $('#viewer-360').spritespin("api");
-                if(api) {
-                    api.stopAnimation();
-                    api.updateFrame(frameIndex);
-                }
-            }).on('change', function() {
-                const api = $('#viewer-360').spritespin("api");
-                if(api && is360Playing) {
-                    api.startAnimation();
-                }
-            });
-        }
-
-        function switch360View(view) {
-            if(view === current360View) return;
-            
-            const slider = $('#slider-360');
-            const currentFrame = slider.length ? (parseInt(slider.val(), 10) || 0) : 0;
-            
-            const btnInt = document.getElementById('btn-int');
-            const btnExt = document.getElementById('btn-ext');
-
-            if (view === 'interior') {
-                renderSpriteSpin(intFrames, currentFrame);
-                
-                if(btnInt && btnExt) {
-                    btnInt.classList.add('bg-black', 'text-white');
-                    btnInt.classList.remove('text-gray-500', 'hover:text-black');
-                    btnExt.classList.remove('bg-black', 'text-white');
-                    btnExt.classList.add('text-gray-500', 'hover:text-black');
-                }
-            } else {
-                renderSpriteSpin(extFrames, currentFrame);
-                
-                if(btnInt && btnExt) {
-                    btnExt.classList.add('bg-black', 'text-white');
-                    btnExt.classList.remove('text-gray-500', 'hover:text-black');
-                    btnInt.classList.remove('bg-black', 'text-white');
-                    btnInt.classList.add('text-gray-500', 'hover:text-black');
-                }
-            }
-            
-            current360View = view;
         }
 
         let isExploded = false;
