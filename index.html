@@ -163,18 +163,16 @@
         .slider-360::-webkit-slider-thumb { -webkit-appearance: none; width: 18px !important; height: 18px !important; background: #1d1d1f !important; border-radius: 50%; cursor: pointer; border: 2px solid #fff !important; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
         .slider-360::-webkit-slider-thumb:hover { transform: scale(1.15); }
         
-        /* Bulletproof SpriteSpin container: Disable JS resizing and force CSS object-fit */
-        #viewer-360 { width: 100%; height: 100%; position: absolute; inset: 0; overflow: hidden; }
-        #viewer-360 .spritespin-stage, #viewer-360 canvas, #viewer-360 img { 
-            width: 100% !important; 
-            height: 100% !important; 
-            object-fit: contain !important; 
-            object-position: center !important;
-            left: 0 !important;
-            top: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            transform: none !important;
+        /* 360 Viewer Center Container - Let SpriteSpin calculate its own bounds and perfectly center it */
+        #viewer-360 { 
+            width: 100%; 
+            height: 100%; 
+            position: absolute; 
+            inset: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
         }
 
         /* Exploded View Anatomy Styles */
@@ -2677,7 +2675,9 @@
                 sense: -1,
                 loop: true,
                 animate: is360Playing,
-                frameTime: 240 
+                frameTime: 240,
+                responsive: true,
+                sizeMode: 'fit'
             };
 
             const viewer = $('#viewer-360');
@@ -2697,6 +2697,9 @@
                     const api = $(this).spritespin("api");
                     if(api && is360Playing) api.startAnimation();
                 });
+                
+                // Force layout recalculation after load
+                setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
             }
 
             $('#slider-360').off('input change').on('input', function() {
@@ -2743,8 +2746,11 @@
                         animate: is360Playing,
                         loop: true,
                         sense: -1,
-                        frameTime: 240
+                        frameTime: 240,
+                        responsive: true,
+                        sizeMode: 'fit'
                     });
+                    setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
                 }
                 
                 if(btnInt && btnExt) {
@@ -2763,8 +2769,11 @@
                         animate: is360Playing,
                         loop: true,
                         sense: -1,
-                        frameTime: 240
+                        frameTime: 240,
+                        responsive: true,
+                        sizeMode: 'fit'
                     });
+                    setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
                 }
                 
                 if(btnInt && btnExt) {
