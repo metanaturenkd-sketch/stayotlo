@@ -166,37 +166,27 @@
         /* ===== FIXED RESPONSIVE 360 VIEWER ===== */
         .viewer-360-wrapper {
             width: 100%;
-            height: 100%; /* Strictly match the parent container's available height */
             max-width: 1400px;
             margin: 0 auto;
+            aspect-ratio: 16 / 9;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         #viewer-360 {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100% !important;
             height: 100% !important;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        #viewer-360 .spritespin-stage {
-            width: 100% !important;
-            height: 100% !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-        }
-
+        #viewer-360 .spritespin-stage,
         #viewer-360 canvas,
         #viewer-360 .spritespin-image {
             width: 100% !important;
             height: 100% !important;
-            object-fit: contain !important; /* Forces the entire image to fit inside the box without cropping */
+            object-fit: contain !important;
             display: block;
         }
 
@@ -1604,21 +1594,27 @@
             
             // Only try to play if the user is on the concepts tab
             if (audio && conceptsTab && !conceptsTab.classList.contains('hidden')) {
+                // Explicitly ensure audio is unmuted before playing
+                audio.muted = false;
+                
                 const playPromise = audio.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(e => {
-                        console.log("Browser autoplay policy prevented immediate playback. Adding invisible listeners to catch first user interaction.");
+                        console.log("Browser autoplay policy prevented immediate playback. Awaiting first micro-interaction.");
                         
-                        // If the browser blocks it, wait for the absolute FIRST interaction and force play.
+                        // Force play on the absolute first microscopic interaction anywhere on the window
                         const forcePlay = () => {
-                            audio.play().catch(()=>{});
-                            ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(evt => {
-                                document.removeEventListener(evt, forcePlay);
+                            if (!conceptsTab.classList.contains('hidden')) {
+                                audio.play().catch(()=>{});
+                            }
+                            ['click', 'touchstart', 'scroll', 'keydown', 'mousemove', 'pointerdown', 'wheel'].forEach(evt => {
+                                window.removeEventListener(evt, forcePlay, true);
                             });
                         };
                         
-                        ['click', 'touchstart', 'scroll', 'keydown', 'mousemove'].forEach(evt => {
-                            document.addEventListener(evt, forcePlay, { once: true, passive: true });
+                        // Bind to window with capture: true to ensure it intercepts instantly on any action
+                        ['click', 'touchstart', 'scroll', 'keydown', 'mousemove', 'pointerdown', 'wheel'].forEach(evt => {
+                            window.addEventListener(evt, forcePlay, { once: true, passive: true, capture: true });
                         });
                     });
                 }
@@ -2598,7 +2594,8 @@
         }
         
         function startInternalGalleries() { 
-            const slideDuration = 7000;
+            // Reduced from 7000ms to 4500ms so the gallery feels active immediately
+            const slideDuration = 4500;
             setInterval(() => { 
                 const isProject1 = currentSlide === 0;
                 const activeGalleryId = isProject1 ? 'gallery-mountain' : 'gallery-lake';
