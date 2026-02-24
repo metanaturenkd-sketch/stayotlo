@@ -132,9 +132,9 @@
             background-size: 40px 40px;
         }
         .arch-grid-dark {
-            background-image: linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 24px 24px;
         }
 
         /* Floor Plan Slideshow */
@@ -747,7 +747,7 @@
 
                     <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center md:text-left w-full max-w-[95%]">1. Spatial Flow</h3>
                     
-                    <div class="relative w-[95%] aspect-square md:aspect-[16/9] bg-[#111e30] shadow-2xl rounded-[2rem] overflow-hidden group border border-[#1e3450] cursor-zoom-in transition-all flex flex-col p-4 md:p-8 mb-6" onclick="openPlanModal()">
+                    <div class="relative w-[95%] aspect-square md:aspect-[16/9] bg-[#111e30] shadow-2xl rounded-[2rem] overflow-hidden group border border-[#1e3450] cursor-zoom-in transition-all flex flex-col p-4 md:p-6 mb-6" onclick="openPlanModal()">
                         
                         <div class="relative z-50 flex justify-center mb-6 md:mb-8" onclick="event.stopPropagation()">
                             <div class="flex items-center gap-6 bg-white/10 backdrop-blur-md border border-white/10 px-5 py-2.5 rounded-full shadow-md">
@@ -772,11 +772,11 @@
                         <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none z-0"></div>
                         
                         <div id="plan-gallery" class="w-full flex-grow relative z-10">
-                            <img src="plans/plan1.png" class="plan-image active p-2 md:p-8" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan2.png" loading="lazy" class="plan-image inactive p-2 md:p-8" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan3.png" loading="lazy" class="plan-image inactive p-2 md:p-8" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan4.png" loading="lazy" class="plan-image inactive p-2 md:p-8" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
-                            <img src="plans/plan5.png" loading="lazy" class="plan-image inactive p-2 md:p-8" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan1.png" class="plan-image active p-1 md:p-2" data-index="0" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan2.png" loading="lazy" class="plan-image inactive p-1 md:p-2" data-index="1" onerror="this.src='https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan3.png" loading="lazy" class="plan-image inactive p-1 md:p-2" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan4.png" loading="lazy" class="plan-image inactive p-1 md:p-2" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan5.png" loading="lazy" class="plan-image inactive p-1 md:p-2" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
                         </div>
                     </div>
                 </div>
@@ -814,6 +814,13 @@
                     
                     <div class="flex justify-between items-end w-full max-w-[95%] mb-6">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">3. System Anatomy</h3>
+                        
+                        <!-- Typology Selector -->
+                        <div class="flex items-center gap-1 bg-white/90 backdrop-blur-md border border-gray-200 p-1 rounded-full shadow-sm relative z-50">
+                            <button id="btn-type-a" onclick="switchTypology('A')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-black text-white transition-colors">Type A</button>
+                            <button id="btn-type-b" onclick="switchTypology('B')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Type B</button>
+                            <button id="btn-type-c" onclick="switchTypology('C')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Type C</button>
+                        </div>
                     </div>
 
                     <div class="relative flex items-center bg-gray-50 border border-gray-200 rounded-full p-1 shadow-sm w-[88px] h-12 mb-4 z-50">
@@ -828,9 +835,9 @@
 
                     <div id="explode-stage" class="relative w-[95%] h-[55vh] md:h-[65vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group shadow-sm transition-all z-10">
                         <div class="explode-wrapper relative w-full max-w-[1200px] h-full">
-                            <img src="images/view.png" loading="lazy" class="explode-layer explode-view" alt="" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" onclick="setExplodeState(true)">
+                            <img id="anatomy-view-img" src="images/view.png" loading="lazy" class="explode-layer explode-view" alt="" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" onclick="setExplodeState(true)">
                             <img src="images/shell.png" loading="lazy" class="explode-layer explode-shell" onerror="this.src='https://images.unsplash.com/photo-1541888086968-9de15039eb14?auto=format&fit=crop&q=80'" alt="Shell structure">
-                            <img src="images/interior.png" loading="lazy" class="explode-layer explode-interior" onerror="this.src='https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80'" alt="Interior layout" onclick="toggleExplodeFocus()">
+                            <img id="anatomy-interior-img" src="images/interior.png" loading="lazy" class="explode-layer explode-interior" onerror="this.src='https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80'" alt="Interior layout" onclick="toggleExplodeFocus()">
                             <img src="images/base.png" loading="lazy" class="explode-layer explode-base" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80'" alt="Foundation" onclick="setExplodeState(false)">
                         </div>
                     </div>
@@ -1549,6 +1556,47 @@
         let is360Playing = true;
         let is360Initialized = false;
         let interiorLoaded = false;
+
+        // --- Typology Preloading & State ---
+        const typologyImages = {
+            A: { interior: 'images/interior.png', view: 'images/view.png' },
+            B: { interior: 'images/interior2.png', view: 'images/view2.png' },
+            C: { interior: 'images/interior3.png', view: 'images/view3.png' }
+        };
+        let currentTypology = 'A';
+
+        // Preload images into browser memory to ensure zero layout shift or flickering on swap
+        Object.values(typologyImages).forEach(srcs => {
+            const imgInt = new Image(); imgInt.src = srcs.interior;
+            const imgView = new Image(); imgView.src = srcs.view;
+        });
+
+        function switchTypology(type) {
+            if (type === currentTypology) return;
+            
+            // Update Active Button Styles
+            ['A', 'B', 'C'].forEach(t => {
+                const btn = document.getElementById(`btn-type-${t.toLowerCase()}`);
+                if (!btn) return;
+                
+                if (t === type) {
+                    btn.classList.add('bg-black', 'text-white');
+                    btn.classList.remove('text-gray-500', 'hover:text-black');
+                } else {
+                    btn.classList.remove('bg-black', 'text-white');
+                    btn.classList.add('text-gray-500', 'hover:text-black');
+                }
+            });
+
+            // Instantly Swap Image Sources (Preloaded so it's smooth and maintains scaling/zoom events)
+            const interiorImg = document.getElementById('anatomy-interior-img');
+            const viewImg = document.getElementById('anatomy-view-img');
+            
+            if (interiorImg) interiorImg.src = typologyImages[type].interior;
+            if (viewImg) viewImg.src = typologyImages[type].view;
+            
+            currentTypology = type;
+        }
 
         function attemptPlayMusic() {
             const audio = document.getElementById('bg-music');
