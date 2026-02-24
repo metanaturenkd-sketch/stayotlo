@@ -2814,5 +2814,22 @@
             }
         }
     </script>
+    
+    <script>
+      window.addEventListener('load', function() {
+          const viewer = document.getElementById('viewer-360');
+          function resize360() {
+              const wrapper = viewer.parentElement;
+              const width = wrapper.clientWidth;
+              const height = wrapper.clientHeight;
+              viewer.style.width = width + 'px';
+              viewer.style.height = height + 'px';
+          }
+          if (viewer) {
+              resize360();
+              window.addEventListener('resize', resize360);
+          }
+      });
+    </script>
 </body>
 </html>
