@@ -163,15 +163,9 @@
         .slider-360::-webkit-slider-thumb { -webkit-appearance: none; width: 18px !important; height: 18px !important; background: #1d1d1f !important; border-radius: 50%; cursor: pointer; border: 2px solid #fff !important; box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.2s; }
         .slider-360::-webkit-slider-thumb:hover { transform: scale(1.15); }
         
-        /* 360 Viewer Center Container - Let SpriteSpin calculate its own bounds and perfectly center it */
         #viewer-360 { 
             width: 100%; 
             height: 100%; 
-            position: absolute; 
-            inset: 0; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
             overflow: hidden; 
         }
 
@@ -773,8 +767,8 @@
                         </div>
 
                         <!-- Fixed framing container for SpriteSpin -->
-                        <div class="relative w-full aspect-video bg-gray-100/50 rounded-xl overflow-hidden border border-gray-200/50 shadow-inner">
-                            <div id="viewer-360" class="absolute inset-0 w-full h-full transition-opacity duration-700 opacity-100 cursor-grab active:cursor-grabbing z-10"></div>
+                        <div class="relative w-full mx-auto bg-gray-100/50 rounded-xl overflow-hidden border border-gray-200/50 shadow-inner" style="aspect-ratio: 1458/774;">
+                            <div id="viewer-360" class="w-full h-full cursor-grab active:cursor-grabbing z-10 flex items-center justify-center"></div>
                         </div>
                     </div>
 
@@ -2643,6 +2637,13 @@
         let extFrames = [];
         let intFrames = [];
 
+        // Pre-fill both arrays immediately to prevent loading lag
+        for(let i=1; i<=51; i++) {
+            let paddedIndex = String(i).padStart(2, '0');
+            extFrames.push(`360e/Image${paddedIndex}.png`);
+            intFrames.push(`360i/Image${paddedIndex}.png`);
+        }
+
         function toggle360Play() {
             is360Playing = !is360Playing;
             const api = $('#viewer-360').spritespin("api");
@@ -2657,19 +2658,16 @@
             }
         }
 
-        function init360() {
-            if(typeof jQuery === 'undefined' || !$.fn.spritespin) {
-                setTimeout(init360, 200);
-                return;
+        function renderSpriteSpin(framesArray, startFrame) {
+            const viewer = $('#viewer-360');
+            
+            // Destroy existing instance safely before drawing a new one to prevent layout bugs
+            if (viewer.data('spritespin')) {
+                viewer.spritespin('destroy');
             }
 
-            extFrames = [];
-            for(let i=1; i<=51; i++) {
-                let paddedIndex = String(i).padStart(2, '0');
-                extFrames.push(`360e/Image${paddedIndex}.png`);
-            }
-
-            const spinOptions = {
+            viewer.spritespin({
+                source: framesArray,
                 width: 1458, 
                 height: 774,
                 sense: -1,
@@ -2677,30 +2675,30 @@
                 animate: is360Playing,
                 frameTime: 240,
                 responsive: true,
-                sizeMode: 'fit'
-            };
+                sizeMode: 'fit',
+                frame: startFrame,
+                onFrame: function(e, data) {
+                    $('#slider-360').val(data.frame);
+                }
+            });
 
-            const viewer = $('#viewer-360');
-            if(viewer.length) {
-                viewer.spritespin({
-                    ...spinOptions,
-                    source: extFrames,
-                    onFrame: function(e, data) {
-                        $('#slider-360').val(data.frame);
-                    }
-                });
+            // Re-attach interaction events on the new instance
+            viewer.off('mousedown touchstart').on('mousedown touchstart', function() {
+                const api = $(this).spritespin("api");
+                if(api) api.stopAnimation();
+            }).off('mouseup touchend mouseleave').on('mouseup touchend mouseleave', function() {
+                const api = $(this).spritespin("api");
+                if(api && is360Playing) api.startAnimation();
+            });
+        }
 
-                viewer.on('mousedown touchstart', function() {
-                    const api = $(this).spritespin("api");
-                    if(api) api.stopAnimation();
-                }).on('mouseup touchend mouseleave', function() {
-                    const api = $(this).spritespin("api");
-                    if(api && is360Playing) api.startAnimation();
-                });
-                
-                // Force layout recalculation after load
-                setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+        function init360() {
+            if(typeof jQuery === 'undefined' || !$.fn.spritespin) {
+                setTimeout(init360, 200);
+                return;
             }
+
+            renderSpriteSpin(extFrames, 0);
 
             $('#slider-360').off('input change').on('input', function() {
                 const frameIndex = parseInt($(this).val(), 10);
@@ -2722,36 +2720,12 @@
             
             const slider = $('#slider-360');
             const currentFrame = slider.length ? (parseInt(slider.val(), 10) || 0) : 0;
-            const viewer = $('#viewer-360');
             
             const btnInt = document.getElementById('btn-int');
             const btnExt = document.getElementById('btn-ext');
 
             if (view === 'interior') {
-                if(!interiorLoaded) {
-                    intFrames = [];
-                    for(let i=1; i<=51; i++) {
-                        let paddedIndex = String(i).padStart(2, '0');
-                        intFrames.push(`360i/Image${paddedIndex}.png`);
-                    }
-                    interiorLoaded = true;
-                }
-
-                if(viewer.length) {
-                    viewer.spritespin({
-                        width: 1458,
-                        height: 774,
-                        source: intFrames,
-                        frame: currentFrame,
-                        animate: is360Playing,
-                        loop: true,
-                        sense: -1,
-                        frameTime: 240,
-                        responsive: true,
-                        sizeMode: 'fit'
-                    });
-                    setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
-                }
+                renderSpriteSpin(intFrames, currentFrame);
                 
                 if(btnInt && btnExt) {
                     btnInt.classList.add('bg-black', 'text-white');
@@ -2760,21 +2734,7 @@
                     btnExt.classList.add('text-gray-500', 'hover:text-black');
                 }
             } else {
-                if(viewer.length) {
-                    viewer.spritespin({
-                        width: 1458,
-                        height: 774,
-                        source: extFrames,
-                        frame: currentFrame,
-                        animate: is360Playing,
-                        loop: true,
-                        sense: -1,
-                        frameTime: 240,
-                        responsive: true,
-                        sizeMode: 'fit'
-                    });
-                    setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
-                }
+                renderSpriteSpin(extFrames, currentFrame);
                 
                 if(btnInt && btnExt) {
                     btnExt.classList.add('bg-black', 'text-white');
