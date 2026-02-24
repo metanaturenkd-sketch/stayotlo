@@ -36,6 +36,52 @@
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; background: #1d1d1f; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); border: 2px solid #fff; transition: transform 0.2s; }
         input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
 
+        /* 360 Viewer Overrides & Structural Fixes */
+        .slider-360 {
+            -webkit-appearance: none;
+            height: 4px !important;
+            background: rgba(0,0,0,0.15) !important;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .slider-360::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px !important;
+            height: 18px !important;
+            background: #1d1d1f !important;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #fff !important;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .slider-360::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        /* ===== EXPERIENCE 360 RESPONSIVE FIXES ===== */
+        .experience-360-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .experience-360-canvas {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1458 / 774;
+            max-height: 75vh;
+            object-fit: contain;
+            display: block;
+            touch-action: pan-y; /* allows page scrolling while touching horizontally */
+        }
+
         /* AMENITIES CARD STYLES */
         .select-card { 
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
@@ -734,6 +780,43 @@
                             <img src="plans/plan4.png" loading="lazy" class="plan-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
                             <img src="plans/plan5.png" loading="lazy" class="plan-image inactive" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
                         </div>
+                    </div>
+                </div>
+
+                <!-- NEW 360 EXPERIENCE SECTION -->
+                <div id="otlo-360" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center md:text-left w-full max-w-[95%]">2. The 360° Experience</h3>
+                    
+                    <div class="experience-360 relative w-[95%] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all mb-8 flex flex-col items-center py-6 md:py-8">
+                        
+                        <!-- UI Controls -->
+                        <div class="controls-360 relative z-50 flex justify-center mb-6">
+                            <div class="flex items-center gap-1 bg-white/90 backdrop-blur-md border border-gray-200 px-2 py-1.5 rounded-full shadow-md">
+                                <button id="btn-360-ext" onclick="Experience360.setView('exterior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-black text-white transition-colors">Exterior</button>
+                                <button id="btn-360-int" onclick="Experience360.setView('interior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Interior</button>
+                                <div class="w-px h-4 bg-gray-300 mx-1"></div>
+                                <button id="btn-360-play" onclick="Experience360.togglePlay()" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-black transition-colors rounded-full" title="Play/Pause Rotation">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Canvas Viewer Container -->
+                        <div class="experience-360-container viewer-360 px-4 md:px-8 cursor-grab active:cursor-grabbing" id="experience-360-interaction">
+                            <canvas id="experience-360-canvas" class="experience-360-canvas transition-opacity duration-300"></canvas>
+                            
+                            <!-- Loading Indicator -->
+                            <div id="experience-360-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50/80 backdrop-blur-sm z-10 transition-opacity duration-500">
+                                <svg class="animate-spin h-6 w-6 text-gray-400 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Loading Assets...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slider Control -->
+                    <div class="w-full max-w-lg mx-auto flex flex-col items-center px-6">
+                        <input type="range" id="experience-360-slider" class="slider-360 w-full" min="1" max="51" value="1">
+                        <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest">Drag image or use slider to rotate</p>
                     </div>
                 </div>
                 
@@ -1635,7 +1718,7 @@
                 });
             }, subnavObserverOptions);
 
-            ['otlo-intro', 'otlo-meaning', 'otlo-spatial', 'otlo-anatomy', 'otlo-amenities'].forEach(id => {
+            ['otlo-intro', 'otlo-meaning', 'otlo-spatial', 'otlo-360', 'otlo-anatomy', 'otlo-amenities'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) subnavObserver.observe(el);
             });
@@ -2630,6 +2713,206 @@
             modalImg.classList.remove('scale-100');
             modalImg.classList.add('scale-95');
         }
+
+        // --- Custom Vanilla JS 360 Viewer ---
+        const Experience360 = {
+            frames: 51,
+            currentFrame: 1,
+            isPlaying: true,
+            view: 'exterior', // 'exterior' | 'interior'
+            images: { exterior: [], interior: [] },
+            loaded: { exterior: 0, interior: 0 },
+            canvas: null,
+            ctx: null,
+            lastDrawTime: 0,
+            fps: 12, // Slow and smooth
+            dragStartX: 0,
+            isDragging: false,
+            hasInitialized: false,
+
+            init() {
+                if (this.hasInitialized) return;
+                this.canvas = document.getElementById('experience-360-canvas');
+                if (!this.canvas) return;
+                
+                this.ctx = this.canvas.getContext('2d');
+                // Lock exact native resolution
+                this.canvas.width = 1458;
+                this.canvas.height = 774;
+
+                this.preload('exterior');
+                this.preload('interior');
+                this.bindEvents();
+                this.loop();
+                this.hasInitialized = true;
+            },
+
+            preload(type) {
+                const folder = type === 'exterior' ? '360e' : '360i';
+                for (let i = 1; i <= this.frames; i++) {
+                    const img = new Image();
+                    const paddedIndex = String(i).padStart(2, '0');
+                    img.src = `${folder}/Image${paddedIndex}.png`;
+                    img.onload = () => {
+                        this.loaded[type]++;
+                        // Draw immediately if it's the active view and first image to load
+                        if (this.view === type && this.loaded[type] === 1) {
+                            this.drawFrame();
+                        }
+                        // Hide loader once all active view frames are fully loaded
+                        if (this.view === type && this.loaded[type] === this.frames) {
+                            const loader = document.getElementById('experience-360-loader');
+                            if (loader) {
+                                loader.style.opacity = '0';
+                                setTimeout(() => loader.style.display = 'none', 500);
+                            }
+                        }
+                    };
+                    this.images[type].push(img);
+                }
+            },
+
+            drawFrame() {
+                if (!this.canvas) return;
+                const imgArray = this.images[this.view];
+                const img = imgArray[this.currentFrame - 1];
+                
+                if (img && img.complete) {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    this.ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
+                    
+                    const slider = document.getElementById('experience-360-slider');
+                    if (slider) slider.value = this.currentFrame;
+                }
+            },
+
+            nextFrame() {
+                this.currentFrame--;
+                if (this.currentFrame < 1) this.currentFrame = this.frames;
+                this.drawFrame();
+            },
+
+            loop(timestamp) {
+                if (this.isPlaying) {
+                    if (timestamp - this.lastDrawTime > (1000 / this.fps)) {
+                        this.nextFrame();
+                        this.lastDrawTime = timestamp;
+                    }
+                }
+                requestAnimationFrame((ts) => this.loop(ts));
+            },
+
+            togglePlay() {
+                this.isPlaying = !this.isPlaying;
+                this.updatePlayBtn();
+            },
+
+            updatePlayBtn() {
+                const btn = document.getElementById('btn-360-play');
+                if (!btn) return;
+                if (this.isPlaying) {
+                    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+                } else {
+                    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+                }
+            },
+
+            setView(newView) {
+                if (this.view === newView) return;
+                
+                const btnExt = document.getElementById('btn-360-ext');
+                const btnInt = document.getElementById('btn-360-int');
+                
+                if (newView === 'interior') {
+                    if(btnInt) { btnInt.classList.add('bg-black', 'text-white'); btnInt.classList.remove('text-gray-500', 'hover:text-black'); }
+                    if(btnExt) { btnExt.classList.remove('bg-black', 'text-white'); btnExt.classList.add('text-gray-500', 'hover:text-black'); }
+                } else {
+                    if(btnExt) { btnExt.classList.add('bg-black', 'text-white'); btnExt.classList.remove('text-gray-500', 'hover:text-black'); }
+                    if(btnInt) { btnInt.classList.remove('bg-black', 'text-white'); btnInt.classList.add('text-gray-500', 'hover:text-black'); }
+                }
+
+                // Smooth fade transition
+                this.canvas.style.opacity = 0;
+                setTimeout(() => {
+                    this.view = newView;
+                    this.drawFrame();
+                    this.canvas.style.opacity = 1;
+                }, 150);
+            },
+
+            bindEvents() {
+                const container = document.getElementById('experience-360-interaction');
+                const slider = document.getElementById('experience-360-slider');
+                if (!container || !slider) return;
+
+                // Sync Slider
+                slider.addEventListener('input', (e) => {
+                    this.isPlaying = false;
+                    this.updatePlayBtn();
+                    this.currentFrame = parseInt(e.target.value);
+                    this.drawFrame();
+                });
+
+                // Drag Logic
+                const startDrag = (x) => {
+                    this.isDragging = true;
+                    this.dragStartX = x;
+                    this.isPlaying = false;
+                    this.updatePlayBtn();
+                    container.classList.add('cursor-grabbing');
+                };
+
+                const doDrag = (x) => {
+                    if (!this.isDragging) return;
+                    const delta = x - this.dragStartX;
+                    const sensitivity = 15; // drag sensitivity (pixels per frame)
+                    
+                    if (Math.abs(delta) > sensitivity) {
+                        const framesToMove = Math.floor(delta / sensitivity);
+                        this.currentFrame += framesToMove;
+                        
+                        // Wrap frame index
+                        while(this.currentFrame > this.frames) this.currentFrame -= this.frames;
+                        while(this.currentFrame < 1) this.currentFrame += this.frames;
+                        
+                        this.drawFrame();
+                        this.dragStartX = x;
+                    }
+                };
+
+                const endDrag = () => {
+                    this.isDragging = false;
+                    container.classList.remove('cursor-grabbing');
+                };
+
+                // Mouse Events
+                container.addEventListener('mousedown', e => { e.preventDefault(); startDrag(e.clientX); });
+                window.addEventListener('mousemove', e => doDrag(e.clientX));
+                window.addEventListener('mouseup', endDrag);
+
+                // Touch Events
+                container.addEventListener('touchstart', e => startDrag(e.touches[0].clientX), {passive: true});
+                window.addEventListener('touchmove', e => doDrag(e.touches[0].clientX), {passive: true});
+                window.addEventListener('touchend', endDrag);
+            }
+        };
+
+        // Initialize 360 Viewer automatically when it enters the viewport
+        document.addEventListener("DOMContentLoaded", function() {
+            if(typeof IntersectionObserver !== 'undefined') {
+                const observer360 = new IntersectionObserver((entries) => {
+                    if(entries[0].isIntersecting) {
+                        Experience360.init();
+                        observer360.disconnect();
+                    }
+                }, { rootMargin: "600px" }); 
+                
+                const section360 = document.getElementById('otlo-360');
+                if(section360) observer360.observe(section360);
+            } else {
+                Experience360.init();
+            }
+        });
 
         let isExploded = false;
 
