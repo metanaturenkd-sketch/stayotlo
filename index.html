@@ -2752,8 +2752,8 @@
                 animate: is360Playing,
                 frameTime: 240,
                 frame: startFrame,
-                responsive: true,     /* Enable native responsive behavior */
-                sizeMode: 'fit',      /* Scale proportionately to fit within the container without cropping */
+                responsive: false,    /* Disabled so it doesn't fight our CSS overrides */
+                sizeMode: 'original', /* Renders internal canvas strictly at 1458x774, allowing CSS to cleanly shrink it */
                 onFrame: function(e, data) {
                     $('#slider-360').val(data.frame);
                 }
