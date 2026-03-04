@@ -780,13 +780,26 @@
                             <img src="plans/plan3.png" loading="lazy" class="plan-image inactive" data-index="2" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" alt="">
                             <img src="plans/plan4.png" loading="lazy" class="plan-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
                             <img src="plans/plan5.png" loading="lazy" class="plan-image inactive" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan6.png" loading="lazy" class="plan-image inactive" data-index="5" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80'" alt="">
                         </div>
                     </div>
                 </div>
 
                 <!-- NEW 360 EXPERIENCE SECTION -->
                 <div id="otlo-360" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6 text-center md:text-left w-full max-w-[95%]">2. The 360° Experience</h3>
+                    
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end w-full max-w-[95%] mb-6 gap-4">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">2. The 360° Experience</h3>
+                        
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 z-50 relative">
+                            <!-- Category Toggle -->
+                            <div class="relative flex items-center bg-gray-100 p-1 rounded-full shadow-inner border border-gray-200">
+                                <div id="cat-highlight-360" class="absolute w-[calc(50%-4px)] h-[calc(100%-8px)] bg-white rounded-full shadow-sm transition-transform duration-300 left-1 translate-x-full"></div>
+                                <button id="btn-cat-1bed-360" onclick="Experience360.setCategory('1bed')" class="relative z-10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 transition-colors w-24 text-center">1 Bedroom</button>
+                                <button id="btn-cat-2bed-360" onclick="Experience360.setCategory('2bed')" class="relative z-10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-black transition-colors w-24 text-center">2 Bedroom</button>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="experience-360 relative w-[95%] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all mb-8 flex flex-col items-center py-6 md:py-8">
                         
@@ -823,14 +836,24 @@
                 
                 <div id="otlo-anatomy" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
                     
-                    <div class="flex justify-between items-end w-full max-w-[95%] mb-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end w-full max-w-[95%] mb-6 gap-4">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">3. System Anatomy</h3>
                         
-                        <!-- Typology Selector -->
-                        <div class="flex items-center gap-1 bg-white/90 backdrop-blur-md border border-gray-200 p-1 rounded-full shadow-sm relative z-50">
-                            <button id="btn-type-a" onclick="switchTypology('A')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-black text-white transition-colors">Type A</button>
-                            <button id="btn-type-b" onclick="switchTypology('B')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Type B</button>
-                            <button id="btn-type-c" onclick="switchTypology('C')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Type C</button>
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 z-50 relative">
+                            <!-- Category Toggle -->
+                            <div class="relative flex items-center bg-gray-100 p-1 rounded-full shadow-inner border border-gray-200">
+                                <div id="cat-highlight" class="absolute w-[calc(50%-4px)] h-[calc(100%-8px)] bg-white rounded-full shadow-sm transition-transform duration-300 left-1 translate-x-full"></div>
+                                <button id="btn-cat-1bed" onclick="switchCategory('1bed')" class="relative z-10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 transition-colors w-24 text-center">1 Bedroom</button>
+                                <button id="btn-cat-2bed" onclick="switchCategory('2bed')" class="relative z-10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-black transition-colors w-24 text-center">2 Bedroom</button>
+                            </div>
+                            
+                            <!-- Typology Sub-tabs -->
+                            <div id="typology-selector" class="flex items-center gap-3 transition-all duration-300 opacity-100 pl-1">
+                                <div class="w-px h-4 bg-gray-300 hidden sm:block"></div>
+                                <button id="btn-type-a" onclick="switchTypology('A')" class="text-[10px] font-bold uppercase tracking-widest text-black border-b border-black pb-0.5 transition-all">Type A</button>
+                                <button id="btn-type-b" onclick="switchTypology('B')" class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-800 border-b border-transparent pb-0.5 transition-all">Type B</button>
+                                <button id="btn-type-c" onclick="switchTypology('C')" class="text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-800 border-b border-transparent pb-0.5 transition-all">Type C</button>
+                            </div>
                         </div>
                     </div>
 
@@ -847,9 +870,9 @@
                     <div id="explode-stage" class="relative w-[95%] h-[55vh] md:h-[65vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 flex items-center justify-center group shadow-sm transition-all z-10">
                         <div class="explode-wrapper relative w-full max-w-[1200px] h-full">
                             <img id="anatomy-view-img" src="images/view.png" loading="lazy" class="explode-layer explode-view" alt="" onerror="this.src='https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&q=80'" onclick="setExplodeState(true)">
-                            <img src="images/shell.png" loading="lazy" class="explode-layer explode-shell" onerror="this.src='https://images.unsplash.com/photo-1541888086968-9de15039eb14?auto=format&fit=crop&q=80'" alt="Shell structure">
+                            <img id="anatomy-shell-img" src="images/shell.png" loading="lazy" class="explode-layer explode-shell" onerror="this.src='https://images.unsplash.com/photo-1541888086968-9de15039eb14?auto=format&fit=crop&q=80'" alt="Shell structure">
                             <img id="anatomy-interior-img" src="images/interior.png" loading="lazy" class="explode-layer explode-interior" onerror="this.src='https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80'" alt="Interior layout" onclick="toggleExplodeFocus()">
-                            <img src="images/base.png" loading="lazy" class="explode-layer explode-base" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80'" alt="Foundation" onclick="setExplodeState(false)">
+                            <img id="anatomy-base-img" src="images/base.png" loading="lazy" class="explode-layer explode-base" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80'" alt="Foundation" onclick="setExplodeState(false)">
                         </div>
                     </div>
                     <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest" id="explode-hint">Click interior to zoom</p>
@@ -1136,17 +1159,17 @@
                         </div>
                         <div class="grid md:grid-cols-3 gap-6 mb-8">
                             <div class="bg-white border border-gray-200 rounded-[2rem] p-8 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                <h4 class="text-xl font-bold mb-2">1.5 Bed / 1 Bath</h4>
+                                <h4 class="text-xl font-bold mb-2">1 BED / 1 BATH</h4>
                                 <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Sleeps 2</p>
                                 <p class="text-sm text-gray-500 font-light">Perfect for couples and extended stays with a dedicated workstation.</p>
                             </div>
                             <div class="bg-white border border-gray-200 rounded-[2rem] p-8 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                <h4 class="text-xl font-bold mb-2">2 Bedroom / 1 Bath</h4>
+                                <h4 class="text-xl font-bold mb-2">2 BED / 1 BATH</h4>
                                 <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Sleeps 4</p>
                                 <p class="text-sm text-gray-500 font-light">Perfectly balanced layout designed for families or small groups.</p>
                             </div>
                             <div class="bg-white border border-gray-200 rounded-[2rem] p-8 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                <h4 class="text-xl font-bold mb-2">2 Bedroom / 2 Bath</h4>
+                                <h4 class="text-xl font-bold mb-2">2 BED / 2 BATH</h4>
                                 <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Sleeps 4 to 6</p>
                                 <p class="text-sm text-gray-500 font-light">Spacious floor plans designed with group stays and privacy in mind.</p>
                             </div>
@@ -1564,19 +1587,63 @@
 
         // --- Typology Preloading & State ---
         const typologyImages = {
-            A: { interior: 'images/interior.png', view: 'images/view.png' },
-            B: { interior: 'images/interior2.png', view: 'images/view2.png' },
-            C: { interior: 'images/interior3.png', view: 'images/view3.png' }
+            '1bed': { interior: 'images/11interior.png', view: 'images/11view.png', shell: 'images/11shell.png', base: 'images/11base.png' },
+            '2bed_A': { interior: 'images/interior.png', view: 'images/view.png', shell: 'images/shell.png', base: 'images/base.png' },
+            '2bed_B': { interior: 'images/interior2.png', view: 'images/view2.png', shell: 'images/shell.png', base: 'images/base.png' },
+            '2bed_C': { interior: 'images/interior3.png', view: 'images/view3.png', shell: 'images/shell.png', base: 'images/base.png' }
         };
+        let currentCategory = '2bed';
         let currentTypology = 'A';
 
         // Preload images into browser memory to ensure zero layout shift or flickering on swap
         Object.values(typologyImages).forEach(srcs => {
-            const imgInt = new Image(); imgInt.src = srcs.interior;
-            const imgView = new Image(); imgView.src = srcs.view;
+            if(srcs.interior) { const img = new Image(); img.src = srcs.interior; }
+            if(srcs.view) { const img = new Image(); img.src = srcs.view; }
+            if(srcs.shell) { const img = new Image(); img.src = srcs.shell; }
+            if(srcs.base) { const img = new Image(); img.src = srcs.base; }
         });
 
+        function switchCategory(cat) {
+            if (currentCategory === cat) return;
+            currentCategory = cat;
+
+            const btn1 = document.getElementById('btn-cat-1bed');
+            const btn2 = document.getElementById('btn-cat-2bed');
+            const highlight = document.getElementById('cat-highlight');
+            const typSelector = document.getElementById('typology-selector');
+
+            if (cat === '1bed') {
+                if(btn1) btn1.classList.replace('text-gray-500', 'text-black');
+                if(btn2) btn2.classList.replace('text-black', 'text-gray-500');
+                if(highlight) highlight.style.transform = 'translateX(0)';
+                
+                if(typSelector) {
+                    typSelector.style.opacity = '0';
+                    typSelector.style.pointerEvents = 'none';
+                    setTimeout(() => { typSelector.style.display = 'none'; }, 300);
+                }
+                
+                applyAnatomyImages('1bed');
+            } else {
+                if(btn2) btn2.classList.replace('text-gray-500', 'text-black');
+                if(btn1) btn1.classList.replace('text-black', 'text-gray-500');
+                if(highlight) highlight.style.transform = 'translateX(100%)';
+                
+                if(typSelector) {
+                    typSelector.style.display = 'flex';
+                    // slight delay to allow display to process before fading in
+                    setTimeout(() => { 
+                        typSelector.style.opacity = '1'; 
+                        typSelector.style.pointerEvents = 'auto';
+                    }, 10);
+                }
+                
+                applyAnatomyImages('2bed_' + currentTypology);
+            }
+        }
+
         function switchTypology(type) {
+            if (currentCategory !== '2bed') return;
             if (type === currentTypology) return;
             
             // Update Active Button Styles
@@ -1585,22 +1652,31 @@
                 if (!btn) return;
                 
                 if (t === type) {
-                    btn.classList.add('bg-black', 'text-white');
-                    btn.classList.remove('text-gray-500', 'hover:text-black');
+                    btn.classList.add('text-black', 'border-black');
+                    btn.classList.remove('text-gray-400', 'border-transparent', 'hover:text-gray-800');
                 } else {
-                    btn.classList.remove('bg-black', 'text-white');
-                    btn.classList.add('text-gray-500', 'hover:text-black');
+                    btn.classList.remove('text-black', 'border-black');
+                    btn.classList.add('text-gray-400', 'border-transparent', 'hover:text-gray-800');
                 }
             });
 
-            // Instantly Swap Image Sources (Preloaded so it's smooth and maintains scaling/zoom events)
+            currentTypology = type;
+            applyAnatomyImages('2bed_' + type);
+        }
+
+        function applyAnatomyImages(key) {
             const interiorImg = document.getElementById('anatomy-interior-img');
             const viewImg = document.getElementById('anatomy-view-img');
+            const shellImg = document.getElementById('anatomy-shell-img');
+            const baseImg = document.getElementById('anatomy-base-img');
             
-            if (interiorImg) interiorImg.src = typologyImages[type].interior;
-            if (viewImg) viewImg.src = typologyImages[type].view;
-            
-            currentTypology = type;
+            const srcs = typologyImages[key];
+            if (!srcs) return;
+
+            if (interiorImg) interiorImg.src = srcs.interior;
+            if (viewImg) viewImg.src = srcs.view;
+            if (shellImg) shellImg.src = srcs.shell;
+            if (baseImg) baseImg.src = srcs.base;
         }
 
         function attemptPlayMusic() {
@@ -2738,9 +2814,16 @@
             frames: 51,
             currentFrame: 1,
             isPlaying: true,
+            category: '2bed', // '1bed' | '2bed'
             view: 'exterior', // 'exterior' | 'interior'
-            images: { exterior: [], interior: [] },
-            loaded: { exterior: 0, interior: 0 },
+            images: {
+                '1bed': { exterior: [], interior: [] },
+                '2bed': { exterior: [], interior: [] }
+            },
+            loaded: {
+                '1bed': { exterior: 0, interior: 0 },
+                '2bed': { exterior: 0, interior: 0 }
+            },
             canvas: null,
             ctx: null,
             lastDrawTime: 0,
@@ -2759,27 +2842,37 @@
                 this.canvas.width = 1458;
                 this.canvas.height = 774;
 
-                this.preload('exterior');
-                this.preload('interior');
+                this.preload('2bed', 'exterior');
+                this.preload('2bed', 'interior');
                 this.bindEvents();
                 this.loop();
                 this.hasInitialized = true;
             },
 
-            preload(type) {
-                const folder = type === 'exterior' ? '360e' : '360i';
+            preload(cat, type) {
+                if (this.loaded[cat][type] > 0) return; // prevent duplicate preloading
+
+                let folder = '';
+                if (cat === '1bed') {
+                    folder = type === 'exterior' ? '11e' : '11i';
+                } else {
+                    folder = type === 'exterior' ? '360e' : '360i';
+                }
+
                 for (let i = 1; i <= this.frames; i++) {
                     const img = new Image();
                     const paddedIndex = String(i).padStart(2, '0');
                     img.src = `${folder}/Image${paddedIndex}.png`;
                     img.onload = () => {
-                        this.loaded[type]++;
+                        this.loaded[cat][type]++;
+                        
                         // Draw immediately if it's the active view and first image to load
-                        if (this.view === type && this.loaded[type] === 1) {
+                        if (this.category === cat && this.view === type && this.loaded[cat][type] === 1) {
                             this.drawFrame();
                         }
+                        
                         // Hide loader once all active view frames are fully loaded
-                        if (this.view === type && this.loaded[type] === this.frames) {
+                        if (this.category === cat && this.view === type && this.loaded[cat][type] === this.frames) {
                             const loader = document.getElementById('experience-360-loader');
                             if (loader) {
                                 loader.style.opacity = '0';
@@ -2787,13 +2880,13 @@
                             }
                         }
                     };
-                    this.images[type].push(img);
+                    this.images[cat][type].push(img);
                 }
             },
 
             drawFrame() {
                 if (!this.canvas) return;
-                const imgArray = this.images[this.view];
+                const imgArray = this.images[this.category][this.view];
                 const img = imgArray[this.currentFrame - 1];
                 
                 if (img && img.complete) {
@@ -2836,6 +2929,49 @@
                 }
             },
 
+            setCategory(newCat) {
+                if (this.category === newCat) return;
+
+                const btn1 = document.getElementById('btn-cat-1bed-360');
+                const btn2 = document.getElementById('btn-cat-2bed-360');
+                const highlight = document.getElementById('cat-highlight-360');
+
+                if (newCat === '1bed') {
+                    if(btn1) btn1.classList.replace('text-gray-500', 'text-black');
+                    if(btn2) btn2.classList.replace('text-black', 'text-gray-500');
+                    if(highlight) highlight.style.transform = 'translateX(0)';
+                } else {
+                    if(btn2) btn2.classList.replace('text-gray-500', 'text-black');
+                    if(btn1) btn1.classList.replace('text-black', 'text-gray-500');
+                    if(highlight) highlight.style.transform = 'translateX(100%)';
+                }
+
+                this.category = newCat;
+
+                // Trigger preload if not started
+                if (this.loaded[newCat][this.view] === 0) {
+                    this.preload(newCat, 'exterior');
+                    this.preload(newCat, 'interior');
+                }
+
+                // Manage loader display
+                const loader = document.getElementById('experience-360-loader');
+                if (this.loaded[newCat][this.view] < this.frames && loader) {
+                    loader.style.display = 'flex';
+                    setTimeout(() => loader.style.opacity = '1', 10);
+                } else if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 500);
+                }
+
+                // Smooth fade transition
+                this.canvas.style.opacity = 0;
+                setTimeout(() => {
+                    this.drawFrame();
+                    this.canvas.style.opacity = 1;
+                }, 150);
+            },
+
             setView(newView) {
                 if (this.view === newView) return;
                 
@@ -2850,10 +2986,21 @@
                     if(btnInt) { btnInt.classList.remove('bg-black', 'text-white'); btnInt.classList.add('text-gray-500', 'hover:text-black'); }
                 }
 
+                this.view = newView;
+
+                // Manage loader display
+                const loader = document.getElementById('experience-360-loader');
+                if (this.loaded[this.category][this.view] < this.frames && loader) {
+                    loader.style.display = 'flex';
+                    setTimeout(() => loader.style.opacity = '1', 10);
+                } else if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 500);
+                }
+
                 // Smooth fade transition
                 this.canvas.style.opacity = 0;
                 setTimeout(() => {
-                    this.view = newView;
                     this.drawFrame();
                     this.canvas.style.opacity = 1;
                 }, 150);
