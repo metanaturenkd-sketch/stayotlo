@@ -579,36 +579,26 @@
                     </button>
                 </div>
                 
-                <div class="carousel-track h-full" id="carousel-track" style="will-change: transform;">
-                    <div class="carousel-slide min-w-full h-full relative group">
-                        <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-mountain">
-                            <img src="images/msd.png" class="gallery-image active" data-index="0">
-                            <img src="images/msn.png" class="gallery-image inactive" data-index="1">
-                            <img src="images/mcd.png" class="gallery-image inactive" data-index="2">
-                            <img src="images/mcn.png" class="gallery-image inactive" data-index="3">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20"></div>
-                        </div>
-                        <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
-                            <button onclick="cycleInternalImage('gallery-mountain', -1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">←</button>
-                            <button onclick="cycleInternalImage('gallery-mountain', 1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">→</button>
-                        </div>
-                    </div>
-                    <div class="carousel-slide min-w-full h-full relative group">
-                        <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-lake">
-                            <img src="images/lsd.png" class="gallery-image active" data-index="0">
-                            <img src="images/lsn.png" class="gallery-image inactive" data-index="1">
-                            <img src="images/lcd.png" class="gallery-image inactive" data-index="2">
-                            <img src="images/lcn.png" class="gallery-image inactive" data-index="3">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20"></div>
-                        </div>
-                        <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
-                            <button onclick="cycleInternalImage('gallery-lake', -1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">←</button>
-                            <button onclick="cycleInternalImage('gallery-lake', 1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">→</button>
-                        </div>
-                    </div>
+                <div class="absolute inset-0 z-0 bg-gray-900" id="gallery-main">
+                    <img src="images/lsd.png" class="gallery-image active" data-index="0">
+                    <img src="images/lsn.png" class="gallery-image inactive" data-index="1">
+                    <img src="images/lcd.png" class="gallery-image inactive" data-index="2">
+                    <img src="images/lcn.png" class="gallery-image inactive" data-index="3">
+                    <img src="images/lcd1b.png" class="gallery-image inactive" data-index="4">
+                    <img src="images/lcn1b.png" class="gallery-image inactive" data-index="5">
+                    <img src="images/msd.png" class="gallery-image inactive" data-index="6">
+                    <img src="images/msn.png" class="gallery-image inactive" data-index="7">
+                    <img src="images/mcd.png" class="gallery-image inactive" data-index="8">
+                    <img src="images/mcn.png" class="gallery-image inactive" data-index="9">
+                    <img src="images/mcd1b.png" class="gallery-image inactive" data-index="10">
+                    <img src="images/mcn1b.png" class="gallery-image inactive" data-index="11">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-20 pointer-events-none"></div>
                 </div>
-                <button onclick="moveCarousel(-1)" class="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
-                <button onclick="moveCarousel(1)" class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 md:w-16 md:h-16 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+                
+                <div class="absolute bottom-24 md:bottom-32 right-6 md:right-10 z-30 flex gap-2">
+                    <button onclick="cycleInternalImage('gallery-main', -1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">←</button>
+                    <button onclick="cycleInternalImage('gallery-main', 1)" class="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/20">→</button>
+                </div>
 
                 <div class="absolute bottom-8 md:bottom-12 left-0 w-full z-40 flex flex-col items-center justify-center pointer-events-none animate-fade-in" style="animation-delay: 0.8s">
                     <img src="logo/logoo.png" alt="OTLO Logo" class="w-24 md:w-32 object-contain mb-4 drop-shadow-xl" style="filter: brightness(0) invert(1);" onerror="this.style.display='none'">
@@ -1583,7 +1573,7 @@
             IND: [{ name: "The Machan", loc: "Lonavala", keys: 30, adr: "₹22k", occ: "80%", feat: "Eco-Engineering", url: "https://www.themachan.com/" }, { name: "Evolve Back", loc: "Coorg", keys: 45, adr: "₹35k", occ: "75%", feat: "Heritage Luxury", url: "https://www.evolveback.com/coorg/" }, { name: "Ayatana", loc: "Coorg", keys: 50, adr: "₹28k", occ: "82%", feat: "Landscape Integration", url: "https://www.ayatanacoorg.com/" }]
         };
         const defaults = { hardCost: 200, softCost: 50, ffe: 40, landCost: 50000, infra: 200000, legal: 15000, permit: 10000, adr: 250, reserve: 20000 };
-        let currentCurr = 'USD'; let charts = {}; let currentSlide = 0; const galleryState = { 'gallery-mountain': 0, 'gallery-lake': 0 };
+        let currentCurr = 'USD'; let charts = {}; const galleryState = { 'gallery-main': 0 };
         const monetaryInputs = ['in-hard', 'in-soft', 'in-ffe', 'in-land-cost', 'in-infra', 'in-legal', 'in-permit', 'in-adr', 'in-reserve'];
         let activeScenario = null;
         let exportSlot = null;
@@ -1750,8 +1740,8 @@
             
             // --- NEW: Hardware Accelerated Image Preloading for Hero Gallery ---
             const heroImagesToPreload = [
-                'images/msd.png', 'images/msn.png', 'images/mcd.png', 'images/mcn.png',
-                'images/lsd.png', 'images/lsn.png', 'images/lcd.png', 'images/lcn.png'
+                'images/lsd.png', 'images/lsn.png', 'images/lcd.png', 'images/lcn.png', 'images/lcd1b.png', 'images/lcn1b.png',
+                'images/msd.png', 'images/msn.png', 'images/mcd.png', 'images/mcn.png', 'images/mcd1b.png', 'images/mcn1b.png'
             ];
             heroImagesToPreload.forEach(src => {
                 const img = new Image();
@@ -2653,15 +2643,6 @@
         
         function filterBenchmarks(r) { renderBenchmarks(r); }
         
-        function moveCarousel(dir) { 
-            const track = document.getElementById('carousel-track'); 
-            if(!track) return;
-            currentSlide += dir; 
-            if (currentSlide < 0) currentSlide = 1; 
-            if (currentSlide > 1) currentSlide = 0; 
-            track.style.transform = `translateX(-${currentSlide * 100}%)`; 
-        }
-
         function toggleMute() { 
             const audio = document.getElementById('bg-music'); 
             if(!audio) return;
@@ -2697,30 +2678,9 @@
         }
         
         function startInternalGalleries() { 
-            // Reduced from 7000ms to 4500ms so the gallery feels active immediately
-            const slideDuration = 4500;
+            const slideDuration = 5500; // Increased duration slightly to allow the slow transition to breathe
             setInterval(() => { 
-                const isProject1 = currentSlide === 0;
-                const activeGalleryId = isProject1 ? 'gallery-mountain' : 'gallery-lake';
-                
-                const container = document.getElementById(activeGalleryId);
-                if (!container) return;
-
-                const images = container.querySelectorAll('img');
-                const currentIndex = galleryState[activeGalleryId] || 0;
-
-                if (currentIndex >= images.length - 1) {
-                    // 1. Move carousel track FIRST
-                    moveCarousel(1);
-                    
-                    // 2. Wait for the 3s physical CSS slide transition to finish before cross-fading the left-behind gallery. 
-                    // This strictly fixes the visual flicker/glitch just before lsd.png and lsn.png.
-                    setTimeout(() => {
-                        cycleInternalImage(activeGalleryId, 1);
-                    }, 3000);
-                } else {
-                    cycleInternalImage(activeGalleryId, 1);
-                }
+                cycleInternalImage('gallery-main', 1);
             }, slideDuration); 
         }
 
