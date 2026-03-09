@@ -552,12 +552,13 @@
                     <div class="max-w-screen-2xl mx-auto px-4 md:px-6 flex items-center justify-between">
                         <div class="w-[240px] hidden md:block shrink-0"></div>
                         
-                        <div class="flex items-center justify-between w-[550px] lg:w-[680px] text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all shrink-0">
+                        <div class="flex items-center justify-between w-[550px] lg:w-[680px] text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all shrink-0 gap-2">
                             <button data-section="otlo-intro" onclick="scrollToConceptSection('otlo-intro')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Gallery</button>
                             <button data-section="otlo-meaning" onclick="scrollToConceptSection('otlo-meaning')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Vision</button>
                             <button data-section="otlo-spatial" onclick="scrollToConceptSection('otlo-spatial')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Spatial Flow</button>
                             <button data-section="otlo-360" onclick="scrollToConceptSection('otlo-360')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">360° View</button>
                             <button data-section="otlo-anatomy" onclick="scrollToConceptSection('otlo-anatomy')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Anatomy</button>
+                            <button data-section="otlo-virtual-tour" onclick="scrollToConceptSection('otlo-virtual-tour')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Virtual Tour</button>
                             <button data-section="otlo-amenities" onclick="scrollToConceptSection('otlo-amenities')" class="subnav-btn px-4 py-1.5 rounded-full transition-all whitespace-nowrap text-white/60 bg-transparent hover:text-white">Amenities</button>
                         </div>
 
@@ -876,6 +877,16 @@
                         </div>
                     </div>
                     <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest" id="explode-hint">Click interior to zoom</p>
+                </div>
+
+                <!-- NEW VIRTUAL TOUR SECTION -->
+                <div id="otlo-virtual-tour" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end w-full max-w-[95%] mb-6 gap-4">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">Virtual Tour</h3>
+                    </div>
+                    <div class="relative w-[95%] h-[60vh] md:h-[75vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all z-10 flex items-center justify-center p-1 md:p-2">
+                        <iframe class="w-full h-full rounded-[1.5rem] md:rounded-[1.8rem] bg-black" allowfullscreen allowvr scrolling="no" src="https://otlo.shapespark.com/otlo_walk_pod1/" style="border: none;"></iframe>
+                    </div>
                 </div>
 
                 <!-- NEW AMENITIES SECTION -->
@@ -1807,7 +1818,7 @@
                 });
             }, subnavObserverOptions);
 
-            ['otlo-intro', 'otlo-meaning', 'otlo-spatial', 'otlo-360', 'otlo-anatomy', 'otlo-amenities'].forEach(id => {
+            ['otlo-intro', 'otlo-meaning', 'otlo-spatial', 'otlo-360', 'otlo-anatomy', 'otlo-virtual-tour', 'otlo-amenities'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) subnavObserver.observe(el);
             });
