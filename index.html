@@ -799,12 +799,6 @@
                     
                     <div class="experience-360 relative w-[95%] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all mb-8 flex flex-col items-center py-6 md:py-8 min-h-[50vh]">
                         
-                        <!-- Empty State (Studio) -->
-                        <div id="experience-360-empty" class="absolute inset-0 w-full h-full bg-gray-50 transition-opacity duration-500 opacity-0 z-0 pointer-events-none flex flex-col items-center justify-center">
-                            <svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                            <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Coming Soon</span>
-                        </div>
-
                         <!-- UI Controls -->
                         <div id="controls-360" class="controls-360 relative z-50 flex justify-center mb-6 transition-opacity duration-300">
                             <div class="flex items-center gap-1 bg-white/90 backdrop-blur-md border border-gray-200 px-2 py-1.5 rounded-full shadow-md">
@@ -2856,10 +2850,12 @@
             category: 'residence', // 'studio' | 'residence' | 'suite'
             view: 'exterior', // 'exterior' | 'interior'
             images: {
+                'studio': { exterior: [], interior: [] },
                 'suite': { exterior: [], interior: [] },
                 'residence': { exterior: [], interior: [] }
             },
             loaded: {
+                'studio': { exterior: 0, interior: 0 },
                 'suite': { exterior: 0, interior: 0 },
                 'residence': { exterior: 0, interior: 0 }
             },
@@ -2889,7 +2885,7 @@
             },
 
             preload(cat, type) {
-                if (cat === 'studio' || !this.loaded[cat]) return;
+                if (!this.loaded[cat]) return;
                 if (this.loaded[cat][type] > 0) return; // prevent duplicate preloading
 
                 let folder = '';
@@ -2897,6 +2893,8 @@
                     folder = type === 'exterior' ? '11e' : '11i';
                 } else if (cat === 'residence') {
                     folder = type === 'exterior' ? '360e' : '360i';
+                } else if (cat === 'studio') {
+                    folder = type === 'exterior' ? 'b11e' : 'b11i';
                 }
 
                 for (let i = 1; i <= this.frames; i++) {
@@ -2947,7 +2945,7 @@
             },
 
             loop(timestamp) {
-                if (this.isPlaying && this.category !== 'studio') {
+                if (this.isPlaying) {
                     if (timestamp - this.lastDrawTime > (1000 / this.fps)) {
                         this.nextFrame();
                         this.lastDrawTime = timestamp;
@@ -2990,32 +2988,6 @@
 
                 this.category = newCat;
 
-                const emptyState = document.getElementById('experience-360-empty');
-                const interactionArea = document.getElementById('experience-360-interaction');
-                const controls = document.getElementById('controls-360');
-                const sliderContainer = document.getElementById('slider-360-container');
-
-                if (newCat === 'studio') {
-                    if (emptyState) {
-                        emptyState.classList.remove('opacity-0', 'pointer-events-none');
-                        emptyState.classList.add('opacity-100', 'pointer-events-auto', 'z-20');
-                    }
-                    if (interactionArea) interactionArea.style.opacity = '0';
-                    if (controls) controls.style.opacity = '0';
-                    if (sliderContainer) sliderContainer.style.opacity = '0';
-                    this.isPlaying = false;
-                    this.updatePlayBtn();
-                    return; // Stop further execution for empty state
-                } else {
-                    if (emptyState) {
-                        emptyState.classList.add('opacity-0', 'pointer-events-none');
-                        emptyState.classList.remove('opacity-100', 'pointer-events-auto', 'z-20');
-                    }
-                    if (interactionArea) interactionArea.style.opacity = '1';
-                    if (controls) controls.style.opacity = '1';
-                    if (sliderContainer) sliderContainer.style.opacity = '1';
-                }
-
                 // Trigger preload if not started
                 if (this.loaded[newCat] && this.loaded[newCat][this.view] === 0) {
                     this.preload(newCat, 'exterior');
@@ -3043,7 +3015,7 @@
             },
 
             setView(newView) {
-                if (this.view === newView || this.category === 'studio') return;
+                if (this.view === newView) return;
                 
                 const btnExt = document.getElementById('btn-360-ext');
                 const btnInt = document.getElementById('btn-360-int');
