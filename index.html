@@ -772,6 +772,8 @@
                             <img src="plans/plan4.png" loading="lazy" class="plan-image inactive" data-index="3" onerror="this.src='https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80'" alt="">
                             <img src="plans/plan5.png" loading="lazy" class="plan-image inactive" data-index="4" onerror="this.src='https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80'" alt="">
                             <img src="plans/plan6.png" loading="lazy" class="plan-image inactive" data-index="5" onerror="this.src='https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan7.png" loading="lazy" class="plan-image inactive" data-index="6" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80'" alt="">
+                            <img src="plans/plan8.png" loading="lazy" class="plan-image inactive" data-index="7" onerror="this.src='https://images.unsplash.com/photo-1524813686514-a57563d77965?auto=format&fit=crop&q=80'" alt="">
                         </div>
                     </div>
                 </div>
@@ -782,20 +784,29 @@
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-end w-full max-w-[95%] mb-6 gap-4">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">2. The 360° Experience</h3>
                         
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 z-50 relative">
+                        <div class="w-full sm:w-[420px] z-50 relative">
                             <!-- Category Toggle -->
-                            <div class="relative flex items-center bg-gray-100 p-1 rounded-full shadow-inner border border-gray-200">
-                                <div id="cat-highlight-360" class="absolute w-[calc(50%-4px)] h-[calc(100%-8px)] bg-white rounded-full shadow-sm transition-transform duration-300 left-1 translate-x-full"></div>
-                                <button id="btn-cat-1bed-360" onclick="Experience360.setCategory('1bed')" class="relative z-10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 transition-colors w-24 text-center">1 Bedroom</button>
-                                <button id="btn-cat-2bed-360" onclick="Experience360.setCategory('2bed')" class="relative z-10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-black transition-colors w-24 text-center">2 Bedroom</button>
+                            <div class="bg-gray-100 p-1 rounded-full shadow-inner border border-gray-200">
+                                <div class="relative flex items-center w-full">
+                                    <div id="cat-highlight-360" class="absolute top-0 bottom-0 left-0 w-[33.333%] bg-white rounded-full shadow-sm transition-transform duration-300 translate-x-[100%]"></div>
+                                    <button id="btn-cat-studio-360" onclick="Experience360.setCategory('studio', 0)" class="relative z-10 py-2 w-[33.333%] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500 transition-colors text-center">Studio Vault</button>
+                                    <button id="btn-cat-residence-360" onclick="Experience360.setCategory('residence', 1)" class="relative z-10 py-2 w-[33.333%] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-black transition-colors text-center">Residence Vault</button>
+                                    <button id="btn-cat-suite-360" onclick="Experience360.setCategory('suite', 2)" class="relative z-10 py-2 w-[33.333%] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500 transition-colors text-center">Suite Vault</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="experience-360 relative w-[95%] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all mb-8 flex flex-col items-center py-6 md:py-8">
+                    <div class="experience-360 relative w-[95%] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all mb-8 flex flex-col items-center py-6 md:py-8 min-h-[50vh]">
                         
+                        <!-- Empty State (Studio) -->
+                        <div id="experience-360-empty" class="absolute inset-0 w-full h-full bg-gray-50 transition-opacity duration-500 opacity-0 z-0 pointer-events-none flex flex-col items-center justify-center">
+                            <svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Coming Soon</span>
+                        </div>
+
                         <!-- UI Controls -->
-                        <div class="controls-360 relative z-50 flex justify-center mb-6">
+                        <div id="controls-360" class="controls-360 relative z-50 flex justify-center mb-6 transition-opacity duration-300">
                             <div class="flex items-center gap-1 bg-white/90 backdrop-blur-md border border-gray-200 px-2 py-1.5 rounded-full shadow-md">
                                 <button id="btn-360-ext" onclick="Experience360.setView('exterior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-black text-white transition-colors">Exterior</button>
                                 <button id="btn-360-int" onclick="Experience360.setView('interior')" class="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">Interior</button>
@@ -807,7 +818,7 @@
                         </div>
 
                         <!-- Canvas Viewer Container -->
-                        <div class="experience-360-container viewer-360 px-4 md:px-8 cursor-grab active:cursor-grabbing" id="experience-360-interaction">
+                        <div class="experience-360-container viewer-360 px-4 md:px-8 cursor-grab active:cursor-grabbing transition-opacity duration-300" id="experience-360-interaction">
                             <canvas id="experience-360-canvas" class="experience-360-canvas transition-opacity duration-300"></canvas>
                             
                             <!-- Loading Indicator -->
@@ -819,7 +830,7 @@
                     </div>
 
                     <!-- Slider Control -->
-                    <div class="w-full max-w-lg mx-auto flex flex-col items-center px-6">
+                    <div id="slider-360-container" class="w-full max-w-lg mx-auto flex flex-col items-center px-6 transition-opacity duration-300">
                         <input type="range" id="experience-360-slider" class="slider-360 w-full" min="1" max="51" value="1">
                         <p class="text-[9px] text-gray-400 mt-4 text-center uppercase tracking-widest">Drag image or use slider to rotate</p>
                     </div>
@@ -830,12 +841,15 @@
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-end w-full max-w-[95%] mb-6 gap-4">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">3. System Anatomy</h3>
                         
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 z-50 relative">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 z-50 relative w-full sm:w-auto">
                             <!-- Category Toggle -->
-                            <div class="relative flex items-center bg-gray-100 p-1 rounded-full shadow-inner border border-gray-200">
-                                <div id="cat-highlight" class="absolute w-[calc(50%-4px)] h-[calc(100%-8px)] bg-white rounded-full shadow-sm transition-transform duration-300 left-1 translate-x-full"></div>
-                                <button id="btn-cat-1bed" onclick="switchCategory('1bed')" class="relative z-10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-500 transition-colors w-24 text-center">1 Bedroom</button>
-                                <button id="btn-cat-2bed" onclick="switchCategory('2bed')" class="relative z-10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-black transition-colors w-24 text-center">2 Bedroom</button>
+                            <div class="w-full sm:w-[420px] bg-gray-100 p-1 rounded-full shadow-inner border border-gray-200">
+                                <div class="relative flex items-center w-full">
+                                    <div id="cat-highlight" class="absolute top-0 bottom-0 left-0 w-[33.333%] bg-white rounded-full shadow-sm transition-transform duration-300 translate-x-[100%]"></div>
+                                    <button id="btn-cat-studio" onclick="switchCategory('studio', 0)" class="relative z-10 py-2 w-[33.333%] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500 transition-colors text-center">Studio Vault</button>
+                                    <button id="btn-cat-residence" onclick="switchCategory('residence', 1)" class="relative z-10 py-2 w-[33.333%] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-black transition-colors text-center">Residence Vault</button>
+                                    <button id="btn-cat-suite" onclick="switchCategory('suite', 2)" class="relative z-10 py-2 w-[33.333%] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500 transition-colors text-center">Suite Vault</button>
+                                </div>
                             </div>
                             
                             <!-- Typology Sub-tabs -->
@@ -873,9 +887,33 @@
                 <div id="otlo-virtual-tour" class="w-full max-w-[1800px] mx-auto min-h-[calc(100vh-140px)] flex flex-col items-center justify-center py-10 md:py-16 scroll-mt-28 reveal-on-scroll border-t border-gray-100">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-end w-full max-w-[95%] mb-6 gap-4">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400">Virtual Tour</h3>
+                        
+                        <div class="w-full sm:w-[420px] z-50 relative">
+                            <div class="bg-gray-100 p-1 rounded-full shadow-inner border border-gray-200">
+                                <div class="relative flex items-center w-full">
+                                    <div id="vt-highlight" class="absolute top-0 bottom-0 left-0 w-[33.333%] bg-white rounded-full shadow-sm transition-transform duration-300 translate-x-0"></div>
+                                    <button id="btn-vt-studio" onclick="switchVirtualTour('studio', 0)" class="relative z-10 py-2 w-[33.333%] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-black transition-colors text-center">Studio Vault</button>
+                                    <button id="btn-vt-residence" onclick="switchVirtualTour('residence', 1)" class="relative z-10 py-2 w-[33.333%] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500 transition-colors text-center">Residence Vault</button>
+                                    <button id="btn-vt-suite" onclick="switchVirtualTour('suite', 2)" class="relative z-10 py-2 w-[33.333%] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-500 transition-colors text-center">Suite Vault</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="relative w-[95%] h-[60vh] md:h-[75vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all z-10 flex items-center justify-center p-1 md:p-2">
-                        <iframe class="w-full h-full rounded-[1.5rem] md:rounded-[1.8rem] bg-black" allowfullscreen allowvr scrolling="no" src="https://otlo.shapespark.com/otlo_walk_pod1/" style="border: none;"></iframe>
+                    
+                    <div class="relative w-[95%] h-[60vh] md:h-[75vh] bg-gray-50/50 rounded-[2rem] overflow-hidden border border-gray-100 shadow-sm transition-all z-10 p-1 md:p-2">
+                        <div class="relative w-full h-full rounded-[1.5rem] md:rounded-[1.8rem] overflow-hidden bg-white">
+                            <!-- Studio -->
+                            <iframe id="vt-studio" class="absolute inset-0 w-full h-full bg-black transition-opacity duration-500 opacity-100 z-10" allowfullscreen allowvr scrolling="no" src="https://otlo.shapespark.com/otlo_walk_pod1/" style="border: none;"></iframe>
+                            
+                            <!-- Residence -->
+                            <iframe id="vt-residence" class="absolute inset-0 w-full h-full bg-black transition-opacity duration-500 opacity-0 z-0 pointer-events-none" allowfullscreen allowvr scrolling="no" src="https://otlo.shapespark.com/otlo_walk_grand/" style="border: none;"></iframe>
+                            
+                            <!-- Suite -->
+                            <div id="vt-suite" class="absolute inset-0 w-full h-full bg-gray-50 transition-opacity duration-500 opacity-0 z-0 pointer-events-none flex flex-col items-center justify-center border border-gray-200">
+                                <svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Link Coming Soon</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1588,12 +1626,13 @@
 
         // --- Typology Preloading & State ---
         const typologyImages = {
-            '1bed': { interior: 'images/11interior.png', view: 'images/11view.png', shell: 'images/11shell.png', base: 'images/11base.png' },
-            '2bed_A': { interior: 'images/interior.png', view: 'images/view.png', shell: 'images/shell.png', base: 'images/base.png' },
-            '2bed_B': { interior: 'images/interior2.png', view: 'images/view2.png', shell: 'images/shell.png', base: 'images/base.png' },
-            '2bed_C': { interior: 'images/interior3.png', view: 'images/view3.png', shell: 'images/shell.png', base: 'images/base.png' }
+            'studio': { interior: 'images/b11interior.png', view: 'images/b11view.png', shell: 'images/b11shell.png', base: 'images/b11base.png' },
+            'suite': { interior: 'images/11interior.png', view: 'images/11view.png', shell: 'images/11shell.png', base: 'images/11base.png' },
+            'residence_A': { interior: 'images/interior.png', view: 'images/view.png', shell: 'images/shell.png', base: 'images/base.png' },
+            'residence_B': { interior: 'images/interior2.png', view: 'images/view2.png', shell: 'images/shell.png', base: 'images/base.png' },
+            'residence_C': { interior: 'images/interior3.png', view: 'images/view3.png', shell: 'images/shell.png', base: 'images/base.png' }
         };
-        let currentCategory = '2bed';
+        let currentCategory = 'residence';
         let currentTypology = 'A';
 
         // Preload images into browser memory to ensure zero layout shift or flickering on swap
@@ -1604,32 +1643,27 @@
             if(srcs.base) { const img = new Image(); img.src = srcs.base; }
         });
 
-        function switchCategory(cat) {
+        function switchCategory(cat, index) {
             if (currentCategory === cat) return;
             currentCategory = cat;
 
-            const btn1 = document.getElementById('btn-cat-1bed');
-            const btn2 = document.getElementById('btn-cat-2bed');
             const highlight = document.getElementById('cat-highlight');
+            if (highlight) {
+                highlight.style.transform = `translateX(${index * 100}%)`;
+            }
+
+            ['studio', 'residence', 'suite'].forEach(c => {
+                const btn = document.getElementById(`btn-cat-${c}`);
+                if (c === cat) {
+                    if(btn) btn.classList.replace('text-gray-500', 'text-black');
+                } else {
+                    if(btn) btn.classList.replace('text-black', 'text-gray-500');
+                }
+            });
+
             const typSelector = document.getElementById('typology-selector');
 
-            if (cat === '1bed') {
-                if(btn1) btn1.classList.replace('text-gray-500', 'text-black');
-                if(btn2) btn2.classList.replace('text-black', 'text-gray-500');
-                if(highlight) highlight.style.transform = 'translateX(0)';
-                
-                if(typSelector) {
-                    typSelector.style.opacity = '0';
-                    typSelector.style.pointerEvents = 'none';
-                    setTimeout(() => { typSelector.style.display = 'none'; }, 300);
-                }
-                
-                applyAnatomyImages('1bed');
-            } else {
-                if(btn2) btn2.classList.replace('text-gray-500', 'text-black');
-                if(btn1) btn1.classList.replace('text-black', 'text-gray-500');
-                if(highlight) highlight.style.transform = 'translateX(100%)';
-                
+            if (cat === 'residence') {
                 if(typSelector) {
                     typSelector.style.display = 'flex';
                     // slight delay to allow display to process before fading in
@@ -1639,12 +1673,20 @@
                     }, 10);
                 }
                 
-                applyAnatomyImages('2bed_' + currentTypology);
+                applyAnatomyImages('residence_' + currentTypology);
+            } else {
+                if(typSelector) {
+                    typSelector.style.opacity = '0';
+                    typSelector.style.pointerEvents = 'none';
+                    setTimeout(() => { typSelector.style.display = 'none'; }, 300);
+                }
+                
+                applyAnatomyImages(cat);
             }
         }
 
         function switchTypology(type) {
-            if (currentCategory !== '2bed') return;
+            if (currentCategory !== 'residence') return;
             if (type === currentTypology) return;
             
             // Update Active Button Styles
@@ -1662,7 +1704,7 @@
             });
 
             currentTypology = type;
-            applyAnatomyImages('2bed_' + type);
+            applyAnatomyImages('residence_' + type);
         }
 
         function applyAnatomyImages(key) {
@@ -1678,6 +1720,32 @@
             if (viewImg) viewImg.src = srcs.view;
             if (shellImg) shellImg.src = srcs.shell;
             if (baseImg) baseImg.src = srcs.base;
+        }
+
+        function switchVirtualTour(view, index) {
+            const highlight = document.getElementById('vt-highlight');
+            if (highlight) {
+                highlight.style.transform = `translateX(${index * 100}%)`;
+            }
+            
+            ['studio', 'residence', 'suite'].forEach(v => {
+                const btn = document.getElementById(`btn-vt-${v}`);
+                const el = document.getElementById(`vt-${v}`);
+                
+                if (v === view) {
+                    if (btn) btn.classList.replace('text-gray-500', 'text-black');
+                    if (el) {
+                        el.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+                        el.classList.add('opacity-100', 'z-10');
+                    }
+                } else {
+                    if (btn) btn.classList.replace('text-black', 'text-gray-500');
+                    if (el) {
+                        el.classList.add('opacity-0', 'z-0', 'pointer-events-none');
+                        el.classList.remove('opacity-100', 'z-10');
+                    }
+                }
+            });
         }
 
         function attemptPlayMusic() {
@@ -2785,15 +2853,15 @@
             frames: 51,
             currentFrame: 1,
             isPlaying: true,
-            category: '2bed', // '1bed' | '2bed'
+            category: 'residence', // 'studio' | 'residence' | 'suite'
             view: 'exterior', // 'exterior' | 'interior'
             images: {
-                '1bed': { exterior: [], interior: [] },
-                '2bed': { exterior: [], interior: [] }
+                'suite': { exterior: [], interior: [] },
+                'residence': { exterior: [], interior: [] }
             },
             loaded: {
-                '1bed': { exterior: 0, interior: 0 },
-                '2bed': { exterior: 0, interior: 0 }
+                'suite': { exterior: 0, interior: 0 },
+                'residence': { exterior: 0, interior: 0 }
             },
             canvas: null,
             ctx: null,
@@ -2813,20 +2881,21 @@
                 this.canvas.width = 1458;
                 this.canvas.height = 774;
 
-                this.preload('2bed', 'exterior');
-                this.preload('2bed', 'interior');
+                this.preload('residence', 'exterior');
+                this.preload('residence', 'interior');
                 this.bindEvents();
                 this.loop();
                 this.hasInitialized = true;
             },
 
             preload(cat, type) {
+                if (cat === 'studio' || !this.loaded[cat]) return;
                 if (this.loaded[cat][type] > 0) return; // prevent duplicate preloading
 
                 let folder = '';
-                if (cat === '1bed') {
+                if (cat === 'suite') {
                     folder = type === 'exterior' ? '11e' : '11i';
-                } else {
+                } else if (cat === 'residence') {
                     folder = type === 'exterior' ? '360e' : '360i';
                 }
 
@@ -2856,8 +2925,10 @@
             },
 
             drawFrame() {
-                if (!this.canvas) return;
+                if (!this.canvas || !this.images[this.category]) return;
                 const imgArray = this.images[this.category][this.view];
+                if (!imgArray) return;
+
                 const img = imgArray[this.currentFrame - 1];
                 
                 if (img && img.complete) {
@@ -2876,7 +2947,7 @@
             },
 
             loop(timestamp) {
-                if (this.isPlaying) {
+                if (this.isPlaying && this.category !== 'studio') {
                     if (timestamp - this.lastDrawTime > (1000 / this.fps)) {
                         this.nextFrame();
                         this.lastDrawTime = timestamp;
@@ -2900,34 +2971,60 @@
                 }
             },
 
-            setCategory(newCat) {
+            setCategory(newCat, index) {
                 if (this.category === newCat) return;
 
-                const btn1 = document.getElementById('btn-cat-1bed-360');
-                const btn2 = document.getElementById('btn-cat-2bed-360');
                 const highlight = document.getElementById('cat-highlight-360');
-
-                if (newCat === '1bed') {
-                    if(btn1) btn1.classList.replace('text-gray-500', 'text-black');
-                    if(btn2) btn2.classList.replace('text-black', 'text-gray-500');
-                    if(highlight) highlight.style.transform = 'translateX(0)';
-                } else {
-                    if(btn2) btn2.classList.replace('text-gray-500', 'text-black');
-                    if(btn1) btn1.classList.replace('text-black', 'text-gray-500');
-                    if(highlight) highlight.style.transform = 'translateX(100%)';
+                if (highlight) {
+                    highlight.style.transform = `translateX(${index * 100}%)`;
                 }
+
+                ['studio', 'residence', 'suite'].forEach(cat => {
+                    const btn = document.getElementById(`btn-cat-${cat}-360`);
+                    if (cat === newCat) {
+                        if (btn) btn.classList.replace('text-gray-500', 'text-black');
+                    } else {
+                        if (btn) btn.classList.replace('text-black', 'text-gray-500');
+                    }
+                });
 
                 this.category = newCat;
 
+                const emptyState = document.getElementById('experience-360-empty');
+                const interactionArea = document.getElementById('experience-360-interaction');
+                const controls = document.getElementById('controls-360');
+                const sliderContainer = document.getElementById('slider-360-container');
+
+                if (newCat === 'studio') {
+                    if (emptyState) {
+                        emptyState.classList.remove('opacity-0', 'pointer-events-none');
+                        emptyState.classList.add('opacity-100', 'pointer-events-auto', 'z-20');
+                    }
+                    if (interactionArea) interactionArea.style.opacity = '0';
+                    if (controls) controls.style.opacity = '0';
+                    if (sliderContainer) sliderContainer.style.opacity = '0';
+                    this.isPlaying = false;
+                    this.updatePlayBtn();
+                    return; // Stop further execution for empty state
+                } else {
+                    if (emptyState) {
+                        emptyState.classList.add('opacity-0', 'pointer-events-none');
+                        emptyState.classList.remove('opacity-100', 'pointer-events-auto', 'z-20');
+                    }
+                    if (interactionArea) interactionArea.style.opacity = '1';
+                    if (controls) controls.style.opacity = '1';
+                    if (sliderContainer) sliderContainer.style.opacity = '1';
+                }
+
                 // Trigger preload if not started
-                if (this.loaded[newCat][this.view] === 0) {
+                if (this.loaded[newCat] && this.loaded[newCat][this.view] === 0) {
                     this.preload(newCat, 'exterior');
                     this.preload(newCat, 'interior');
                 }
 
                 // Manage loader display
                 const loader = document.getElementById('experience-360-loader');
-                if (this.loaded[newCat][this.view] < this.frames && loader) {
+                if (this.loaded[newCat] && this.loaded[newCat][this.view] < this.frames && loader) {
                     loader.style.display = 'flex';
                     setTimeout(() => loader.style.opacity = '1', 10);
                 } else if (loader) {
@@ -2936,15 +3033,17 @@
                 }
 
                 // Smooth fade transition
-                this.canvas.style.opacity = 0;
-                setTimeout(() => {
-                    this.drawFrame();
-                    this.canvas.style.opacity = 1;
-                }, 150);
+                if (this.canvas) {
+                    this.canvas.style.opacity = 0;
+                    setTimeout(() => {
+                        this.drawFrame();
+                        this.canvas.style.opacity = 1;
+                    }, 150);
+                }
             },
 
             setView(newView) {
-                if (this.view === newView) return;
+                if (this.view === newView || this.category === 'studio') return;
                 
                 const btnExt = document.getElementById('btn-360-ext');
                 const btnInt = document.getElementById('btn-360-int');
@@ -2961,7 +3060,7 @@
 
                 // Manage loader display
                 const loader = document.getElementById('experience-360-loader');
-                if (this.loaded[this.category][this.view] < this.frames && loader) {
+                if (this.loaded[this.category] && this.loaded[this.category][this.view] < this.frames && loader) {
                     loader.style.display = 'flex';
                     setTimeout(() => loader.style.opacity = '1', 10);
                 } else if (loader) {
