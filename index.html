@@ -245,6 +245,21 @@
         .glass-toggle { width: 88px; height: 48px; border-radius: 24px; padding: 4px; position: relative; display: flex; }
         .glass-highlight { position: absolute; width: 40px; height: 40px; background: #000; border-radius: 50%; left: 4px; top: 4px; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
+        /* Prevent Image Downloading & Selection */
+        img, canvas {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none; /* Prevents long-press save popup on iOS/Android */
+        }
+
         /* PRINT STYLES */
         .print-only-header { display: none; }
         @media print {
@@ -1569,6 +1584,13 @@
     </div>
 
     <script>
+        // Prevent right-click on images and canvases
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG' || e.target.tagName === 'CANVAS') {
+                e.preventDefault();
+            }
+        });
+
         const CURRENCY = { USD: { symbol: '$', rate: 1, locale: 'en-US' }, INR: { symbol: '₹', rate: 75, locale: 'en-IN' } };
         
         // --- CONFIG ---
